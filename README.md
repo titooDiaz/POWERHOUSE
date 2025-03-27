@@ -27,28 +27,14 @@ Esta aplicación busca abordar estos desafíos proporcionando una solución acce
 - **Lenguaje de programación**: Java
 - **Framework de interfaz gráfica**: Swing, la biblioteca gráfica estándar de Java para la creación de interfaces de usuario.
 
-## Instalación y Ejecución
+## Instalación
+
+Diagrama [UML](https://lucid.app/lucidchart/f7df46b9-29f3-4efb-a40d-b79172f46d21/edit?view_items=u1LWT.LyNiFZ&invitationId=inv_5814b055-761f-4257-8e6e-9f7ff3ca67b8)
 
 1. **Clonar el repositorio**:
 
    ```bash
-   
-   ```
-
-2. **Compilar el proyecto**:
-
-   Navega al directorio del proyecto y ejecuta:
-
-   ```bash
-   
-   ```
-
-3. **Ejecutar la aplicación**:
-
-   Desde el directorio `bin`, ejecuta:
-
-   ```bash
-   
+   https://github.com/titooDiaz/POWERHOUSE
    ```
 
 ## Contribuciones

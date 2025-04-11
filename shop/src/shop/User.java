@@ -1,6 +1,7 @@
 package shop;
 
 public class User{
+    // attribute
     private int pk;
     private String name;
     private String username;
@@ -10,7 +11,7 @@ public class User{
     private Boolean active;
     private String key;
 
-    
+    //builder
     public User(String name, String username, String password, String email){
         this.name = name;
         this.username = username;
@@ -18,6 +19,7 @@ public class User{
         this.email = email;
     }
 
+    // methods
     public void Login(){
 
     } 
@@ -26,7 +28,34 @@ public class User{
         return "";
     }
 
+    public void logout(){
 
+    }
 
+    public void createUser(){
+
+    }
+
+    public void deleteUser(){
+        
+    }
+
+    public void editUser(){
+        
+    }
+
+    public void rememberPassword(){
+        
+    }
+
+    public void upgratePassword(){
+        
+    }
+
+    public  String[] generateReport(){
+        String vector[] = new String[100];
+
+        return vector;
+    }
 
 }

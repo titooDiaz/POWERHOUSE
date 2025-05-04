@@ -1,4 +1,4 @@
-package shop;
+package shop.models;
 import java.util.Date;
 
 public class Service {

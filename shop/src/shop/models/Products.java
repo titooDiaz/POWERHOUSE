@@ -1,4 +1,4 @@
-package shop;
+package shop.models;
 
 public class Products {
     private int pk;

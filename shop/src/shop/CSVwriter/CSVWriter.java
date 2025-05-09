@@ -3,16 +3,17 @@ package shop.CSVwriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-
-// Import user information class
-import shop.User;
+import shop.models.User;
 
 public class CSVWriter {
 
     private static int currentPk = 1; // You can load this value from the file if you want continuity
 
     public static void appendUserToCSV(User user) {
-        String filePath = "src/resources/data/Users/user.csv";
+        String basePath = System.getProperty("user.dir");
+        String filePath = basePath + "/POWERHOUSE/shop/src/resources/data/Users/user.csv";
+
+        System.out.println(filePath+"ASDASDASDASDASDASDK,JASLKDJALKSD");
         boolean fileExists = new java.io.File(filePath).exists();
 
         try (FileWriter fw = new FileWriter(filePath, true);

@@ -3,6 +3,7 @@ package shop;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import shop.CSVwriter.CSVWriter;
+import shop.models.User;
 
 public class Shop {
     public static void main(String[] args) {

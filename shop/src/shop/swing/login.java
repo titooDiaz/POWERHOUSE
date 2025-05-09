@@ -68,7 +68,7 @@ public class login extends JFrame {
         shadow.setLocation(510 + 8, 110 + 8); // slight offset for 3D effect
         add(shadow);
 
-        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/resources/images/PowerAppIcon.png"));
+        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/resources/images/icon.png"));
         Image scaledImage = originalIcon.getImage().getScaledInstance(280, 280, Image.SCALE_SMOOTH);
         ImageIcon resizedIcon = new ImageIcon(scaledImage);
 

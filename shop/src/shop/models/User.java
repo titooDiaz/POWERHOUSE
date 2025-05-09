@@ -1,4 +1,4 @@
-package shop;
+package shop.models;
 
 public class User{
     // attribute
@@ -17,6 +17,7 @@ public class User{
         this.username = username;
         this.password = password;
         this.email = email;
+        this.type = "Admin";
     }
     //getter and setter
     public int getPk() {

@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.*;
+import shop.CSVwriter.CSVWriter;
+import shop.models.User;
 
 public class AddUser extends JFrame {
     public AddUser() {
@@ -177,6 +179,8 @@ public class AddUser extends JFrame {
                 JOptionPane.showMessageDialog(null, "Usuario registrado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
                 // guardado de datos
+                User user1 = new User(campos[1].getText(), campos[0].getText(), pass2, campos[2].getText());
+                CSVWriter.appendUserToCSV(user1);
             }
         });      
 

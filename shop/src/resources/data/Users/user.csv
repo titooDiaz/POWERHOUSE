@@ -1,3 +1,4 @@
 pk,name,username,password,email,type,active,key
 1,Name,UserName,Password,Email@example.com,default,true,64e0f669-7a57-44d9-b397-c1056ed942ae
 1,Name,UserName,Password,Email@example.com,default,true,abc37eff-20f7-4301-992a-d13dc1d069e7
+1,asd,asd,asd,asd@as.com,default,true,1580102d-2ce1-4ae7-bea6-64df84ef460c

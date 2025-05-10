@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.*;
-import shop.CSVwriter.CSVWriter;
+import shop.CSVwriter.WriterUsers;
 import shop.models.User;
 
 public class AddUser extends JFrame {
@@ -180,7 +180,7 @@ public class AddUser extends JFrame {
 
                 // guardado de datos
                 User user1 = new User(campos[1].getText(), campos[0].getText(), pass2, campos[2].getText());
-                CSVWriter.appendUserToCSV(user1);
+                WriterUsers.appendUserToCSV(user1);
             }
         });      
 

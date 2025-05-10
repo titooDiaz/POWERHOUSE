@@ -2,7 +2,7 @@ package shop;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import shop.CSVwriter.CSVWriter;
+import shop.CSVwriter.WriterUsers;
 import shop.models.User;
 
 public class Shop {
@@ -11,7 +11,7 @@ public class Shop {
 
         // create user
         User user1 = new User("Name", "UserName", "Password", "Email@example.com");
-        CSVWriter.appendUserToCSV(user1);
+        WriterUsers.appendUserToCSV(user1);
 
         // Crear la ventana
         JFrame frame = new JFrame("Mi primera GUI con Swing");

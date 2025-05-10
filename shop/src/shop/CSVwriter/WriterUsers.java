@@ -3,17 +3,14 @@ package shop.CSVwriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.swing.JOptionPane;
 import shop.models.User;
 
-public class CSVWriter {
-
-    private static int currentPk = 1; // You can load this value from the file if you want continuity
-
+public class WriterUsers {
     public static void appendUserToCSV(User user) {
         String basePath = System.getProperty("user.dir");
         String filePath = basePath + "/POWERHOUSE/shop/src/resources/data/Users/user.csv";
 
-        System.out.println(filePath+"ASDASDASDASDASDASDK,JASLKDJALKSD");
         boolean fileExists = new java.io.File(filePath).exists();
 
         try (FileWriter fw = new FileWriter(filePath, true);
@@ -24,7 +21,11 @@ public class CSVWriter {
                 pw.println("pk,name,username,password,email,type,active,key");
             }
 
-            String line = "\n" + currentPk++ + "," +
+            int currentPk = PkManager.getAndIncrementPk(0);
+            if (currentPk ==-1){
+                JOptionPane.showMessageDialog(null, "Error al procesar el guardado", "Error", JOptionPane.ERROR_MESSAGE);
+            }else{
+                String line = "\n" + currentPk++ + "," +
                     user.getName() + "," +
                     user.getUsername() + "," +
                     user.getPassword() + "," +
@@ -34,6 +35,7 @@ public class CSVWriter {
                     generateRandomKey();
 
             pw.print(line);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();

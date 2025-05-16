@@ -181,6 +181,12 @@ public class AddUser extends JFrame {
                 // guardado de datos
                 User user1 = new User(campos[1].getText(), campos[0].getText(), pass2, campos[2].getText());
                 WriterUsers.appendUserToCSV(user1);
+
+                // cuando el susuario se registre cambiaremos de ventana!
+                login main = new login();
+                main.setVisible(true);
+                // Cierra esta ventana
+                this.dispose();
             }
         });      
 

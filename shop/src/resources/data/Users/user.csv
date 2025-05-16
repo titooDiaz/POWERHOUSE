@@ -1,1 +1,4 @@
 pk,name,username,password,email,type,active,key
+1,Miguel Angel Diaz,usuario1,asd,Miguelitodiaz@gmailc.com,default,true,994ea671-1567-4c09-98f0-8eca2e478b2c
+1,mesa benitrz,Jheiber,asd,majsdlakjsd@gmail.com,default,true,235e45e7-8cbb-4add-9197-5d39d582e043
+2,Jheiber jhoandry mesa benitez,Jheiber02,asd,jheiber06@gmail.com,default,true,cfc4cf14-7cf5-4a30-a0b5-7784da71c27b

@@ -8,7 +8,7 @@ public class login extends JFrame {
 
     public login() {
         setTitle("PowerApp");
-        setSize(900, 600);
+        setSize(900, 550);
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -60,6 +60,14 @@ public class login extends JFrame {
         panelLogin.add(recuperar);
 
         // Logo with 3D effect (drop shadow)
+        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/resources/images/icon.png"));
+        Image scaledImage = originalIcon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon = new ImageIcon(scaledImage);
+
+        JLabel logo = new JLabel(resizedIcon);
+        logo.setBounds(510, 110, 300, 300);
+        add(logo);
+        
         JLabel shadow = new JLabel();
         shadow.setBounds(510, 110, 300, 300);
         shadow.setOpaque(true);
@@ -67,14 +75,6 @@ public class login extends JFrame {
         shadow.setBorder(BorderFactory.createEmptyBorder());
         shadow.setLocation(510 + 8, 110 + 8); // slight offset for 3D effect
         add(shadow);
-
-        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/resources/images/icon.png"));
-        Image scaledImage = originalIcon.getImage().getScaledInstance(280, 280, Image.SCALE_SMOOTH);
-        ImageIcon resizedIcon = new ImageIcon(scaledImage);
-
-        JLabel logo = new JLabel(resizedIcon);
-        logo.setBounds(510, 110, 280, 280);
-        add(logo);
 
         // Footer date (placeholder)
         JLabel fecha = new JLabel("<current date>");

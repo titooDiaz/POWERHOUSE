@@ -1,0 +1,78 @@
+package shop.swing;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class Profile extends JFrame {
+    public Profile() {
+        setTitle("PowerApp");
+        setSize(900, 550);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(null);
+
+        // Fondo general
+        JPanel fondo = new JPanel();
+        fondo.setBackground(new Color(77, 77, 77));  // #4D4D4D
+        fondo.setBounds(0, 0, 900, 550);
+        fondo.setLayout(null);
+        add(fondo);
+
+        // Botón volver con letra más pequeña
+        JButton volver = new JButton("< volver");
+        volver.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));  // tamaño 14
+        volver.setForeground(Color.WHITE);
+        volver.setBackground(new Color(102, 102, 102));
+        volver.setFocusPainted(false);
+        volver.setBorderPainted(false);
+        volver.setBounds(20, 10, 100, 30);
+        fondo.add(volver);
+
+        // Título
+        JLabel titulo = new JLabel("Mi Perfil");
+        titulo.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 36));
+        titulo.setForeground(Color.WHITE);
+        titulo.setBounds(360, 20, 300, 40);
+        fondo.add(titulo);
+
+        // Panel lateral izquierdo (más alto)
+        JPanel panelInfo = new JPanel();
+        panelInfo.setBackground(new Color(102, 102, 102));
+        panelInfo.setBounds(60, 80, 420, 420);  // altura aumentada de 370 a 420
+        panelInfo.setLayout(null);
+        fondo.add(panelInfo);
+
+        // Datos del perfil
+        String[] campos = {"Nombre", "nombre de usuario", "Correo electrónico", "Tipo de usuario", "Estado"};
+        int y = 20;
+
+        for (String campo : campos) {
+            // Etiqueta del campo
+            JLabel etiqueta = new JLabel(campo);
+            etiqueta.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
+            etiqueta.setForeground(Color.WHITE);
+            etiqueta.setBounds(20, y, 200, 20);
+            panelInfo.add(etiqueta);
+
+            // Valor del campo (JLabel blanco)
+            JLabel valor = new JLabel("Aquí va el dato...");
+            valor.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
+            valor.setOpaque(true);
+            valor.setBackground(Color.WHITE);
+            valor.setBounds(20, y + 25, 380, 30);
+            panelInfo.add(valor);
+
+            y += 75;
+        }
+
+        // Área para imagen o avatar a la derecha (coordenada y igual que panel)
+        JLabel avatar = new JLabel();
+        avatar.setBounds(520, 80, 300, 300);
+        avatar.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
+        fondo.add(avatar);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new Profile().setVisible(true));
+    }
+}

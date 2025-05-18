@@ -23,7 +23,7 @@ public class AddUser extends JFrame {
         add(titulo);
 
         // Boton volver
-        JButton volver = new JButton("< volver");
+        JButton volver = new RoundedButton("< volver", 15);
         volver.setBounds(10, 10, 100, 30);
         volver.setBackground(Color.DARK_GRAY);
         volver.setForeground(Color.WHITE);
@@ -31,7 +31,7 @@ public class AddUser extends JFrame {
         add(volver);
 
         // Panel de formulario
-        JPanel panel = new JPanel();
+        JPanel panel = new RoundedPanel(30);
         panel.setLayout(null);
         panel.setBackground(new Color(100, 100, 100)); // gris medio
         panel.setBounds(50, 80, 400, 350);
@@ -97,7 +97,7 @@ public class AddUser extends JFrame {
         }
 
         // Boton registrar
-        JButton registrar = new JButton("REGISTRAR");
+        RoundedButton registrar = new RoundedButton("REGISTRAR", 15);
         registrar.setBounds(100, 310, 200, 35);
         registrar.setBackground(new Color(0, 200, 100)); // verde
         registrar.setForeground(Color.WHITE);

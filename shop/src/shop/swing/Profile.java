@@ -18,8 +18,8 @@ public class Profile extends JFrame {
         fondo.setLayout(null);
         add(fondo);
 
-        // Botón volver con letra más pequeña
-        JButton volver = new JButton("< volver");
+        // Botón volver
+        RoundedButton volver = new RoundedButton("< volver", 15);
         volver.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));  // tamaño 14
         volver.setForeground(Color.WHITE);
         volver.setBackground(new Color(102, 102, 102));
@@ -36,7 +36,7 @@ public class Profile extends JFrame {
         fondo.add(titulo);
 
         // Panel lateral izquierdo (más alto)
-        JPanel panelInfo = new JPanel();
+        RoundedPanel panelInfo = new RoundedPanel(30);
         panelInfo.setBackground(new Color(102, 102, 102));
         panelInfo.setBounds(60, 80, 420, 420);  // altura aumentada de 370 a 420
         panelInfo.setLayout(null);

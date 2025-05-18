@@ -1,11 +1,13 @@
 package shop.swing;
 
 import java.awt.*;
-import java.awt.geom.RoundRectangle2D;
 import javax.swing.*;
 
 public class login extends JFrame {
 
+    /**
+     * 
+     */
     public login() {
         setTitle("PowerApp");
         setSize(900, 550);
@@ -23,15 +25,10 @@ public class login extends JFrame {
         add(titulo);
 
         // Login panel with rounded background
-        JPanel panelLogin = new JPanel(null) {
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2 = (Graphics2D) g;
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(new Color(80, 80, 80));
-                g2.fill(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 20, 20));
-            }
-        };
+        JPanel panelLogin = new RoundedPanel(30);
+        panelLogin.setForeground(Color.BLACK);
+        panelLogin.setBackground(Color.GRAY);
+        panelLogin.setLayout(null);
         panelLogin.setBounds(80, 100, 300, 300);
         panelLogin.setOpaque(false);
         add(panelLogin);
@@ -50,12 +47,12 @@ public class login extends JFrame {
         panelLogin.add(contraseña);
 
         // "Ingresar" button (green)
-        JButton ingresar = crearBoton("Ingresar", new Color(0, 204, 102));
+        RoundedButton ingresar = crearBoton("Ingresar", new Color(0, 204, 102), 15);
         ingresar.setBounds(30, 180, 240, 35);
         panelLogin.add(ingresar);
 
         // "Recuperar contraseña" button (red)
-        JButton recuperar = crearBoton("recuperar contraseña", new Color(255, 102, 102));
+        RoundedButton recuperar = crearBoton("recuperar contraseña", new Color(255, 102, 102),15);
         recuperar.setBounds(30, 230, 240, 35);
         panelLogin.add(recuperar);
 
@@ -114,16 +111,15 @@ public class login extends JFrame {
     }
 
     // Creates a styled JButton
-    private JButton crearBoton(String texto, Color color) {
-        JButton boton = new JButton(texto);
-        boton.setFocusPainted(false);
-        boton.setFont(new Font("Arial", Font.BOLD, 14));
+    private RoundedButton crearBoton(String texto, Color color, int radius) {
+        RoundedButton boton = new RoundedButton(texto, radius);
         boton.setForeground(Color.WHITE);
         boton.setBackground(color);
         boton.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createMatteBorder(2, 2, 4, 4, color.darker()), // bottom-right shadow
                 BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
+       
         return boton;
     }
 

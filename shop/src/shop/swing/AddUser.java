@@ -100,29 +100,29 @@ public class AddUser extends JFrame {
 
         // Boton registrar
         RoundedButton registrar = new RoundedButton("REGISTRAR", 15);
-        registrar.setBounds(100, 310, 200, 35);
-        registrar.setBackground(new Color(0, 200, 100)); // verde
-        registrar.setForeground(Color.WHITE);
-        registrar.setFont(new Font("Arial", Font.BOLD, 14));
-        registrar.setFocusPainted(false);
-        registrar.setBorder(BorderFactory.createEmptyBorder());
-        panel.add(registrar);
+            registrar.setBounds(100, 310, 200, 35);
+            registrar.setBackground(new Color(0, 200, 100)); // verde
+            registrar.setForeground(Color.WHITE);
+            registrar.setFont(new Font("Arial", Font.BOLD, 14));
+            registrar.setFocusPainted(false);
+            registrar.setBorder(BorderFactory.createEmptyBorder());
+            panel.add(registrar);
 
         ImageIcon originalIcon = new ImageIcon(getClass().getResource("/resources/images/icon.png"));
         Image scaledImage = originalIcon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
         ImageIcon resizedIcon = new ImageIcon(scaledImage);
 
         JLabel logo = new JLabel(resizedIcon);
-        logo.setBounds(510, 110, 300, 300);
-        add(logo);
+         logo.setBounds(510, 110, 300, 300);
+         add(logo);
         
         JLabel shadow = new JLabel();
-        shadow.setBounds(510, 110, 300, 300);
-        shadow.setOpaque(true);
-        shadow.setBackground(Color.WHITE);
-        shadow.setBorder(BorderFactory.createEmptyBorder());
-        shadow.setLocation(510 + 8, 110 + 8); // slight offset for 3D effect
-        add(shadow);
+            shadow.setBounds(510, 110, 300, 300);
+            shadow.setOpaque(true);
+            shadow.setBackground(Color.WHITE);
+            shadow.setBorder(BorderFactory.createEmptyBorder());
+            shadow.setLocation(510 + 8, 110 + 8); // slight offset for 3D effect
+            add(shadow);
 
         // llamar al boton
         registrar.addActionListener(e -> {

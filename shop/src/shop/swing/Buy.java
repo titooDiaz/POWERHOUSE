@@ -48,19 +48,27 @@ public class Buy extends JFrame {
         panelIzquierdo.add(fecha);
 
          // CENTER
-        JPanel panelCentral = new JPanel(); 
-        panelCentral.setBackground(darkGray);
-        panelCentral.setBorder(BorderFactory.createEmptyBorder(30, 80, 30, 80));
-        panelCentral.setLayout(new BoxLayout(panelCentral, BoxLayout.Y_AXIS));
-
-        Font labelFont = new Font("SansSerif", Font.BOLD, 24);
-        panelCentral.add(createFieldPanel("Tipo:", new JComboBox<>(new String[]{"Producto", "Servicio"}), labelFont));
-        panelCentral.add(Box.createVerticalStrut(30));
-        panelCentral.add(createFieldPanel("Nombre:", new JTextField(), labelFont));
-        panelCentral.add(Box.createVerticalStrut(30));
-        panelCentral.add(createFieldPanel("Código:", new JTextField(), labelFont));
-        panelCentral.add(Box.createVerticalStrut(30));
-        panelCentral.add(createFieldPanel("Cantidad", new JTextField(), labelFont));
+        JPanel panelCentral = new JPanel(null);
+        panelCentral.setBackground(Color.GRAY);
+        panelCentral.setPreferredSize(new Dimension(500, 0));
+        JLabel titulo = new JLabel("COMPRAR");
+        titulo.setFont(new Font("Arial", Font.BOLD, 28));
+        titulo.setForeground(Color.WHITE);
+        titulo.setBounds(180, 5, 200, 40);
+        panelCentral.add(titulo);
+        String[] campos = {
+            "Tipo", "Descripcion", "Producto", "Codigo",
+            "Cantidad", "Fecha vencimiento", "Metodo de pago", "Precio"
+        };
+        for (int i = 0; i < campos.length; i++) {
+            JTextField campo = new JTextField(campos[i]);
+            campo.setBounds((i % 2 == 0 ? 20 : 260), 60 + (i / 2) * 60, 200, 40);
+            panelCentral.add(campo);
+        }
+        RoundedButton agregarBtn = new RoundedButton("Agregar", 15);
+        agregarBtn.setBackground(Color.YELLOW);
+        agregarBtn.setBounds(180, 310, 140, 40);
+        panelCentral.add(agregarBtn);
         panelCentral.add(Box.createVerticalStrut(30));
         // Panel derecho: resumen de productos
         RoundedPanel panelDerecho = new RoundedPanel(15,new BorderLayout());
@@ -110,22 +118,7 @@ public class Buy extends JFrame {
         add(panelDerecho, BorderLayout.EAST);
         add(panelInferior, BorderLayout.SOUTH);
     }
-        private JPanel createFieldPanel(String label, JComponent field, Font labelFont) {
-        RoundedPanel panel = new RoundedPanel(15);
-        panel.setLayout(new BorderLayout(0,10)); // espacio entre label y field
-        panel.setBackground(new Color(150,150,150));
-        panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // padding interno
-
-        JLabel lbl = new JLabel(label);
-        lbl.setFont(labelFont);
-        panel.add(lbl, BorderLayout.NORTH);
-
-        field.setPreferredSize(new Dimension(400, 35));
-        panel.add(field, BorderLayout.CENTER);
-        return panel;
-    }
-
-    public static void main(String[] args) {
+        public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new Buy().setVisible(true));
     }
 }

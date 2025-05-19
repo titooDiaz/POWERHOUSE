@@ -3,14 +3,16 @@ package shop.swing;
 import javax.swing.*;
 import java.awt.*;
 
+
 public class Sell extends JFrame {
 
     public Sell() {
-        setTitle("PowerApp - Vender");
+        setTitle("PowerApp - Sell");
         setSize(900, 550);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
+        getContentPane().setBackground(new Color(60,60,60));
 
         // Colores personalizados
         Color darkGray = new Color(45, 45, 45);
@@ -20,10 +22,10 @@ public class Sell extends JFrame {
         Font font = new Font("SansSerif", Font.PLAIN, 14);
 
         // Panel izquierdo: información del usuario
-        JPanel panelIzquierdo = new JPanel();
+        RoundedPanel panelIzquierdo = new RoundedPanel(30);
         panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
         panelIzquierdo.setPreferredSize(new Dimension(200, 0));
-        panelIzquierdo.setBackground(darkGray);
+        panelIzquierdo.setBackground(new Color(100,100,100));
 
         JLabel foto = new JLabel(new ImageIcon("usuario.png"));
         JLabel usuario = new JLabel("<Usuario>");
@@ -45,58 +47,31 @@ public class Sell extends JFrame {
         panelIzquierdo.add(email);
         panelIzquierdo.add(fecha);
 
-        // Panel central: formulario de venta
-        JPanel panelCentral = new JPanel();
-        panelCentral.setLayout(new BoxLayout(panelCentral, BoxLayout.Y_AXIS));
-        panelCentral.setBackground(Color.WHITE);
-        panelCentral.setBorder(BorderFactory.createEmptyBorder(30, 20, 30, 20));
-
-        JComboBox<String> selectorProducto = new JComboBox<>(new String[]{"Seleccione un producto", "Producto 1", "Producto 2"});
-        JTextField codigo = new JTextField();
-        JTextField metodoPago1 = new JTextField();
-        JTextField metodoPago2 = new JTextField();
-        JButton botonAgregar = new JButton("Agregar");
-
-        Dimension fieldSize = new Dimension(300, 30);
-        selectorProducto.setMaximumSize(fieldSize);
-        codigo.setMaximumSize(fieldSize);
-        metodoPago1.setMaximumSize(fieldSize);
-        metodoPago2.setMaximumSize(fieldSize);
-
-        JLabel labelProducto = new JLabel("Seleccione un producto:");
-        JLabel labelCodigo = new JLabel("Código:");
-        JLabel labelMetodo1 = new JLabel("Método de pago (1):");
-        JLabel labelMetodo2 = new JLabel("Método de pago (2):");
-
-        for (JLabel label : new JLabel[]{labelProducto, labelCodigo, labelMetodo1, labelMetodo2}) {
-            label.setAlignmentX(Component.LEFT_ALIGNMENT);
-            label.setFont(font);
+         // CENTER
+        JPanel panelCentral = new JPanel(null);
+        panelCentral.setBackground(Color.GRAY);
+        panelCentral.setPreferredSize(new Dimension(500, 0));
+        JLabel titulo = new JLabel("Vender");
+        titulo.setFont(new Font("Arial", Font.BOLD, 28));
+        titulo.setForeground(Color.WHITE);
+        titulo.setBounds(180, 5, 200, 40);
+        panelCentral.add(titulo);
+        String[] campos = {
+            "Tipo", "Codigo", "Producto", "Cantidad"
+        };
+        for (int i = 0; i < campos.length; i++) {
+            JTextField campo = new JTextField(campos[i]);
+            campo.setBounds((i % 2 == 0 ? 20 : 260), 60 + (i / 2) * 60, 200, 40);
+            panelCentral.add(campo);
         }
-
-        panelCentral.add(labelProducto);
-        panelCentral.add(selectorProducto);
-        panelCentral.add(Box.createVerticalStrut(10));
-
-        panelCentral.add(labelCodigo);
-        panelCentral.add(codigo);
-        panelCentral.add(Box.createVerticalStrut(10));
-
-        panelCentral.add(labelMetodo1);
-        panelCentral.add(metodoPago1);
-        panelCentral.add(Box.createVerticalStrut(10));
-
-        panelCentral.add(labelMetodo2);
-        panelCentral.add(metodoPago2);
-        panelCentral.add(Box.createVerticalStrut(20));
-
-        botonAgregar.setBackground(new Color(255, 211, 77));
-        botonAgregar.setFont(font);
-        botonAgregar.setFocusPainted(false);
-        botonAgregar.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelCentral.add(botonAgregar);
-
+        
+        RoundedButton agregarBtn = new RoundedButton("Agregar", 15);
+        agregarBtn.setBackground(Color.YELLOW);
+        agregarBtn.setBounds(180, 310, 140, 40);
+        panelCentral.add(agregarBtn);
+        panelCentral.add(Box.createVerticalStrut(30));
         // Panel derecho: resumen de productos
-        JPanel panelDerecho = new JPanel(new BorderLayout());
+        RoundedPanel panelDerecho = new RoundedPanel(15,new BorderLayout());
         panelDerecho.setPreferredSize(new Dimension(200, 0));
         panelDerecho.setBackground(lightGray);
         panelDerecho.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
@@ -105,16 +80,13 @@ public class Sell extends JFrame {
         resumenLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
         resumenLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        JTextArea resumenArea = new JTextArea();
-        resumenArea.setEditable(false);
+        JLabel resumenArea = new JLabel();
         resumenArea.setFont(font);
-        resumenArea.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-
         panelDerecho.add(resumenLabel, BorderLayout.NORTH);
         panelDerecho.add(new JScrollPane(resumenArea), BorderLayout.CENTER);
 
         // Panel inferior: total y botón de confirmar
-        JPanel panelInferior = new JPanel(new BorderLayout());
+        RoundedPanel panelInferior = new RoundedPanel(16, new BorderLayout());
         panelInferior.setPreferredSize(new Dimension(900, 70));
         panelInferior.setBackground(darkGray);
         panelInferior.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
@@ -131,8 +103,7 @@ public class Sell extends JFrame {
         panelTotales.add(totalProductos);
         panelTotales.add(totalGeneral);
 
-        JButton confirmarVenta = new JButton("Confirmar venta");
-        confirmarVenta.setPreferredSize(new Dimension(180, 40));
+        RoundedButton confirmarVenta = new RoundedButton("Confirmar venta", 15);
         confirmarVenta.setBackground(accent);
         confirmarVenta.setForeground(Color.WHITE);
         confirmarVenta.setFont(font);
@@ -147,8 +118,8 @@ public class Sell extends JFrame {
         add(panelDerecho, BorderLayout.EAST);
         add(panelInferior, BorderLayout.SOUTH);
     }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new Sell().setVisible(true));
+        public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new Buy().setVisible(true));
     }
 }
+

@@ -45,7 +45,7 @@ public class TiendaVirtualGUI extends JFrame {
         // Paneles de funciones
         addPanelBoton("VENDER", "metodo-de-pago.png", 100, 120, new Color(240, 80, 80));
         addPanelBoton("COMPRAR", "comercio.png", 420, 120, new Color(0, 170, 200));
-        addPanelBoton("GENERAR REPORTE", ".png", 100, 300, new Color(255, 165, 0));
+        addPanelBoton("GENERAR REPORTE", "reporte-de-negocios.png", 100, 300, new Color(255, 165, 0));
         addPanelBoton("VER INVENTARIO", "inventario.png", 420, 300, new Color(220, 200, 50));
 
         // Fecha

@@ -15,10 +15,7 @@ public class registerProduct extends JFrame {
         setLayout(new BorderLayout());
 
         // Colores y fuentes
-        Color darkGray = new Color(45, 45, 45);
-        Color midGray  = new Color(150, 150, 150);
-        Color lightGray= new Color(230, 230, 230);
-        Color accent   = new Color(0, 200, 100);
+        Color darkGray = new Color(60, 60, 60);
         Font headerFont= new Font("SansSerif", Font.BOLD, 28);
         Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
 
@@ -26,20 +23,22 @@ public class registerProduct extends JFrame {
         JPanel barraSuperior = new JPanel(new BorderLayout());
         barraSuperior.setBackground(darkGray);
         barraSuperior.setPreferredSize(new Dimension(900, 60));
-        JLabel botonVolver = new JLabel("<  volver");
-        botonVolver.setForeground(Color.WHITE);
-        botonVolver.setFont(new Font("SansSerif", Font.BOLD, 16));
-        botonVolver.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
-        barraSuperior.add(botonVolver, BorderLayout.WEST);
+        // Boton volver
+        JButton volver = new RoundedButton("< volver", 15);
+        volver.setBounds(10, 10, 100, 30);
+        volver.setBackground(Color.DARK_GRAY);
+        volver.setForeground(Color.WHITE);
+        volver.setBorderPainted(false);
+        add(volver);
         JLabel titulo = new JLabel("REGISTRAR PRODUCTO/SERVICIO", SwingConstants.CENTER);
-        titulo.setForeground(accent);
+        titulo.setForeground(Color.WHITE);
         titulo.setFont(headerFont);
         barraSuperior.add(titulo, BorderLayout.CENTER);
         add(barraSuperior, BorderLayout.NORTH);
 
         // CENTER
         JPanel formWrapper = new JPanel(); // 30 es el radio de las esquinas
-        formWrapper.setBackground(new Color(180, 180, 180));
+        formWrapper.setBackground(darkGray);
         formWrapper.setBorder(BorderFactory.createEmptyBorder(30, 80, 30, 80));
         formWrapper.setLayout(new BoxLayout(formWrapper, BoxLayout.Y_AXIS));
 
@@ -62,11 +61,12 @@ public class registerProduct extends JFrame {
         barraInferior.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         RoundedButton btnConfirmar = new RoundedButton("CONFIRMAR",15);
         btnConfirmar.setFont(new Font("SansSerif", Font.BOLD, 16));
-        btnConfirmar.setBackground(accent);
+        btnConfirmar.setBackground(new Color(0, 200, 100));
         btnConfirmar.setForeground(Color.WHITE);
         btnConfirmar.setPreferredSize(new Dimension(200, 50));
         btnConfirmar.setFocusPainted(false);
         barraInferior.add(btnConfirmar, BorderLayout.CENTER);
+        
         String hoy = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         JLabel lblFecha = new JLabel(hoy, SwingConstants.RIGHT);
         lblFecha.setForeground(Color.LIGHT_GRAY);
@@ -76,7 +76,7 @@ public class registerProduct extends JFrame {
     }
 
     private JPanel createFieldPanel(String label, JComponent field, Font labelFont) {
-        JPanel panel = new JPanel();
+        RoundedPanel panel = new RoundedPanel(15);
         panel.setLayout(new BorderLayout(0,10)); // espacio entre label y field
         panel.setBackground(new Color(150,150,150));
         panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // padding interno

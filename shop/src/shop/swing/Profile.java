@@ -13,19 +13,17 @@ public class Profile extends JFrame {
 
         // Fondo general
         JPanel fondo = new JPanel();
-        fondo.setBackground(new Color(77, 77, 77));  // #4D4D4D
+        fondo.setBackground(new Color(60, 60, 60));  
         fondo.setBounds(0, 0, 900, 550);
         fondo.setLayout(null);
         add(fondo);
 
         // Botón volver
-        RoundedButton volver = new RoundedButton("< volver", 15);
-        volver.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));  // tamaño 14
+        JButton volver = new RoundedButton("< volver", 15);
+        volver.setBounds(10, 10, 100, 30);
+        volver.setBackground(Color.DARK_GRAY);
         volver.setForeground(Color.WHITE);
-        volver.setBackground(new Color(102, 102, 102));
-        volver.setFocusPainted(false);
         volver.setBorderPainted(false);
-        volver.setBounds(20, 10, 100, 30);
         fondo.add(volver);
 
         // Título
@@ -67,7 +65,7 @@ public class Profile extends JFrame {
 
         // Área para imagen o avatar a la derecha (coordenada y igual que panel)
         JLabel avatar = new JLabel();
-        avatar.setBounds(520, 80, 300, 300);
+        avatar.setBounds(550, 110, 300, 300);
         avatar.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
         fondo.add(avatar);
     }

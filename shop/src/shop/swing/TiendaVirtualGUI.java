@@ -11,23 +11,28 @@ public class TiendaVirtualGUI extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null);
-        getContentPane().setBackground(new Color(40, 40, 50)); // Fondo oscuro
+        getContentPane().setBackground(new Color(60,60,60)); // Fondo oscuro
 
         // Etiqueta usuario
-        JTextField txtUsuario = new JTextField("¡Hola! <Username>");
+        JLabel txtUsuario = new JLabel("¡Hola! <Username>");
         txtUsuario.setBounds(50, 20, 250, 30);
+        txtUsuario.setFont(new Font("Arial", Font.BOLD, 20));
+        txtUsuario.setForeground(Color.WHITE);
         add(txtUsuario);
 
         // Botón Cerrar Sesión
-        JButton btnCerrarSesion = new JButton("Cerrar sesión");
+        RoundedButton btnCerrarSesion = new RoundedButton("Cerrar sesión", 15);
         btnCerrarSesion.setBounds(320, 20, 120, 30);
-        btnCerrarSesion.setBackground(Color.RED);
+        btnCerrarSesion.setBackground( new Color(240, 80, 80));
         btnCerrarSesion.setForeground(Color.WHITE);
         add(btnCerrarSesion);
 
         // Botón Ver Usuarios
-        JButton btnVerUsuarios = new JButton("Ver Usuarios");
+        RoundedButton btnVerUsuarios = new RoundedButton("Ver Perfil", 15);
         btnVerUsuarios.setBounds(650, 20, 120, 30);
+        btnVerUsuarios.setBackground(Color.DARK_GRAY);
+        btnVerUsuarios.setForeground(Color.WHITE);
+        btnVerUsuarios.setBorderPainted(false);
         add(btnVerUsuarios);
 
         // Título
@@ -38,10 +43,10 @@ public class TiendaVirtualGUI extends JFrame {
         add(titulo);
 
         // Paneles de funciones
-        addPanelBoton("VENDER", "icono_vender.png", 100, 120, new Color(240, 80, 80));
-        addPanelBoton("COMPRAR", "icono_comprar.png", 420, 120, new Color(0, 170, 200));
-        addPanelBoton("GENERAR REPORTE", "icono_reporte.png", 100, 300, new Color(255, 165, 0));
-        addPanelBoton("VER INVENTARIO", "icono_inventario.png", 420, 300, new Color(220, 200, 50));
+        addPanelBoton("VENDER", "metodo-de-pago.png", 100, 120, new Color(240, 80, 80));
+        addPanelBoton("COMPRAR", "comercio.png", 420, 120, new Color(0, 170, 200));
+        addPanelBoton("GENERAR REPORTE", ".png", 100, 300, new Color(255, 165, 0));
+        addPanelBoton("VER INVENTARIO", "inventario.png", 420, 300, new Color(220, 200, 50));
 
         // Fecha
         JLabel fecha = new JLabel("<current date>");
@@ -54,7 +59,6 @@ public class TiendaVirtualGUI extends JFrame {
         JPanel panel = new JPanel(null);
         panel.setBounds(x, y, 250, 140);
         panel.setBackground(new Color(100, 100, 100));
-        panel.setBorder(BorderFactory.createRaisedBevelBorder());
 
         // Icono
         JLabel iconoLabel = new JLabel();
@@ -63,7 +67,7 @@ public class TiendaVirtualGUI extends JFrame {
         panel.add(iconoLabel);
 
         // Botón funcional
-        JButton boton = new JButton(texto);
+        RoundedButton boton = new RoundedButton(texto, 15);
         boton.setBounds(120, 50, 110, 40);
         boton.setBackground(colorBoton);
         boton.setForeground(Color.WHITE);

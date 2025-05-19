@@ -8,6 +8,8 @@ import shop.CSVwriter.WriterUsers;
 import shop.models.User;
 
 public class AddUser extends JFrame {
+    Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
+
     public AddUser() {
         setTitle("PowerApp");
         setSize(900, 550);
@@ -15,7 +17,7 @@ public class AddUser extends JFrame {
         setLayout(null);
         getContentPane().setBackground(new Color(60, 60, 60));
 
-        // tecxto superior
+        // texto superior
         JLabel titulo = new JLabel("Crea un nuevo ADMINISTRADOR");
         titulo.setFont(new Font("Arial", Font.BOLD, 20));
         titulo.setForeground(Color.WHITE);
@@ -106,22 +108,21 @@ public class AddUser extends JFrame {
         registrar.setBorder(BorderFactory.createEmptyBorder());
         panel.add(registrar);
 
-        // Icono de usuario
-        ImageIcon icon = new ImageIcon(getClass().getResource("/resources/images/icon.png"));
-        Image imagenOriginal = icon.getImage();
-        Image imagenEscalada = imagenOriginal.getScaledInstance(300, 300, Image.SCALE_SMOOTH);
-        // Escalarss
-        ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
-        // Colocamos en JLabel
-        JLabel imagen = new JLabel(iconoEscalado);
-        imagen.setBounds(500, 100, 300, 300);
-        add(imagen);
+        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/resources/images/icon.png"));
+        Image scaledImage = originalIcon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon = new ImageIcon(scaledImage);
 
-        // Fecha en esquina
-        JLabel fecha = new JLabel("<current date>");
-        fecha.setForeground(Color.WHITE);
-        fecha.setBounds(780, 480, 120, 30);
-        add(fecha);
+        JLabel logo = new JLabel(resizedIcon);
+        logo.setBounds(510, 110, 300, 300);
+        add(logo);
+        
+        JLabel shadow = new JLabel();
+        shadow.setBounds(510, 110, 300, 300);
+        shadow.setOpaque(true);
+        shadow.setBackground(Color.WHITE);
+        shadow.setBorder(BorderFactory.createEmptyBorder());
+        shadow.setLocation(510 + 8, 110 + 8); // slight offset for 3D effect
+        add(shadow);
 
         // llamar al boton
         registrar.addActionListener(e -> {

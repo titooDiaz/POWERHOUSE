@@ -9,6 +9,7 @@ public class Inventory extends JFrame {
     private JPanel catPanel1;      // para productos
     private JPanel panelServicios; // para servicios
 
+    Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
     public Inventory() {
         setTitle("PowerApp - Inventario");
         setSize(900, 550);
@@ -17,8 +18,8 @@ public class Inventory extends JFrame {
         setLayout(new BorderLayout());
 
         // ─── Estilos ───────────────────────────────────────────────────────────────
-        Color darkGray   = new Color(45, 45, 45);
-        Color midGray    = new Color(120, 120, 120);
+        Color darkGray   = new Color(60, 60, 60);
+        Color midGray    = new Color(100, 100, 100);
         Color lightGray  = new Color(200, 200, 200);
         Color btnGreen   = new Color(0, 200, 100);
         Color btnYellow  = new Color(255, 211, 77);
@@ -32,14 +33,16 @@ public class Inventory extends JFrame {
         north.setBackground(darkGray);
         north.setPreferredSize(new Dimension(900, 60));
 
-        JLabel volver = new JLabel("<  volver");
+        // Boton volver
+        JButton volver = new RoundedButton("< volver", 15);
+        volver.setBounds(10, 10, 100, 30);
+        volver.setBackground(Color.DARK_GRAY);
         volver.setForeground(Color.WHITE);
-        volver.setFont(new Font("SansSerif", Font.BOLD, 16));
-        volver.setBorder(new EmptyBorder(0, 10, 0, 0));
-        north.add(volver, BorderLayout.WEST);
+        volver.setBorderPainted(false);
+        add(volver);
 
         JLabel titulo = new JLabel("INVENTARIO", SwingConstants.CENTER);
-        titulo.setForeground(btnYellow);
+        titulo.setForeground(Color.WHITE);
         titulo.setFont(headerFont);
         north.add(titulo, BorderLayout.CENTER);
 
@@ -56,7 +59,7 @@ public class Inventory extends JFrame {
         c.insets  = new Insets(5, 5, 5, 5);
 
         // —— Panel Productos ————————————————————————————————————————————
-        JPanel panelProductos = new JPanel();
+        RoundedPanel panelProductos = new RoundedPanel(30);
         panelProductos.setLayout(new BoxLayout(panelProductos, BoxLayout.Y_AXIS));
         panelProductos.setBackground(midGray);
         panelProductos.setBorder(new EmptyBorder(15, 15, 15, 15));
@@ -74,7 +77,7 @@ public class Inventory extends JFrame {
         centerWrapper.add(panelProductos, c);
 
         // —— Panel Servicios ————————————————————————————————————————————
-        panelServicios = new JPanel();
+        panelServicios = new RoundedPanel(30);
         panelServicios.setLayout(new BoxLayout(panelServicios, BoxLayout.Y_AXIS));
         panelServicios.setBackground(midGray);
         panelServicios.setBorder(new EmptyBorder(15, 15, 15, 15));
@@ -86,8 +89,7 @@ public class Inventory extends JFrame {
         panelServicios.add(lblServ);
         panelServicios.add(Box.createVerticalStrut(10));
 
-        // ejemplos iniciales (puedes borrarlos si quieres empezar vacío)
-        String[] servicios = {"Servicio 1", "Servicio 2", "Servicio 3", "Servicio 4"};
+        String[] servicios = {};
         for (String s : servicios) {
             panelServicios.add(createFilaServicio(s, "detalles", labelFont, buttonFont, lightGray, btnRed, 15));
             panelServicios.add(Box.createVerticalStrut(8));
@@ -171,7 +173,7 @@ public class Inventory extends JFrame {
                                         Color bgRow, Color btnColor) {
         JPanel catPanel = new JPanel();
         catPanel.setLayout(new BoxLayout(catPanel, BoxLayout.Y_AXIS));
-        catPanel.setBackground(new Color(120, 120, 120));  // midGray
+        catPanel.setBackground(new Color(100, 100, 100));  // midGray
 
         JLabel lbl = new JLabel(tituloCat);
         lbl.setFont(labelFont);
@@ -184,13 +186,14 @@ public class Inventory extends JFrame {
     }
 
     // fila producto
-    private JPanel createFilaProducto(String nombre, String cantidad,
+    private RoundedPanel createFilaProducto(String nombre, String cantidad,
                                       Font labelFont, Font btnFont,
                                       Color bgRow, Color btnColor) {
-        JPanel row = new JPanel(new BorderLayout(10, 0));
+        RoundedPanel row = new RoundedPanel(15);
         row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
         row.setBackground(bgRow);
         row.setBorder(new EmptyBorder(5, 10, 5, 10));
+        row.setLayout(new BorderLayout(10, 0));
 
         JLabel lblNombre = new JLabel(nombre);
         lblNombre.setFont(labelFont);
@@ -211,13 +214,14 @@ public class Inventory extends JFrame {
     }
 
     // fila servicio
-    private JPanel createFilaServicio(String nombreServ, String textoBtn,
+    private RoundedPanel createFilaServicio(String nombreServ, String textoBtn,
                                       Font labelFont, Font btnFont,
                                       Color bgRow, Color btnColor, int radius) {
-        JPanel row = new JPanel(new BorderLayout(10, 0));
+        RoundedPanel row = new RoundedPanel(15);
         row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 35));
         row.setBackground(bgRow);
         row.setBorder(new EmptyBorder(5, 10, 5, 10));
+        row.setLayout(new BorderLayout(10, 0));
 
         JLabel nombre = new JLabel(nombreServ);
         nombre.setFont(labelFont);

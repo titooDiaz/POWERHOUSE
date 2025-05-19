@@ -1,13 +1,13 @@
 package shop.swing;
 
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+
 import javax.swing.*;
 
 public class login extends JFrame {
 
-    /**
-     * 
-     */
     public login() {
         setTitle("PowerApp");
         setSize(900, 550);
@@ -40,19 +40,69 @@ public class login extends JFrame {
         loginLabel.setBounds(60, 20, 200, 30);
         panelLogin.add(loginLabel);
 
-        // Username and password fields
-        JTextField usuario = crearInput("Usuario", 70);
-        JPasswordField contraseña = crearPasswordField(120);
-        panelLogin.add(usuario);
-        panelLogin.add(contraseña);
+        //Logica de introducir datos
+        String[] placeholders = {
+            "Ingrese usuario",
+            "Ingrese contraseña"
+
+        };
+        
+        JTextField[] campos = new JTextField[placeholders.length];
+        
+        for (int i = 0; i < placeholders.length; i++) {
+            JTextField campo;
+            String placeholder = placeholders[i];
+        
+            if (placeholder.toLowerCase().contains("contraseña")) {
+                campo = new JPasswordField();
+            } else {
+                campo = new JTextField(); 
+            }
+        
+            campo.setBounds(30, 70 + i * 50, 240, 35);
+            campo.setFont(new Font("Arial", Font.PLAIN, 13));
+            campo.setForeground(Color.GRAY);
+            campo.setBackground(Color.WHITE);
+            campo.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(220, 220, 220), 2),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)
+            ));
+        
+            campo.setText(placeholder);
+
+            // Simula el placeholder
+            JTextField finalCampo = campo; // necesario para usar en clase interna
+            campo.addFocusListener(new FocusAdapter() {
+                public void focusGained(FocusEvent e) {
+                    if (finalCampo.getText().equals(placeholder)) {
+                        finalCampo.setText("");
+                        finalCampo.setForeground(Color.BLACK);
+                    }
+                }
+        
+                public void focusLost(FocusEvent e) {
+                    if (finalCampo.getText().isEmpty()) {
+                        finalCampo.setText(placeholder);
+                        finalCampo.setForeground(Color.GRAY);
+                    }
+                }
+            });
+        
+            panelLogin.add(campo);
+            campos[i] = campo;
+        }
 
         // "Ingresar" button (green)
-        RoundedButton ingresar = crearBoton("Ingresar", new Color(0, 204, 102), 15);
+        RoundedButton ingresar = new RoundedButton("Ingresar", 15);
         ingresar.setBounds(30, 180, 240, 35);
+        ingresar.setBackground(new Color(0, 200, 100)); // verde
+        ingresar.setForeground(Color.WHITE);
         panelLogin.add(ingresar);
 
         // "Recuperar contraseña" button (red)
-        RoundedButton recuperar = crearBoton("recuperar contraseña", new Color(255, 102, 102),15);
+        RoundedButton recuperar = new RoundedButton("recuperar contraseña", 15);
+        recuperar.setBackground(new Color(255, 102, 102)); // verde
+        recuperar.setForeground(Color.WHITE);
         recuperar.setBounds(30, 230, 240, 35);
         panelLogin.add(recuperar);
 
@@ -81,46 +131,6 @@ public class login extends JFrame {
         add(fecha);
 
         setVisible(true);
-    }
-
-    // Creates a styled JTextField with 3D effect
-    private JTextField crearInput(String placeholder, int y) {
-        JTextField input = new JTextField(placeholder);
-        input.setBounds(30, y, 240, 35);
-        input.setBackground(Color.WHITE);
-        input.setFont(new Font("Arial", Font.PLAIN, 14));
-        input.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createMatteBorder(2, 2, 4, 4, Color.LIGHT_GRAY), // shadow effect
-                BorderFactory.createEmptyBorder(5, 10, 5, 10)
-        ));
-        return input;
-    }
-
-    // Creates a styled password field
-    private JPasswordField crearPasswordField(int y) {
-        JPasswordField password = new JPasswordField();
-        password.setBounds(30, y, 240, 35);
-        password.setFont(new Font("Arial", Font.PLAIN, 14));
-        password.setEchoChar('*');
-        password.setBackground(Color.WHITE);
-        password.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createMatteBorder(2, 2, 4, 4, Color.LIGHT_GRAY),
-                BorderFactory.createEmptyBorder(5, 10, 5, 10)
-        ));
-        return password;
-    }
-
-    // Creates a styled JButton
-    private RoundedButton crearBoton(String texto, Color color, int radius) {
-        RoundedButton boton = new RoundedButton(texto, radius);
-        boton.setForeground(Color.WHITE);
-        boton.setBackground(color);
-        boton.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createMatteBorder(2, 2, 4, 4, color.darker()), // bottom-right shadow
-                BorderFactory.createEmptyBorder(5, 10, 5, 10)
-        ));
-       
-        return boton;
     }
 
     public static void main(String[] args) {

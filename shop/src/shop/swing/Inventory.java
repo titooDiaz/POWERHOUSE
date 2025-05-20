@@ -3,6 +3,8 @@ package shop.swing;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Inventory extends JFrame {
 
@@ -40,6 +42,13 @@ public class Inventory extends JFrame {
         volver.setForeground(Color.WHITE);
         volver.setBorderPainted(false);
         add(volver);
+
+        // Fecha
+        JLabel txtFecha = new JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        txtFecha.setBounds(700, 20, 250, 30);
+        txtFecha.setFont(new Font("Arial", Font.BOLD, 20));
+        txtFecha.setForeground(Color.WHITE);
+        add(txtFecha);
 
         JLabel titulo = new JLabel("INVENTARIO", SwingConstants.CENTER);
         titulo.setForeground(Color.WHITE);

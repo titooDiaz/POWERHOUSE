@@ -3,6 +3,8 @@ package shop.swing;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.swing.*;
 
@@ -39,6 +41,13 @@ public class login extends JFrame {
         loginLabel.setForeground(Color.WHITE);
         loginLabel.setBounds(60, 20, 200, 30);
         panelLogin.add(loginLabel);
+
+        // Fecha
+        JLabel txtFecha = new JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        txtFecha.setBounds(700, 450, 250, 30);
+        txtFecha.setFont(new Font("Arial", Font.BOLD, 20));
+        txtFecha.setForeground(Color.WHITE);
+        add(txtFecha);
 
         //Logica de introducir datos
         String[] placeholders = {

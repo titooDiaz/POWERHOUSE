@@ -29,7 +29,14 @@ public class registerProduct extends JFrame {
         volver.setBackground(Color.DARK_GRAY);
         volver.setForeground(Color.WHITE);
         volver.setBorderPainted(false);
-        add(volver);
+        barraSuperior.add(volver);
+        // Fecha
+        JLabel txtFecha = new JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        txtFecha.setBounds(750, 10, 250, 30);
+        txtFecha.setFont(new Font("Arial", Font.BOLD, 20));
+        txtFecha.setForeground(Color.WHITE);
+        barraSuperior.add(txtFecha);
+        //titulo
         JLabel titulo = new JLabel("REGISTRAR PRODUCTO/SERVICIO", SwingConstants.CENTER);
         titulo.setForeground(Color.WHITE);
         titulo.setFont(headerFont);
@@ -66,12 +73,6 @@ public class registerProduct extends JFrame {
         btnConfirmar.setPreferredSize(new Dimension(200, 50));
         btnConfirmar.setFocusPainted(false);
         barraInferior.add(btnConfirmar, BorderLayout.CENTER);
-        
-        String hoy = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-        JLabel lblFecha = new JLabel(hoy, SwingConstants.RIGHT);
-        lblFecha.setForeground(Color.LIGHT_GRAY);
-        lblFecha.setFont(labelFont);
-        barraInferior.add(lblFecha, BorderLayout.EAST);
         add(barraInferior, BorderLayout.SOUTH);
     }
 

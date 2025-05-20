@@ -3,6 +3,9 @@ package shop.swing;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import javax.swing.*;
 import shop.CSVwriter.WriterUsers;
 import shop.models.User;
@@ -31,6 +34,13 @@ public class AddUser extends JFrame {
         volver.setForeground(Color.WHITE);
         volver.setBorderPainted(false);
         add(volver);
+
+        // Fecha
+        JLabel txtFecha = new JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        txtFecha.setBounds(700, 450, 250, 30);
+        txtFecha.setFont(new Font("Arial", Font.BOLD, 20));
+        txtFecha.setForeground(Color.WHITE);
+        add(txtFecha);
 
         // Panel de formulario
         JPanel panel = new RoundedPanel(30);
@@ -107,6 +117,7 @@ public class AddUser extends JFrame {
             registrar.setFocusPainted(false);
             registrar.setBorder(BorderFactory.createEmptyBorder());
             panel.add(registrar);
+
 
         ImageIcon originalIcon = new ImageIcon(getClass().getResource("/resources/images/icon.png"));
         Image scaledImage = originalIcon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);

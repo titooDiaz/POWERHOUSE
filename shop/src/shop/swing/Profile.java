@@ -2,6 +2,8 @@ package shop.swing;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Profile extends JFrame {
     public Profile() {
@@ -10,13 +12,8 @@ public class Profile extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(null);
+        getContentPane().setBackground(new Color(60, 60, 60));
 
-        // Fondo general
-        JPanel fondo = new JPanel();
-        fondo.setBackground(new Color(60, 60, 60));  
-        fondo.setBounds(0, 0, 900, 550);
-        fondo.setLayout(null);
-        add(fondo);
 
         // Botón volver
         JButton volver = new RoundedButton("< volver", 15);
@@ -24,21 +21,28 @@ public class Profile extends JFrame {
         volver.setBackground(Color.DARK_GRAY);
         volver.setForeground(Color.WHITE);
         volver.setBorderPainted(false);
-        fondo.add(volver);
+        add(volver);
 
         // Título
         JLabel titulo = new JLabel("Mi Perfil");
         titulo.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 36));
         titulo.setForeground(Color.WHITE);
         titulo.setBounds(360, 20, 300, 40);
-        fondo.add(titulo);
+        add(titulo);
 
         // Panel lateral izquierdo (más alto)
         RoundedPanel panelInfo = new RoundedPanel(30);
         panelInfo.setBackground(new Color(102, 102, 102));
         panelInfo.setBounds(60, 80, 420, 420);  // altura aumentada de 370 a 420
         panelInfo.setLayout(null);
-        fondo.add(panelInfo);
+        add(panelInfo);
+
+        //fecha
+        JLabel txtFecha = new JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        txtFecha.setBounds(720, 480, 250, 30);
+        txtFecha.setFont(new Font("Arial", Font.BOLD, 20));
+        txtFecha.setForeground(Color.WHITE);
+        add(txtFecha);
 
         // Datos del perfil
         String[] campos = {"Nombre", "nombre de usuario", "Correo electrónico", "Tipo de usuario", "Estado"};
@@ -53,7 +57,7 @@ public class Profile extends JFrame {
             panelInfo.add(etiqueta);
 
             // Valor del campo (JLabel blanco)
-            JLabel valor = new JLabel("Aquí va el dato...");
+            JLabel valor = new JLabel("  Aquí va el dato...");
             valor.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
             valor.setOpaque(true);
             valor.setBackground(Color.WHITE);
@@ -67,7 +71,7 @@ public class Profile extends JFrame {
         JLabel avatar = new JLabel();
         avatar.setBounds(550, 110, 300, 300);
         avatar.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
-        fondo.add(avatar);
+        add(avatar);
     }
 
     public static void main(String[] args) {

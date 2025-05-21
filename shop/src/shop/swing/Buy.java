@@ -48,30 +48,40 @@ public class Buy extends JFrame {
             panelIzquierdo.add(fecha);
         
             //Panel central
-        JPanel panelCentral = new JPanel();
+        JPanel panelCentral = new JPanel();      
             panelCentral.setBackground(Color.GRAY);
             panelCentral.setPreferredSize(new Dimension(500, 0));
             panelCentral.setLayout(new BoxLayout(panelCentral, BoxLayout.Y_AXIS));
             panelCentral.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-            panelCentral.add(Box.createVerticalStrut(20));  
-            panelCentral.add(createFieldPanel("Tipo de registro:", new JComboBox<>(), labelFont));
-            panelCentral.add(Box.createVerticalStrut(20));
-            panelCentral.add(createFieldPanel("Nombre:", new JTextField(), labelFont));
-            panelCentral.add(Box.createVerticalStrut(20));
-            panelCentral.add(createFieldPanel("Código:", new JTextField(), labelFont));
-            panelCentral.add(Box.createVerticalStrut(30));
-            panelCentral.add(createFieldPanel("Categoría:", new JTextField(), labelFont));
-            panelCentral.add(Box.createVerticalStrut(30));
-            panelCentral.add(createFieldPanel("cantidad:", new JTextField(), labelFont));
+             
+            JPanel columnasPanel = new JPanel(new GridLayout(4, 2, 100, 30)); 
+            columnasPanel.setBackground(Color.GRAY);
+            columnasPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+            //COLUMNAS DE A DOS CADA UNO
+            columnasPanel.add(createFieldPanel("Tipo:", new JComboBox<>(), labelFont)); 
+            columnasPanel.add(createFieldPanel("Nombre del Producto:", new JTextField(), labelFont));
 
+            columnasPanel.add(createFieldPanel("Producto:", new JComboBox<>(), labelFont));
+            columnasPanel.add(createFieldPanel("Código:", new JTextField(), labelFont));
 
+            columnasPanel.add(createFieldPanel("Cantidad:", new JTextField(), labelFont));
+            columnasPanel.add(createFieldPanel("Fecha vencimiento:", new JTextField(), labelFont));
+
+            columnasPanel.add(createFieldPanel("Método de pago:", new JTextField(), labelFont));
+            columnasPanel.add(createFieldPanel("Precio:", new JTextField(), labelFont));
+            
+            panelCentral.add(columnasPanel);
+          
             RoundedButton agregarBtn = new RoundedButton("Agregar", 15);
-                panelCentral.add(Box.createVerticalStrut(30));
+                panelCentral.add(Box.createVerticalStrut(10));
                 agregarBtn.setBackground(new Color(255, 211, 77));
-                agregarBtn.setBounds(180, 310, 140, 40);
+                agregarBtn.setBounds(180, 380, 140, 40);
                 panelCentral.add(agregarBtn);
-                panelCentral.add(Box.createVerticalStrut(30));
+                panelCentral.add(Box.createVerticalStrut(10));
+                agregarBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+                
+                
         // Panel derecho: resumen de productos
         RoundedPanel panelDerecho = new RoundedPanel(15,new BorderLayout());
             panelDerecho.setPreferredSize(new Dimension(200, 0));

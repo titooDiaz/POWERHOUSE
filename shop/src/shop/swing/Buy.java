@@ -70,6 +70,7 @@ public class Buy extends JFrame {
             columnasPanel.add(createFieldPanel("Método de pago:", new JTextField(), labelFont));
             columnasPanel.add(createFieldPanel("Precio:", new JTextField(), labelFont));
             
+            
             panelCentral.add(columnasPanel);
           
             RoundedButton agregarBtn = new RoundedButton("Agregar", 15);

@@ -82,6 +82,7 @@ public class Login extends JFrame {
             // Simula el placeholder
             JTextField finalCampo = campo; // necesario para usar en clase interna
             campo.addFocusListener(new FocusAdapter() {
+                @Override
                 public void focusGained(FocusEvent e) {
                     if (finalCampo.getText().equals(placeholder)) {
                         finalCampo.setText("");
@@ -89,6 +90,7 @@ public class Login extends JFrame {
                     }
                 }
         
+                @Override
                 public void focusLost(FocusEvent e) {
                     if (finalCampo.getText().isEmpty()) {
                         finalCampo.setText(placeholder);

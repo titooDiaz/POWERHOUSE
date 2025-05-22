@@ -15,6 +15,15 @@ public class Sell extends JFrame {
         setLayout(new BorderLayout());
         getContentPane().setBackground(new Color(60,60,60));
 
+
+
+        // Colores personalizados
+        Color darkGray = new Color(45, 45, 45);
+        Color lightGray = new Color(230, 230, 230);
+        Color accent = new Color(0, 200, 150);
+        Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
+        Font font = new Font("SansSerif", Font.PLAIN, 14);
+
         // Boton volver
         JButton volver = new RoundedButton("< volver", 15);
         volver.setBounds(50, 30, 100, 30);
@@ -27,13 +36,6 @@ public class Sell extends JFrame {
             tienda.setVisible(true);
             this.dispose();
         });
-
-        // Colores personalizados
-        Color darkGray = new Color(45, 45, 45);
-        Color lightGray = new Color(230, 230, 230);
-        Color accent = new Color(0, 200, 150);
-        Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
-        Font font = new Font("SansSerif", Font.PLAIN, 14);
 
         // Panel izquierdo: información del usuario
         JPanel panelIzquierdo = new JPanel();
@@ -56,7 +58,7 @@ public class Sell extends JFrame {
             label.setFont(font);
         }
 
-            panelIzquierdo.add(Box.createVerticalStrut(20));
+            panelIzquierdo.add(Box.createVerticalStrut(50));
             panelIzquierdo.add(foto);
             panelIzquierdo.add(Box.createVerticalStrut(10));
             panelIzquierdo.add(usuario);

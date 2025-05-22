@@ -53,7 +53,7 @@ public class Buy extends JFrame {
             label.setFont(font);
         }
 
-            panelIzquierdo.add(Box.createVerticalStrut(20));
+            panelIzquierdo.add(Box.createVerticalStrut(50));
             panelIzquierdo.add(foto);
             panelIzquierdo.add(Box.createVerticalStrut(10));
             panelIzquierdo.add(usuario);

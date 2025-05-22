@@ -1,7 +1,7 @@
 package shop.swing;
 
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 
 public class Buy extends JFrame {
@@ -13,6 +13,19 @@ public class Buy extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         getContentPane().setBackground(new Color(60,60,60));
+
+        // Boton volver
+        JButton volver = new RoundedButton("< volver", 15);
+        volver.setBounds(50, 30, 100, 30);
+        volver.setBackground(Color.DARK_GRAY);
+        volver.setForeground(Color.WHITE);
+        volver.setBorderPainted(false);
+        add(volver);
+        volver.addActionListener(e -> {
+            TiendaVirtualGUI tienda = new TiendaVirtualGUI();
+            tienda.setVisible(true);
+            this.dispose();
+        });
 
         // Colores personalizados
         Color darkGray = new Color(45, 45, 45);

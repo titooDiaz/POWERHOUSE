@@ -1,9 +1,9 @@
 package shop.swing;
 
-import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import javax.swing.*;
 
 public class Profile extends JFrame {
     public Profile() {
@@ -22,6 +22,11 @@ public class Profile extends JFrame {
         volver.setForeground(Color.WHITE);
         volver.setBorderPainted(false);
         add(volver);
+        volver.addActionListener(e -> {
+            TiendaVirtualGUI tienda = new TiendaVirtualGUI();
+            tienda.setVisible(true);
+            this.dispose();
+        });
 
         // Título
         JLabel titulo = new JLabel("Mi Perfil");

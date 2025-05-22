@@ -1,9 +1,9 @@
 package shop.swing;
 
-import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import javax.swing.*;
 
 public class registerProduct extends JFrame {
 
@@ -30,6 +30,12 @@ public class registerProduct extends JFrame {
         volver.setForeground(Color.WHITE);
         volver.setBorderPainted(false);
         barraSuperior.add(volver);
+        volver.addActionListener(e -> {
+            TiendaVirtualGUI tienda = new TiendaVirtualGUI();
+            tienda.setVisible(true);
+            this.dispose();
+        });
+        
         // Fecha
         JLabel txtFecha = new JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         txtFecha.setBounds(750, 10, 250, 30);

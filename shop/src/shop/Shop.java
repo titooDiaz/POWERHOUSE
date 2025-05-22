@@ -20,8 +20,6 @@ public class Shop {
                     register.setVisible(true);
                 }
             }
-            // registro o login
-            
         });
     }
 }

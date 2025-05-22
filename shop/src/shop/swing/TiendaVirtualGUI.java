@@ -1,9 +1,9 @@
 package shop.swing;
 
-import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import javax.swing.*;
 
 public class TiendaVirtualGUI extends JFrame {
 
@@ -36,6 +36,11 @@ public class TiendaVirtualGUI extends JFrame {
         btnVerUsuarios.setForeground(Color.WHITE);
         btnVerUsuarios.setBorderPainted(false);
         add(btnVerUsuarios);
+        btnVerUsuarios.addActionListener(e -> {
+            Profile profile = new Profile();
+            profile.setVisible(true);
+            this.dispose();
+        });
 
         // Título
         JLabel titulo = new JLabel("BIENVENIDO A TU TIENDA VIRTUAL");
@@ -45,10 +50,10 @@ public class TiendaVirtualGUI extends JFrame {
         add(titulo);
 
         // Paneles de funciones
-        addPanelBoton("VENDER", "/resources/images/metodo-de-pago.png", 150, 120, new Color(240, 80, 80));
-        addPanelBoton("COMPRAR", "/resources/images/comercio.png", 470, 120, new Color(0, 170, 200));
-        addPanelBoton("GENERAR REPORTE", "/resources/images/reporte-de-negocios.png", 150, 300, new Color(255, 165, 0));
-        addPanelBoton("VER INVENTARIO", "/resources/images/inventario.png", 470, 300, new Color(220, 200, 50));
+        addPanelBoton("VENDER", "/resources/images/metodo-de-pago.png", 150, 120, new Color(240, 80, 80), new Sell());
+        addPanelBoton("COMPRAR", "/resources/images/comercio.png", 470, 120, new Color(0, 170, 200), new Buy());
+        addPanelBoton("GENERAR REPORTE", "/resources/images/reporte-de-negocios.png", 150, 300, new Color(255, 165, 0), null);
+        addPanelBoton("VER INVENTARIO", "/resources/images/inventario.png", 470, 300, new Color(220, 200, 50), new Inventory());
 
         // Fecha
         JLabel txtFecha = new JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
@@ -58,7 +63,7 @@ public class TiendaVirtualGUI extends JFrame {
         add(txtFecha);
     }
 
-    private void addPanelBoton(String texto, String icono, int x, int y, Color colorBoton) {
+    private void addPanelBoton(String texto, String icono, int x, int y, Color colorBoton, Object move) {
         JPanel panel = new JPanel(null);
         panel.setBounds(x, y, 275, 140);
         panel.setBackground(new Color(100, 100, 100));
@@ -79,7 +84,14 @@ public class TiendaVirtualGUI extends JFrame {
         boton.setBackground(colorBoton);
         boton.setForeground(Color.WHITE);
         panel.add(boton);
-
+        if (move != null){
+            if (move instanceof JFrame) {
+                boton.addActionListener(e -> {
+                    ((JFrame) move).setVisible(true);
+                    this.dispose();
+                });
+            }
+        }
         add(panel);
     }
 

@@ -5,12 +5,11 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
 import javax.swing.*;
 
-public class login extends JFrame {
+public class Login extends JFrame {
 
-    public login() {
+    public Login() {
         setTitle("PowerApp");
         setSize(900, 550);
         setLayout(null);
@@ -143,6 +142,6 @@ public class login extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(login::new);
+        SwingUtilities.invokeLater(Login::new);
     }
 }

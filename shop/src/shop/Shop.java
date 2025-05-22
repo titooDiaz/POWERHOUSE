@@ -1,17 +1,27 @@
 package shop;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import shop.CSVwriter.WriterUsers;
-import shop.models.User;
+import javax.swing.JOptionPane;
+import shop.CSVwriter.PkManager;
 import shop.swing.*;
 
 public class Shop {
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(() -> {
-            AddUser login = new AddUser();
-            login.setVisible(true);
+            
+            int currentPk = PkManager.getLastPk(0);
+            if (currentPk == -1) {
+                JOptionPane.showMessageDialog(null, "Error, no se obtuvo el pk", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                if (currentPk != 1){
+                    Login login = new Login();
+                    login.setVisible(true);
+                }else{
+                    AddUser register = new AddUser();
+                    register.setVisible(true);
+                }
+            }
+            // registro o login
+            
         });
     }
 }
-

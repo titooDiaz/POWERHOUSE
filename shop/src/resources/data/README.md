@@ -68,3 +68,15 @@ El siguiente ejemplo muestra cómo obtener el identificador actual para un nuevo
       // Por ejemplo: escribir en el CSV de usuarios
   }
 ```
+
+El siguiente ejemplo muestra como obtener el ultimo pk de la tabla deseada.
+
+```java
+  int currentPk = PkManager.getLastPk(0);
+  if (currentPk == -1) {
+      JOptionPane.showMessageDialog(null, "Error, no se obtuvo el pk", "Error", JOptionPane.ERROR_MESSAGE);
+  } else {
+      // Continuar con el proceso utilizando currentPk
+      // Por ejemplo: obtener el ultimo pk de usuarios
+  }
+```

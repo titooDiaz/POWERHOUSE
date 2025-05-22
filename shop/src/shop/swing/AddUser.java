@@ -5,7 +5,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
 import javax.swing.*;
 import shop.CSVwriter.WriterUsers;
 import shop.models.User;
@@ -195,7 +194,7 @@ public class AddUser extends JFrame {
                 WriterUsers.appendUserToCSV(user1);
 
                 // cuando el susuario se registre cambiaremos de ventana!
-                login main = new login();
+                Login main = new Login();
                 main.setVisible(true);
                 // Cierra esta ventana
                 this.dispose();

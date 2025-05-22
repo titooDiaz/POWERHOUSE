@@ -9,7 +9,7 @@ import shop.models.User;
 public class WriterUsers {
     public static void appendUserToCSV(User user) {
         String basePath = System.getProperty("user.dir");
-        String filePath = basePath + "/POWERHOUSE/shop/src/resources/data/Users/user.csv";
+        String filePath = basePath + "/shop/src/resources/data/Users/user.csv";
 
         boolean fileExists = new java.io.File(filePath).exists();
 

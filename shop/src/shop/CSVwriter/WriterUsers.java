@@ -1,5 +1,7 @@
 package shop.CSVwriter;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -7,9 +9,10 @@ import javax.swing.JOptionPane;
 import shop.models.User;
 
 public class WriterUsers {
+    static String basePath = System.getProperty("user.dir");
+    static String filePath = basePath + "/shop/src/resources/data/Users/user.csv";
+
     public static void appendUserToCSV(User user) {
-        String basePath = System.getProperty("user.dir");
-        String filePath = basePath + "/shop/src/resources/data/Users/user.csv";
 
         boolean fileExists = new java.io.File(filePath).exists();
 
@@ -40,6 +43,45 @@ public class WriterUsers {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    // logica de inicio de sesion
+    static public Boolean AproveUser(String username, String pass){
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            boolean isFirstLine = true;
+
+            while ((line = br.readLine()) != null) {
+                // Saltar la cabecera
+                if (isFirstLine) {
+                    isFirstLine = false;
+                    continue;
+                }
+
+                String[] fields = line.split(",", -1);
+                if (fields.length > 2) {
+                    String existingUsername = fields[2].trim();
+                    if (existingUsername.equals(username)) {
+                        // LA CONTRASE;A ES CORRECTA?
+                        String password = fields[3].trim();
+                        if (password.equals(pass)){
+                            return true;
+                        }else{
+                            return false;
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    static public Boolean login(String username, String pass) {
+        if (AproveUser(username, pass)){
+            return true;
+        }
+        return false;
     }
 
     private static String generateRandomKey() {

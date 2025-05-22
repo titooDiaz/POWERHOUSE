@@ -6,6 +6,7 @@ import java.awt.event.FocusEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.*;
+import shop.CSVwriter.WriterUsers;
 
 public class Login extends JFrame {
 
@@ -106,6 +107,18 @@ public class Login extends JFrame {
         ingresar.setBackground(new Color(0, 200, 100)); // verde
         ingresar.setForeground(Color.WHITE);
         panelLogin.add(ingresar);
+        // al dar clic...
+        ingresar.addActionListener(e -> {
+            Boolean valid = WriterUsers.login(campos[0].getText(),campos[1].getText());
+            if (valid) {
+                TiendaVirtualGUI home = new TiendaVirtualGUI();
+                home.setVisible(true);
+                this.dispose();
+            }else{
+                JOptionPane.showMessageDialog(null, "La contraseña o el nombre de usuario no es valido.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
 
         // "Recuperar contraseña" button (red)
         RoundedButton recuperar = new RoundedButton("recuperar contraseña", 15);

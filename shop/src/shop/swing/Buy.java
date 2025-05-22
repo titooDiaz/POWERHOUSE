@@ -26,6 +26,7 @@ public class Buy extends JFrame {
             panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
             panelIzquierdo.setPreferredSize(new Dimension(200, 0));
             panelIzquierdo.setBackground(new Color(100,100,100));
+            panelIzquierdo.setBorder(BorderFactory.createLineBorder(new Color(60,60,60) , 10));
 
             JLabel foto = new JLabel(new ImageIcon("usuario.png"));
             JLabel usuario = new JLabel("<Usuario>");
@@ -48,15 +49,16 @@ public class Buy extends JFrame {
             panelIzquierdo.add(fecha);
         
             //Panel central
-        JPanel panelCentral = new JPanel();      
+        RoundedPanel panelCentral = new RoundedPanel(100);      
             panelCentral.setBackground(Color.GRAY);
             panelCentral.setPreferredSize(new Dimension(500, 0));
             panelCentral.setLayout(new BoxLayout(panelCentral, BoxLayout.Y_AXIS));
             panelCentral.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+            panelCentral.setBorder(BorderFactory.createLineBorder(new Color(60,60,60) , 10));
              
             JPanel columnasPanel = new JPanel(new GridLayout(4, 2, 100, 30)); 
             columnasPanel.setBackground(Color.GRAY);
-            columnasPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+            columnasPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 20));
             //COLUMNAS DE A DOS CADA UNO
             columnasPanel.add(createFieldPanel("Tipo:", new JComboBox<>(), labelFont)); 
             columnasPanel.add(createFieldPanel("Nombre del Producto:", new JTextField(), labelFont));
@@ -88,6 +90,7 @@ public class Buy extends JFrame {
             panelDerecho.setPreferredSize(new Dimension(200, 0));
             panelDerecho.setBackground(lightGray);
             panelDerecho.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
+            panelDerecho.setBorder(BorderFactory.createLineBorder(new Color(60,60,60) , 10));
 
         JLabel resumenLabel = new JLabel("Resumen");
             resumenLabel.setFont(new Font("SansSerif", Font.BOLD, 16));

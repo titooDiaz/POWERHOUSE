@@ -1,6 +1,8 @@
 package shop.swing;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.*;
 
 
@@ -22,16 +24,19 @@ public class Sell extends JFrame {
         Font font = new Font("SansSerif", Font.PLAIN, 14);
 
         // Panel izquierdo: información del usuario
-        RoundedPanel panelIzquierdo = new RoundedPanel(30);
+        JPanel panelIzquierdo = new JPanel();
             panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
             panelIzquierdo.setPreferredSize(new Dimension(200, 0));
             panelIzquierdo.setBackground(new Color(100,100,100));
+            panelIzquierdo.setBorder(new EmptyBorder(20, 10, 20, 10));
+            panelIzquierdo.setBorder(BorderFactory.createLineBorder(new Color(60,60,60) , 10));
 
             JLabel foto = new JLabel(new ImageIcon("usuario.png"));
             JLabel usuario = new JLabel("<Usuario>");
             JLabel username = new JLabel("<username>");
             JLabel email = new JLabel("<email>");
             JLabel fecha = new JLabel("<current date>");
+
 
         for (JLabel label : new JLabel[]{usuario, username, email, fecha}) {
             label.setForeground(Color.WHITE);
@@ -47,35 +52,40 @@ public class Sell extends JFrame {
             panelIzquierdo.add(email);
             panelIzquierdo.add(fecha);
 
-        JPanel panelCentral = new JPanel();
+           //Panel central
+        RoundedPanel panelCentral = new RoundedPanel(100);      
             panelCentral.setBackground(Color.GRAY);
             panelCentral.setPreferredSize(new Dimension(500, 0));
             panelCentral.setLayout(new BoxLayout(panelCentral, BoxLayout.Y_AXIS));
             panelCentral.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-            panelCentral.add(Box.createVerticalStrut(20));  
-            panelCentral.add(createFieldPanel("Tipo de registro:", new JComboBox<>(), labelFont));
-            panelCentral.add(Box.createVerticalStrut(20));
-            panelCentral.add(createFieldPanel("Nombre:", new JTextField(), labelFont));
-            panelCentral.add(Box.createVerticalStrut(20));
-            panelCentral.add(createFieldPanel("Código:", new JTextField(), labelFont));
-            panelCentral.add(Box.createVerticalStrut(30));
-            panelCentral.add(createFieldPanel("Metodo de Pago:", new JTextField(), labelFont));
-            panelCentral.add(Box.createVerticalStrut(30));
-            panelCentral.add(createFieldPanel("cantidad:", new JTextField(), labelFont));
-
-
+            panelCentral.setBorder(BorderFactory.createLineBorder(new Color(60,60,60) , 10));
+             
+            JPanel columnasPanel = new JPanel(new GridLayout(6, 0, 10, 5)); 
+            columnasPanel.setBackground(Color.GRAY);
+            columnasPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            //COLUMNAS DE A DOS CADA UNO
+            columnasPanel.add(createFieldPanel("Tipo:", new JComboBox<>(), labelFont)); 
+            columnasPanel.add(createFieldPanel("Nombre del Producto:", new JTextField(), labelFont));
+            columnasPanel.add(createFieldPanel("Producto:", new JComboBox<>(), labelFont));
+            columnasPanel.add(createFieldPanel("Código:", new JTextField(), labelFont));
+            columnasPanel.add(createFieldPanel("Cantidad:", new JTextField(), labelFont));
+            columnasPanel.add(createFieldPanel("Método de pago:", new JTextField(), labelFont));
+           
+            panelCentral.add(columnasPanel);
+          
             RoundedButton agregarBtn = new RoundedButton("Agregar", 15);
-                panelCentral.add(Box.createVerticalStrut(30));
+                panelCentral.add(Box.createVerticalStrut(10));
                 agregarBtn.setBackground(new Color(255, 211, 77));
-                agregarBtn.setBounds(180, 310, 140, 40);
+                agregarBtn.setBounds(180, 280, 140, 40);
                 panelCentral.add(agregarBtn);
-                panelCentral.add(Box.createVerticalStrut(30));
-
+                panelCentral.add(Box.createVerticalStrut(10));
+                agregarBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         // Panel derecho: resumen de productos
-        RoundedPanel panelDerecho = new RoundedPanel(15,new BorderLayout());
+        JPanel panelDerecho = new JPanel(new BorderLayout());
             panelDerecho.setPreferredSize(new Dimension(200, 0));
             panelDerecho.setBackground(lightGray);
             panelDerecho.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
+            panelDerecho.setBorder(BorderFactory.createLineBorder(new Color(60,60,60) , 10));
 
         JLabel resumenLabel = new JLabel("Resumen");
             resumenLabel.setFont(new Font("SansSerif", Font.BOLD, 16));

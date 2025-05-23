@@ -90,6 +90,8 @@ public class Inventory extends JFrame {
         c.weighty = 1.0;
         centerWrapper.add(panelProductos, c);
 
+        JPanel[] nuevos = new JPanel[5];
+
         // —— Panel Servicios ————————————————————————————————————————————
         panelServicios = new RoundedPanel(30);
         panelServicios.setLayout(new BoxLayout(panelServicios, BoxLayout.Y_AXIS));
@@ -103,11 +105,7 @@ public class Inventory extends JFrame {
         panelServicios.add(lblServ);
         panelServicios.add(Box.createVerticalStrut(10));
 
-        RoundedPanel[] servicios = {};
-        for (RoundedPanel s : servicios) {
-            panelServicios.add(createFilaServicio(labelFont, buttonFont, lightGray, btnRed, 15));
-            panelServicios.add(Box.createVerticalStrut(8));
-        }
+        RoundedPanel[] servicios = new RoundedPanel[5];
 
         c.gridx   = 1;
         c.gridy   = 0;
@@ -138,8 +136,17 @@ public class Inventory extends JFrame {
         btnEditar.setFont(buttonFont);
         btnEditar.setFocusPainted(false);  
         btnEditar.addActionListener(e -> {
-                    
-            editarFilaProduct(servicios);
+            
+            if (nuevos[0] != null) {
+                System.out.println("nuevos[0] = " + nuevos[0]);
+                RoundedButton btn = (RoundedButton) nuevos[0].getComponent(1);
+                btn.setText("editar"); // cambia el texto
+                btn.setBackground(Color.YELLOW); // cambia el color
+            } else {
+                JOptionPane.showMessageDialog(this, "No hay servicios para editar.");
+            }
+
+
         });
         south.add(btnEditar);
 
@@ -179,7 +186,7 @@ public class Inventory extends JFrame {
                 catPanel1.revalidate();
                 catPanel1.repaint();
             } else if (sel == 1) {
-                // Servicio
+                // Servicio;
                 String nombre = JOptionPane.showInputDialog(this, "Nombre del servicio:");
                 if (nombre == null || nombre.trim().isEmpty()) return;
                 JPanel nuevaFila = createFilaServicio( labelFont, buttonFont, lightGray, btnRed, 15);
@@ -187,6 +194,8 @@ public class Inventory extends JFrame {
                 panelServicios.add(Box.createVerticalStrut(8));
                 panelServicios.revalidate();
                 panelServicios.repaint();
+                nuevos[0] = nuevaFila;
+
             }
         });
     }

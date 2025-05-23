@@ -103,9 +103,9 @@ public class Inventory extends JFrame {
         panelServicios.add(lblServ);
         panelServicios.add(Box.createVerticalStrut(10));
 
-        String[] servicios = {};
-        for (String s : servicios) {
-            panelServicios.add(createFilaServicio(s, "detalles", labelFont, buttonFont, lightGray, btnRed, 15));
+        RoundedPanel[] servicios = {};
+        for (RoundedPanel s : servicios) {
+            panelServicios.add(createFilaServicio(labelFont, buttonFont, lightGray, btnRed, 15));
             panelServicios.add(Box.createVerticalStrut(8));
         }
 
@@ -125,14 +125,24 @@ public class Inventory extends JFrame {
         btnRegistrar.setForeground(Color.WHITE);
         btnRegistrar.setFont(buttonFont);
         btnRegistrar.setFocusPainted(false);
+        /*btnRegistrar.addActionListener(e -> {
+                    ((JFrame) new registerProduct() ).setVisible(true);
+                    this.dispose();
+        
+        }); */
         south.add(btnRegistrar);
 
         RoundedButton btnEditar = new RoundedButton("EDITAR", 15);
         btnEditar.setBackground(btnYellow);
         btnEditar.setForeground(Color.WHITE);
         btnEditar.setFont(buttonFont);
-        btnEditar.setFocusPainted(false);
+        btnEditar.setFocusPainted(false);  
+        btnEditar.addActionListener(e -> {
+                    
+            editarFilaProduct(servicios);
+        });
         south.add(btnEditar);
+
 
         RoundedButton btnEliminar = new RoundedButton("ELIMINAR", 15);
         btnEliminar.setBackground(btnRed);
@@ -142,8 +152,8 @@ public class Inventory extends JFrame {
         south.add(btnEliminar);
 
         add(south, BorderLayout.SOUTH);
-
-        // ─── LÓGICA REGISTRAR ─────────────────────────────────────────────────────
+        
+               // ─── LÓGICA REGISTRAR ─────────────────────────────────────────────────────
         btnRegistrar.addActionListener(e -> {
             // Pregunta tipo
             String[] opciones = {"Producto", "Servicio"};
@@ -172,7 +182,7 @@ public class Inventory extends JFrame {
                 // Servicio
                 String nombre = JOptionPane.showInputDialog(this, "Nombre del servicio:");
                 if (nombre == null || nombre.trim().isEmpty()) return;
-                JPanel nuevaFila = createFilaServicio(nombre, "detalles", labelFont, buttonFont, lightGray, btnRed, 15);
+                JPanel nuevaFila = createFilaServicio( labelFont, buttonFont, lightGray, btnRed, 15);
                 panelServicios.add(nuevaFila);
                 panelServicios.add(Box.createVerticalStrut(8));
                 panelServicios.revalidate();
@@ -217,6 +227,7 @@ public class Inventory extends JFrame {
         lblCant.setFont(labelFont);
         row.add(lblCant, BorderLayout.CENTER);
 
+    
         RoundedButton btnDet = new RoundedButton("detalles", 15);
         btnDet.setFont(btnFont);
         btnDet.setBackground(btnColor);
@@ -228,7 +239,7 @@ public class Inventory extends JFrame {
     }
 
     // fila servicio
-    private RoundedPanel createFilaServicio(String nombreServ, String textoBtn,
+    private RoundedPanel createFilaServicio(
                                       Font labelFont, Font btnFont,
                                       Color bgRow, Color btnColor, int radius) {
         RoundedPanel row = new RoundedPanel(15);
@@ -237,11 +248,11 @@ public class Inventory extends JFrame {
         row.setBorder(new EmptyBorder(5, 10, 5, 10));
         row.setLayout(new BorderLayout(10, 0));
 
-        JLabel nombre = new JLabel(nombreServ);
+        JLabel nombre = new JLabel("Servicio");
         nombre.setFont(labelFont);
         row.add(nombre, BorderLayout.WEST);
 
-        RoundedButton btnDet = new RoundedButton(textoBtn, radius);
+        RoundedButton btnDet = new RoundedButton("detalles", radius);
         btnDet.setFont(btnFont);
         btnDet.setBackground(btnColor);
         btnDet.setForeground(Color.WHITE);
@@ -250,7 +261,24 @@ public class Inventory extends JFrame {
 
         return row;
     }
+    private RoundedPanel[] editarFilaProduct(RoundedPanel[] servicios) {
+     for (RoundedPanel s: servicios) {
+        Component[] comps = s.getComponents();
+        for (Component comp : comps) {
+            if (comp instanceof RoundedButton) {
+                RoundedButton btn = (RoundedButton) comp;
+                btn.setText("editar"); // cambia el texto
+                btn.setBackground(Color.YELLOW); // cambia el color
+                btn.addActionListener(e -> {
+                    JOptionPane.showMessageDialog(null, "editado");
+                });
+            }
+        }
+    }
 
+        return servicios;
+        
+    }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             new Inventory().setVisible(true);

@@ -1,17 +1,19 @@
 package shop.models;
 
+import java.util.LinkedList;
+
 public class Products {
     private int pk;
     private String name;
     private String code;
     private float price;
     private float purchase_price;
-    private Product[] products;
+    private LinkedList products;
     private Boolean active;
     private int contProducts;
     
     // builder
-    public Products(int pk, String name, String code, float price, float purchase_price, Boolean
+    public Products(int pk, String name, String code, float price, Boolean
     active) {
         this.pk = pk;
         this.name = name;

@@ -11,10 +11,9 @@ public class Product {
     private Boolean purchased;
 
     // builder
-    public Product(int pk, float purchase_price, Date date, float price, Boolean purchased) {
+    public Product(int pk, float purchase_price, float price, Boolean purchased) {
         this.pk = pk;
         this.purchase_price = purchase_price;
-        this.date = date;
         this.price = price;
         this.purchased = purchased;
     }

@@ -1,20 +1,22 @@
 package shop.models;
 
+import java.util.LinkedList;
+
 public class Services {
     // attributes
     private int pk;
-    private int price;
+    private float price;
     private String name;
     private Boolean active;
     private int contServices;
     
     // composition root
-    private Service[] services;
+    private LinkedList<Service> services;
 
 
     // builder
 
-    public Services(int pk, int price, String name, Boolean active, int contServices) {
+    public Services(int pk, float price, String name, Boolean active) {
         this.pk = pk;
         this.price = price;
         this.name = name;
@@ -30,7 +32,7 @@ public class Services {
         this.pk = pk;
     }
     
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
     
@@ -68,11 +70,11 @@ public class Services {
     }
     
     
-    public Service[] getServices() {
+    public LinkedList<Service> getServices() {
         return services;
     }
     
-    public void setServices(Service[] services) {
+    public void setServices(LinkedList<Service> services) {
         this.services = services;
     }
     

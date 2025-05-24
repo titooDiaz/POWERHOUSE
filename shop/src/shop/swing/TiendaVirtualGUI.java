@@ -7,6 +7,7 @@ import javax.swing.*;
 
 public class TiendaVirtualGUI extends JFrame {
 
+    //absolute layaut
     public TiendaVirtualGUI() {
         setTitle("PowerApp");
         setSize(900, 550);

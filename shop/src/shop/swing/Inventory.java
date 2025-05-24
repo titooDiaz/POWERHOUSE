@@ -3,6 +3,8 @@ package shop.swing;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.LinkedList;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
@@ -11,6 +13,7 @@ public class Inventory extends JFrame {
     private JPanel catPanel1;      // para productos
     private JPanel panelServicios; // para servicios
 
+
     Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
     public Inventory() {
         setTitle("PowerApp - Inventario");
@@ -18,8 +21,9 @@ public class Inventory extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
+        getContentPane().setBackground(new Color(60,60,60));
 
-        // ─── Estilos ───────────────────────────────────────────────────────────────
+        // Estilos
         Color darkGray   = new Color(60, 60, 60);
         Color midGray    = new Color(100, 100, 100);
         Color lightGray  = new Color(200, 200, 200);
@@ -30,7 +34,7 @@ public class Inventory extends JFrame {
         Font  labelFont  = new Font("SansSerif", Font.BOLD, 16);
         Font  buttonFont = new Font("SansSerif", Font.BOLD, 14);
 
-        // ─── NORTH: barra superior ────────────────────────────────────────────────
+        // barra superior 
         JPanel north = new JPanel(new BorderLayout());
         north.setBackground(darkGray);
         north.setPreferredSize(new Dimension(900, 60));
@@ -62,7 +66,7 @@ public class Inventory extends JFrame {
 
         add(north, BorderLayout.NORTH);
 
-        // ─── CENTER: productos y servicios ───────────────────────────────────────
+        // productos y servicios
         JPanel centerWrapper = new JPanel(new GridBagLayout());
         centerWrapper.setBackground(darkGray);
         centerWrapper.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -72,7 +76,7 @@ public class Inventory extends JFrame {
         c.fill    = GridBagConstraints.BOTH;
         c.insets  = new Insets(5, 5, 5, 5);
 
-        // —— Panel Productos ————————————————————————————————————————————
+        // Panel Productos 
         RoundedPanel panelProductos = new RoundedPanel(30);
         panelProductos.setLayout(new BoxLayout(panelProductos, BoxLayout.Y_AXIS));
         panelProductos.setBackground(midGray);
@@ -82,7 +86,7 @@ public class Inventory extends JFrame {
         panelProductos.add(catPanel1);
         panelProductos.add(Box.createVerticalStrut(10));
 
-        panelProductos.add(createCategoriaPanel("Categoría Otro", labelFont, buttonFont, lightGray, btnRed));
+        LinkedList<RoundedPanel> productos= new LinkedList<RoundedPanel>();
 
         c.gridx   = 0;
         c.gridy   = 0;
@@ -90,9 +94,9 @@ public class Inventory extends JFrame {
         c.weighty = 1.0;
         centerWrapper.add(panelProductos, c);
 
-        JPanel[] nuevos = new JPanel[5];
+        
 
-        // —— Panel Servicios ————————————————————————————————————————————
+        //Panel Servicios 
         panelServicios = new RoundedPanel(30);
         panelServicios.setLayout(new BoxLayout(panelServicios, BoxLayout.Y_AXIS));
         panelServicios.setBackground(midGray);
@@ -105,14 +109,14 @@ public class Inventory extends JFrame {
         panelServicios.add(lblServ);
         panelServicios.add(Box.createVerticalStrut(10));
 
-        RoundedPanel[] servicios = new RoundedPanel[5];
+        LinkedList<RoundedPanel> servicios = new LinkedList<RoundedPanel>();
 
         c.gridx   = 1;
         c.gridy   = 0;
         c.weightx = 0.3;
         centerWrapper.add(panelServicios, c);
 
-        // ─── SOUTH: botones ───────────────────────────────────────────────────────
+        // botones 
         JPanel south = new JPanel(new GridLayout(1, 3, 10, 0));
         south.setBackground(darkGray);
         south.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -136,15 +140,9 @@ public class Inventory extends JFrame {
         btnEditar.setFont(buttonFont);
         btnEditar.setFocusPainted(false);  
         btnEditar.addActionListener(e -> {
-            
-            if (nuevos[0] != null) {
-                System.out.println("nuevos[0] = " + nuevos[0]);
-                RoundedButton btn = (RoundedButton) nuevos[0].getComponent(1);
-                btn.setText("editar"); // cambia el texto
-                btn.setBackground(Color.YELLOW); // cambia el color
-            } else {
-                JOptionPane.showMessageDialog(this, "No hay servicios para editar.");
-            }
+
+            editarFilaProductAndServicio(servicios, btnYellow, "editar");
+            editarFilaProductAndServicio(productos, btnYellow, "editar");
 
 
         });
@@ -156,11 +154,18 @@ public class Inventory extends JFrame {
         btnEliminar.setForeground(Color.WHITE);
         btnEliminar.setFont(buttonFont);
         btnEliminar.setFocusPainted(false);
+        btnEliminar.addActionListener(e -> {
+
+            editarFilaProductAndServicio(servicios, btnRed, "eliminar");
+            editarFilaProductAndServicio(productos, btnRed, "eliminar");
+
+        });
+
         south.add(btnEliminar);
 
-        add(south, BorderLayout.SOUTH);
+        add(south,BorderLayout.SOUTH);
         
-               // ─── LÓGICA REGISTRAR ─────────────────────────────────────────────────────
+               // LÓGICA REGISTRAR 
         btnRegistrar.addActionListener(e -> {
             // Pregunta tipo
             String[] opciones = {"Producto", "Servicio"};
@@ -180,21 +185,23 @@ public class Inventory extends JFrame {
                 if (nombre == null || nombre.trim().isEmpty()) return;
                 String cantidad = JOptionPane.showInputDialog(this, "Cantidad:");
                 if (cantidad == null || cantidad.trim().isEmpty()) return;
-                JPanel nuevaFila = createFilaProducto(nombre, cantidad, labelFont, buttonFont, lightGray, btnRed);
+                RoundedPanel nuevaFila = createFilaProducto(labelFont, buttonFont, lightGray, Color.orange, 15);
                 catPanel1.add(nuevaFila);
                 catPanel1.add(Box.createVerticalStrut(5));
                 catPanel1.revalidate();
                 catPanel1.repaint();
+                productos.add(nuevaFila);
+
             } else if (sel == 1) {
                 // Servicio;
                 String nombre = JOptionPane.showInputDialog(this, "Nombre del servicio:");
                 if (nombre == null || nombre.trim().isEmpty()) return;
-                JPanel nuevaFila = createFilaServicio( labelFont, buttonFont, lightGray, btnRed, 15);
+                RoundedPanel nuevaFila = createFilaServicio( labelFont, buttonFont, lightGray, Color.orange, 15);
                 panelServicios.add(nuevaFila);
                 panelServicios.add(Box.createVerticalStrut(8));
                 panelServicios.revalidate();
                 panelServicios.repaint();
-                nuevos[0] = nuevaFila;
+                servicios.add(nuevaFila);
 
             }
         });
@@ -219,30 +226,28 @@ public class Inventory extends JFrame {
     }
 
     // fila producto
-    private RoundedPanel createFilaProducto(String nombre, String cantidad,
-                                      Font labelFont, Font btnFont,
-                                      Color bgRow, Color btnColor) {
+    private RoundedPanel createFilaProducto( Font labelFont, Font btnFont,
+                                      Color bgRow, Color btnColor, int radius) {
         RoundedPanel row = new RoundedPanel(15);
         row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
         row.setBackground(bgRow);
         row.setBorder(new EmptyBorder(5, 10, 5, 10));
         row.setLayout(new BorderLayout(10, 0));
 
-        JLabel lblNombre = new JLabel(nombre);
+        JLabel lblNombre = new JLabel("product");
         lblNombre.setFont(labelFont);
         row.add(lblNombre, BorderLayout.WEST);
 
-        JLabel lblCant = new JLabel(cantidad);
-        lblCant.setFont(labelFont);
-        row.add(lblCant, BorderLayout.CENTER);
-
-    
         RoundedButton btnDet = new RoundedButton("detalles", 15);
         btnDet.setFont(btnFont);
         btnDet.setBackground(btnColor);
         btnDet.setForeground(Color.WHITE);
         btnDet.setFocusPainted(false);
         row.add(btnDet, BorderLayout.EAST);
+
+        JLabel lblCant = new JLabel("8");
+        lblCant.setFont(labelFont);
+        row.add(lblCant, BorderLayout.CENTER);
 
         return row;
     }
@@ -270,22 +275,20 @@ public class Inventory extends JFrame {
 
         return row;
     }
-    private RoundedPanel[] editarFilaProduct(RoundedPanel[] servicios) {
-     for (RoundedPanel s: servicios) {
-        Component[] comps = s.getComponents();
-        for (Component comp : comps) {
-            if (comp instanceof RoundedButton) {
-                RoundedButton btn = (RoundedButton) comp;
-                btn.setText("editar"); // cambia el texto
-                btn.setBackground(Color.YELLOW); // cambia el color
-                btn.addActionListener(e -> {
-                    JOptionPane.showMessageDialog(null, "editado");
-                });
-            }
-        }
-    }
+    private LinkedList<RoundedPanel> editarFilaProductAndServicio(LinkedList<RoundedPanel> list, Color color, String textoButton) {
 
-        return servicios;
+            for(JPanel ser: list){
+
+            if (list != null) {
+                RoundedButton btn = (RoundedButton) ser.getComponent(1);
+                btn.setText(textoButton); // cambia el texto
+                btn.setBackground(color); // cambia el color
+            } else {
+                JOptionPane.showMessageDialog(this, "No hay no hay servicios/productos para " + textoButton);
+            }
+
+            }
+        return list;
         
     }
     public static void main(String[] args) {

@@ -13,6 +13,8 @@ import shop.models.Services;
 
 public class  Inventory extends JFrame {
     
+    public int relojEditar;
+    public int relojEliminar;
     private JPanel panelCategorias;      // para productos
     private JPanel panelServicios; // para servicios
     public LinkedList<Products> listaProductos = new LinkedList<>();
@@ -37,6 +39,7 @@ public class  Inventory extends JFrame {
         Color btnGreen   = new Color(0, 200, 100);
         Color btnYellow  = new Color(255, 211, 77);
         Color btnRed     = new Color(220, 60, 60);
+        Color btnBlue = new Color(30, 100, 200);
         Font  headerFont = new Font("SansSerif", Font.BOLD, 28);
         Font  labelFont  = new Font("SansSerif", Font.BOLD, 16);
         Font  buttonFont = new Font("SansSerif", Font.BOLD, 14);
@@ -147,11 +150,19 @@ public class  Inventory extends JFrame {
             btnEditar.setFont(buttonFont);
             btnEditar.setFocusPainted(false);  
             btnEditar.addActionListener(e -> {
-
-                editarFilaProductAndServicio(servicios, btnYellow, "editar");
-                editarFilaProductAndServicio(productos, btnYellow, "editar");
-
-
+                if (relojEditar == 0) {
+                    editarFilaProductAndServicio(servicios, btnYellow, "editar");
+                    editarFilaProductAndServicio(productos, btnYellow, "editar");
+                    btnEditar.setBackground(btnBlue);
+                    btnEditar.setText("DETALLES");
+                    relojEditar = 1;
+                }else{
+                    editarFilaProductAndServicio(servicios, btnBlue, "detalles");
+                    editarFilaProductAndServicio(productos, btnBlue, "detalles");
+                    btnEditar.setBackground(btnYellow);
+                    btnEditar.setText("EDITAR");
+                    relojEditar = 0;
+                }
             });
         south.add(btnEditar);
 
@@ -163,8 +174,19 @@ public class  Inventory extends JFrame {
             btnEliminar.setFocusPainted(false);
             btnEliminar.addActionListener(e -> {
 
-                editarFilaProductAndServicio(servicios, btnRed, "eliminar");
-                editarFilaProductAndServicio(productos, btnRed, "eliminar");
+                if (relojEliminar == 0) {
+                    editarFilaProductAndServicio(servicios, btnRed, "eliminar");
+                    editarFilaProductAndServicio(productos, btnRed, "eliminar");
+                    btnEliminar.setBackground(Color.ORANGE);
+                    btnEliminar.setText("CANCELAR");
+                    relojEliminar = 1;
+                }else{
+                    editarFilaProductAndServicio(servicios, Color.ORANGE, "eliminar");
+                    editarFilaProductAndServicio(productos, Color.ORANGE, "eliminar");
+                    btnEliminar.setBackground(btnRed);
+                    btnEliminar.setText("ELIMINAR");
+                    relojEliminar = 0;
+                }
 
             });
 
@@ -176,7 +198,7 @@ public class  Inventory extends JFrame {
         }
         public void agregarProducto(Products producto) {
             listaProductos.add(producto);
-            RoundedPanel nuevaFila = createFilaProducto(labelFont, labelFont  , new Color(200, 200, 200), Color.orange, 15);
+            RoundedPanel nuevaFila = createFilaProducto(labelFont, labelFont  , new Color(200, 200, 200), new Color(30, 100, 200), 15);
             panelCategorias.add(nuevaFila);
             panelCategorias.add(Box.createVerticalStrut(5));
             panelCategorias.revalidate();
@@ -253,7 +275,7 @@ public class  Inventory extends JFrame {
             nombre.setFont(labelFont);
             row.add(nombre, BorderLayout.WEST);
 
-        RoundedButton btnDet = new RoundedButton("detalles", radius);
+        RoundedButton btnDet = new RoundedButton("DETALLES", radius);
             btnDet.setFont(btnFont);
             btnDet.setBackground(btnColor);
             btnDet.setForeground(Color.WHITE);

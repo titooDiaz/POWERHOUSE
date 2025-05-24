@@ -173,7 +173,7 @@ public class  Inventory extends JFrame {
                     editarFilaProductAndServicio(servicios, btnYellow, "editar");
                     editarFilaProductAndServicio(productos, btnYellow, "editar");
                     btnEditar.setBackground(btnBlue);
-                    btnEditar.setText("detalles");
+                    btnEditar.setText("DETALLES");
                     relojEditar = 1;
                     if(relojEliminar==1){
                     btnEliminar.setBackground(btnRed);
@@ -305,7 +305,7 @@ public class  Inventory extends JFrame {
             nombre.setFont(labelFont);
             row.add(nombre, BorderLayout.WEST);
 
-        RoundedButton btnDet = new RoundedButton("DETALLES", radius);
+        RoundedButton btnDet = new RoundedButton("detalles", radius);
             btnDet.setFont(btnFont);
             btnDet.setBackground(btnColor);
             btnDet.setForeground(Color.WHITE);

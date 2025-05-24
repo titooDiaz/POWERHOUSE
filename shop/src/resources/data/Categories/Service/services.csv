@@ -1,1 +1,2 @@
-pk,price,name,services,active,amount
+pk,name,code,price,date,active
+1,asd,asd,12312.0,24/05/2025,true,

@@ -142,15 +142,19 @@ public class registerProduct extends JFrame {
             if ("producto".equalsIgnoreCase(tipo)) {
                 JOptionPane.showMessageDialog(this, "Producto registrado correctamente...");
                 Products productos = new Products(nombre, codigo, precio, LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), true);
-                WriterProduct.appendProductCSV(productos);
+                WriterProducts.appendProductCSV(productos);
+
+                inventario.agregarProducto(productos);
                 this.dispose();
                 inventario.setVisible(true);
             } else {
-            Services servicios= new Services(idProductService, precio, nombre, true);
+                Services servicios= new Services(nombre, codigo, precio, LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), true);
+                WriterSerivices.appendServicesCSV(servicios);
+
                 inventario.agregarServicio(servicios);
                 JOptionPane.showMessageDialog(this, "Servicio registrado correctamente...");
-                    this.dispose();
-                    inventario.setVisible(true);
+                this.dispose();
+                inventario.setVisible(true);
             }
             });
     }

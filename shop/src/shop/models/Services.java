@@ -3,10 +3,13 @@ package shop.models;
 import java.util.LinkedList;
 
 public class Services {
+    //pk,name,code,price,date,active
     // attributes
     private int pk;
     private float price;
     private String name;
+    private String date;
+    private String code;
     private Boolean active;
     private int contServices;
     
@@ -16,12 +19,12 @@ public class Services {
 
     // builder
 
-    public Services(int pk, float price, String name, Boolean active) {
-        this.pk = pk;
+    public Services(String name, String code, float price, String date, Boolean active) {
         this.price = price;
         this.name = name;
         this.active = active;
-        this.contServices = contServices;
+        this.date  = date;
+        this.code = code;
         }
 
     public int getPk() {
@@ -30,6 +33,22 @@ public class Services {
     
     public void setPk(int pk) {
         this.pk = pk;
+    }
+
+    public String getCode() {
+        return code;
+    }
+    
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getDate() {
+        return date;
+    }
+    
+    public void setDate(String date) {
+        this.date = date;
     }
     
     public float getPrice() {

@@ -12,24 +12,25 @@ import shop.models.Products;
 import shop.models.Services;
 
 public class  Inventory extends JFrame {
+    
     // paneles
-    private final JPanel north;
-    private final JPanel south;
-    private final JPanel panelCentral;
-    private final JPanel panelProductos;
-    private final JPanel panelCategorias;      // para productos
-    private final JPanel panelServicios; // para servicios
+    private JPanel north;
+    private JPanel south;
+    private JPanel panelCentral;
+    private JPanel panelProductos;
+    private JPanel panelCategorias;      // para productos
+    private JPanel panelServicios; // para servicios
 
     //labels
-    private final JLabel txtFecha;
-    private final JLabel titulo;
-    private final JLabel lblServ;
+    private JLabel txtFecha;
+    private JLabel titulo;
+    private JLabel lblServ;
 
     //botones
-    private final JButton volver;
+    private JButton volver;
     private RoundedButton btnEliminar;
     private RoundedButton btnEditar;
-    private final RoundedButton btnRegistrar;
+    private RoundedButton btnRegistrar;
 
     //relojes
     private int relojEditar;
@@ -172,7 +173,7 @@ public class  Inventory extends JFrame {
                     editarFilaProductAndServicio(servicios, btnYellow, "editar");
                     editarFilaProductAndServicio(productos, btnYellow, "editar");
                     btnEditar.setBackground(btnBlue);
-                    btnEditar.setText("DETALLES");
+                    btnEditar.setText("detalles");
                     relojEditar = 1;
                     if(relojEliminar==1){
                     btnEliminar.setBackground(btnRed);

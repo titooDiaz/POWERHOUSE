@@ -11,6 +11,7 @@ import shop.models.User;
 public class WriterUsers {
     static String basePath = System.getProperty("user.dir");
     static String filePath = basePath + "/shop/src/resources/data/Users/user.csv";
+    static String filePath2 = basePath + "/shop/src/resources/data/currentUser.txt";
 
     public static void appendUserToCSV(User user) {
 
@@ -60,8 +61,12 @@ public class WriterUsers {
                 String[] fields = line.split(",", -1);
                 if (fields.length > 2) {
                     String existingUsername = fields[2].trim();
+                    //obtener pk
+                    int pk = Integer.parseInt(fields[0].trim());
+                    guardarPK(pk);
+
                     if (existingUsername.equals(username)) {
-                        // LA CONTRASE;A ES CORRECTA?
+                        // LA CONTRASEÑA ES CORRECTA?
                         String password = fields[3].trim();
                         if (password.equals(pass)){
                             return true;
@@ -87,4 +92,21 @@ public class WriterUsers {
     private static String generateRandomKey() {
         return java.util.UUID.randomUUID().toString();
     }
+
+    public static void guardarPK(int pk) {
+        try (FileWriter escritor = new FileWriter(filePath2, false)) { // sobreescribir
+            escritor.write(pk + "\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sobrescribirConCero() {
+        try (FileWriter escritor = new FileWriter(filePath2, false)) {
+            escritor.write("0\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

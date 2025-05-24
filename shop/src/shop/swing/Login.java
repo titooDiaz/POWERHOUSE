@@ -128,10 +128,12 @@ public class Login extends JFrame {
         ingresar.setBackground(new Color(0, 200, 100)); // verde
         ingresar.setForeground(Color.WHITE);
         panelLogin.add(ingresar);
+
         // al dar clic...
         ingresar.addActionListener(e -> {
             Boolean valid = WriterUsers.login(campos[0].getText(),campos[1].getText());
             if (valid) {
+                // si es válido, mostrar el panel de bienvenida
                 TiendaVirtualGUI home = new TiendaVirtualGUI();
                 home.setVisible(true);
                 this.dispose();

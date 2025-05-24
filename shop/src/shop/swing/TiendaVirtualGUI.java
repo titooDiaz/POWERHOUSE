@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.*;
 
+import shop.CSVwriter.WriterUsers;
+
 public class TiendaVirtualGUI extends JFrame {
 
     //labels
@@ -45,6 +47,27 @@ public class TiendaVirtualGUI extends JFrame {
         btnCerrarSesion.setBounds(320, 20, 120, 30);
         btnCerrarSesion.setBackground( new Color(240, 80, 80));
         btnCerrarSesion.setForeground(Color.WHITE);
+        btnCerrarSesion.addActionListener(e -> {
+            // Pregunta tipo
+            String[] opciones = {"confirmar", "cancelar"};
+            int sel = JOptionPane.showOptionDialog(
+                this,
+                "Seguro que quieres cerrar la sesión?",
+                "Cerrar Sesión",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opciones,
+                opciones[0]
+            );
+            if (sel == 0) {
+                // Producto
+                Login inicio = new Login();
+                inicio.setVisible(true);
+                this.dispose();
+                WriterUsers.sobrescribirConCero();
+            } 
+        });
         add(btnCerrarSesion);
 
         // Botón Ver Usuarios
@@ -53,12 +76,13 @@ public class TiendaVirtualGUI extends JFrame {
         btnVerUsuarios.setBackground(Color.DARK_GRAY);
         btnVerUsuarios.setForeground(Color.WHITE);
         btnVerUsuarios.setBorderPainted(false);
-        add(btnVerUsuarios);
+        
         btnVerUsuarios.addActionListener(e -> {
             Profile profile = new Profile();
             profile.setVisible(true);
             this.dispose();
         });
+        add(btnVerUsuarios);
 
         // Título
         titulo = new JLabel("BIENVENIDO A TU TIENDA VIRTUAL");

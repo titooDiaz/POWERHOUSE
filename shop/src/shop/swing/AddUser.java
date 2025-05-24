@@ -10,7 +10,24 @@ import shop.CSVwriter.WriterUsers;
 import shop.models.User;
 
 public class AddUser extends JFrame {
-    Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
+    //paneles
+    private JPanel panel;
+
+    //labels
+    private JLabel titulo;
+    private JLabel txtFecha;
+    private JLabel subtitulo;
+    private JLabel logo;
+    private JLabel shadow;
+
+    //botones
+    private JButton registrar;
+
+    //imagen
+    private ImageIcon originalIcon;
+    private Image scaledImage;
+    private ImageIcon resizedIcon;
+
 
     public AddUser() {
         setTitle("PowerApp");
@@ -20,35 +37,27 @@ public class AddUser extends JFrame {
         getContentPane().setBackground(new Color(60, 60, 60));
 
         // texto superior
-        JLabel titulo = new JLabel("Crea un nuevo ADMINISTRADOR");
+        titulo = new JLabel("Crea un nuevo ADMINISTRADOR");
         titulo.setFont(new Font("Arial", Font.BOLD, 20));
         titulo.setForeground(Color.WHITE);
         titulo.setBounds(290, 20, 500, 40);
         add(titulo);
 
-        // Boton volver
-        JButton volver = new RoundedButton("< volver", 15);
-        volver.setBounds(10, 10, 100, 30);
-        volver.setBackground(Color.DARK_GRAY);
-        volver.setForeground(Color.WHITE);
-        volver.setBorderPainted(false);
-        add(volver);
-
         // Fecha
-        JLabel txtFecha = new JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        txtFecha = new JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         txtFecha.setBounds(700, 450, 250, 30);
         txtFecha.setFont(new Font("Arial", Font.BOLD, 20));
         txtFecha.setForeground(Color.WHITE);
         add(txtFecha);
 
         // Panel de formulario
-        JPanel panel = new RoundedPanel(30);
+        panel = new RoundedPanel(30);
         panel.setLayout(null);
         panel.setBackground(new Color(100, 100, 100)); // gris medio
         panel.setBounds(50, 80, 400, 350);
         add(panel);
 
-        JLabel subtitulo = new JLabel("REGISTRAR ADMINISTRADOR");
+        subtitulo = new JLabel("REGISTRAR ADMINISTRADOR");
         subtitulo.setFont(new Font("Arial", Font.BOLD, 18));
         subtitulo.setForeground(Color.WHITE);
         subtitulo.setBounds(60, 10, 300, 30);
@@ -108,7 +117,7 @@ public class AddUser extends JFrame {
         }
 
         // Boton registrar
-        RoundedButton registrar = new RoundedButton("REGISTRAR", 15);
+            registrar = new RoundedButton("REGISTRAR", 15);
             registrar.setBounds(100, 310, 200, 35);
             registrar.setBackground(new Color(0, 200, 100)); // verde
             registrar.setForeground(Color.WHITE);
@@ -118,15 +127,15 @@ public class AddUser extends JFrame {
             panel.add(registrar);
 
 
-        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/resources/images/icon.png"));
-        Image scaledImage = originalIcon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
-        ImageIcon resizedIcon = new ImageIcon(scaledImage);
+            originalIcon = new ImageIcon(getClass().getResource("/resources/images/icon.png"));
+            scaledImage = originalIcon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
+            resizedIcon = new ImageIcon(scaledImage);
 
-        JLabel logo = new JLabel(resizedIcon);
-         logo.setBounds(510, 110, 300, 300);
-         add(logo);
+            logo = new JLabel(resizedIcon);
+            logo.setBounds(510, 110, 300, 300);
+        add(logo);
         
-        JLabel shadow = new JLabel();
+            shadow = new JLabel();
             shadow.setBounds(510, 110, 300, 300);
             shadow.setOpaque(true);
             shadow.setBackground(Color.WHITE);

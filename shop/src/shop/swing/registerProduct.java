@@ -9,15 +9,37 @@ import shop.models.*;
 
 public class registerProduct extends JFrame {
 
+    //paneles
+    private JPanel panelSuperior;
+    private JPanel panelCentral;
+    private JPanel panelInferior;
+
+    //labels
+    private JLabel titulo;
+    private JLabel txtFecha;
+
+    //botones
+    private JButton btnConfirmar;
+    private JButton volver;
+
+    //estilos
+    private Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
+    private Color darkGray = new Color(60, 60, 60);
+    private Font headerFont= new Font("SansSerif", Font.BOLD, 28);
+
+    //cuadros de texto
     private JComboBox<String> comboTipo;
     private JTextField campoNombre;
     private JTextField campoCodigo;
     private JTextField campoCategoria;
     private JTextField campoPrecio;
-    private int idProductService = 0;
     private Inventory inventario;
 
+    //id
+    private int idProductService = 0;
+
     public registerProduct(Inventory inventorio) {
+
         this.inventario = inventorio;
         comboTipo     = new JComboBox<>(new String[]{"producto", "servicio"});
         campoNombre   = new JTextField();
@@ -31,22 +53,18 @@ public class registerProduct extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // Colores y fuentes
-        Color darkGray = new Color(60, 60, 60);
-        Font headerFont= new Font("SansSerif", Font.BOLD, 28);
-        Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
-
         // NORTH: Barra superior
-        JPanel barraSuperior = new JPanel(new BorderLayout());
-            barraSuperior.setBackground(darkGray);
-            barraSuperior.setPreferredSize(new Dimension(900, 60));
+            panelSuperior = new JPanel(new BorderLayout());
+            panelSuperior.setBackground(darkGray);
+            panelSuperior.setPreferredSize(new Dimension(900, 60));
+
         // Boton volver
-        JButton volver = new RoundedButton("< volver", 15);
+            volver = new RoundedButton("< volver", 15);
             volver.setBounds(10, 10, 100, 30);
             volver.setBackground(Color.DARK_GRAY);
             volver.setForeground(Color.WHITE);
             volver.setBorderPainted(false);
-            barraSuperior.add(volver);
+            panelSuperior.add(volver);
             volver.addActionListener(e -> {
                 TiendaVirtualGUI tienda = new TiendaVirtualGUI();
                 tienda.setVisible(true);
@@ -54,50 +72,52 @@ public class registerProduct extends JFrame {
             });
         
         // Fecha
-        JLabel txtFecha = new JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            txtFecha = new JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             txtFecha.setBounds(750, 10, 250, 30);
             txtFecha.setFont(new Font("Arial", Font.BOLD, 20));
             txtFecha.setForeground(Color.WHITE);
-        barraSuperior.add(txtFecha);
+        panelSuperior.add(txtFecha);
+
         //titulo
-        JLabel titulo = new JLabel("REGISTRAR PRODUCTO/SERVICIO", SwingConstants.CENTER);
+            titulo = new JLabel("REGISTRAR PRODUCTO/SERVICIO", SwingConstants.CENTER);
             titulo.setForeground(Color.WHITE);
             titulo.setFont(headerFont);
-        barraSuperior.add(titulo, BorderLayout.CENTER);
-        add(barraSuperior, BorderLayout.NORTH);
+        panelSuperior.add(titulo, BorderLayout.CENTER);
+        add(panelSuperior, BorderLayout.NORTH);
 
         // CENTER
-        JPanel formWrapper = new JPanel(); // 30 es el radio de las esquinas
-            formWrapper.setBackground(darkGray);
-            formWrapper.setBorder(BorderFactory.createEmptyBorder(30, 80, 30, 80));
-            formWrapper.setLayout(new BoxLayout(formWrapper, BoxLayout.Y_AXIS));
+            panelCentral = new JPanel(); // 30 es el radio de las esquinas
+            panelCentral.setBackground(darkGray);
+            panelCentral.setBorder(BorderFactory.createEmptyBorder(30, 80, 30, 80));
+            panelCentral.setLayout(new BoxLayout(panelCentral, BoxLayout.Y_AXIS));
 
-            formWrapper.add(createFieldPanel("Tipo de registro:", comboTipo , labelFont));
-            formWrapper.add(Box.createVerticalStrut(10));
-            formWrapper.add(createFieldPanel("Nombre:", campoNombre, labelFont));
-            formWrapper.add(Box.createVerticalStrut(10));
-            formWrapper.add(createFieldPanel("Código:", campoCodigo, labelFont));
-            formWrapper.add(Box.createVerticalStrut(10));
-            formWrapper.add(createFieldPanel("Categoría:", campoCategoria, labelFont));
-            formWrapper.add(Box.createVerticalStrut(10));
-            formWrapper.add(createFieldPanel("Precio de venta:", campoPrecio, labelFont));
+            panelCentral.add(createFieldPanel("Tipo de registro:", comboTipo , labelFont));
+            panelCentral.add(Box.createVerticalStrut(10));
+            panelCentral.add(createFieldPanel("Nombre:", campoNombre, labelFont));
+            panelCentral.add(Box.createVerticalStrut(10));
+            panelCentral.add(createFieldPanel("Código:", campoCodigo, labelFont));
+            panelCentral.add(Box.createVerticalStrut(10));
+            panelCentral.add(createFieldPanel("Categoría:", campoCategoria, labelFont));
+            panelCentral.add(Box.createVerticalStrut(10));
+            panelCentral.add(createFieldPanel("Precio de venta:", campoPrecio, labelFont));
 
-        add(formWrapper, BorderLayout.CENTER);
+        add(panelCentral, BorderLayout.CENTER);
 
-        // SOUTH: Barra inferior
-        JPanel  barraInferior = new JPanel(new BorderLayout());
-            barraInferior.setBackground(darkGray);
-            barraInferior.setPreferredSize(new Dimension(900, 80));
-            barraInferior.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        // inferior
+            panelInferior = new JPanel(new BorderLayout());
+            panelInferior.setBackground(darkGray);
+            panelInferior.setPreferredSize(new Dimension(900, 80));
+            panelInferior.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+            
         //Boton confirmar
-            RoundedButton btnConfirmar = new RoundedButton("CONFIRMAR",15);
+            btnConfirmar = new RoundedButton("CONFIRMAR",15);
             btnConfirmar.setFont(new Font("SansSerif", Font.BOLD, 16));
             btnConfirmar.setBackground(new Color(0, 200, 100));
             btnConfirmar.setForeground(Color.WHITE);
             btnConfirmar.setPreferredSize(new Dimension(200, 50));
             btnConfirmar.setFocusPainted(false);
-            barraInferior.add(btnConfirmar, BorderLayout.CENTER);
-        add(barraInferior, BorderLayout.SOUTH);
+            panelInferior.add(btnConfirmar, BorderLayout.CENTER);
+        add(panelInferior, BorderLayout.SOUTH);
 
         // LÓGICA REGISTRAR 
         btnConfirmar.addActionListener(e -> {

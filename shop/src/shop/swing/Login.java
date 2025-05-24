@@ -10,6 +10,25 @@ import shop.CSVwriter.WriterUsers;
 
 public class Login extends JFrame {
 
+    //paneles
+    private JPanel panelLogin;
+
+    //labels
+    private JLabel titulo;
+    private JLabel loginLabel;
+    private JLabel txtFecha;
+    private JLabel logo;
+    private JLabel shadow;
+
+    //botones
+    private JButton ingresar;
+    private JButton recuperar;
+
+    //imagen
+    private ImageIcon originalIcon;
+    private Image scaledImage;
+    private ImageIcon resizedIcon;
+
     public Login() {
         setTitle("PowerApp");
         setSize(900, 550);
@@ -19,7 +38,7 @@ public class Login extends JFrame {
         getContentPane().setBackground(new Color(50, 50, 50));
 
         // Main title
-        JLabel titulo = new JLabel("BIENVENIDO A POWERAPP");
+        titulo = new JLabel("BIENVENIDO A POWERAPP");
         titulo.setFont(new Font("Arial", Font.BOLD, 26));
         titulo.setForeground(Color.WHITE);
         titulo.setBounds(250, 30, 500, 30);
@@ -27,7 +46,7 @@ public class Login extends JFrame {
         add(titulo);
 
         // Login panel with rounded background
-        JPanel panelLogin = new RoundedPanel(30);
+        panelLogin = new RoundedPanel(30);
         panelLogin.setForeground(Color.BLACK);
         panelLogin.setBackground(Color.GRAY);
         panelLogin.setLayout(null);
@@ -36,14 +55,14 @@ public class Login extends JFrame {
         add(panelLogin);
 
         // "LOGIN" label
-        JLabel loginLabel = new JLabel("INICIAR SESIÓN");
+        loginLabel = new JLabel("INICIAR SESIÓN");
         loginLabel.setFont(new Font("Arial", Font.BOLD, 18));
         loginLabel.setForeground(Color.WHITE);
         loginLabel.setBounds(60, 20, 200, 30);
         panelLogin.add(loginLabel);
 
         // Fecha
-        JLabel txtFecha = new JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        txtFecha = new JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         txtFecha.setBounds(700, 450, 250, 30);
         txtFecha.setFont(new Font("Arial", Font.BOLD, 20));
         txtFecha.setForeground(Color.WHITE);
@@ -104,7 +123,7 @@ public class Login extends JFrame {
         }
 
         // "Ingresar" button (green)
-        RoundedButton ingresar = new RoundedButton("Ingresar", 15);
+        ingresar = new RoundedButton("Ingresar", 15);
         ingresar.setBounds(30, 180, 240, 35);
         ingresar.setBackground(new Color(0, 200, 100)); // verde
         ingresar.setForeground(Color.WHITE);
@@ -123,22 +142,22 @@ public class Login extends JFrame {
 
 
         // "Recuperar contraseña" button (red)
-        RoundedButton recuperar = new RoundedButton("recuperar contraseña", 15);
+        recuperar = new RoundedButton("recuperar contraseña", 15);
         recuperar.setBackground(new Color(255, 102, 102)); // verde
         recuperar.setForeground(Color.WHITE);
         recuperar.setBounds(30, 230, 240, 35);
         panelLogin.add(recuperar);
 
         // Logo with 3D effect (drop shadow)
-        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/resources/images/icon.png"));
-        Image scaledImage = originalIcon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
-        ImageIcon resizedIcon = new ImageIcon(scaledImage);
+        originalIcon = new ImageIcon(getClass().getResource("/resources/images/icon.png"));
+        scaledImage = originalIcon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
+        resizedIcon = new ImageIcon(scaledImage);
 
-        JLabel logo = new JLabel(resizedIcon);
+        logo = new JLabel(resizedIcon);
         logo.setBounds(510, 110, 300, 300);
         add(logo);
         
-        JLabel shadow = new JLabel();
+        shadow = new JLabel();
         shadow.setBounds(510, 110, 300, 300);
         shadow.setOpaque(true);
         shadow.setBackground(Color.WHITE);
@@ -146,14 +165,6 @@ public class Login extends JFrame {
         shadow.setLocation(510 + 8, 110 + 8); // slight offset for 3D effect
         add(shadow);
 
-        // Footer date (placeholder)
-        JLabel fecha = new JLabel("<current date>");
-        fecha.setFont(new Font("Arial", Font.PLAIN, 12));
-        fecha.setForeground(Color.LIGHT_GRAY);
-        fecha.setBounds(750, 520, 150, 20);
-        add(fecha);
-
-        setVisible(true);
     }
 
     public static void main(String[] args) {

@@ -6,6 +6,25 @@ import java.time.format.DateTimeFormatter;
 import javax.swing.*;
 
 public class Profile extends JFrame {
+    //paneles
+    private JPanel panelInfo;
+
+    //labels
+    private JLabel titulo;
+    private JLabel txtFecha;
+    private JLabel avatar;
+
+
+    //botones
+    private JButton volver;
+
+    //imagen
+    private ImageIcon originalIcon;
+    private Image scaledImage;
+    private ImageIcon resizedIcon;
+    
+    //estilos
+    Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
     public Profile() {
         setTitle("PowerApp");
         setSize(900, 550);
@@ -16,7 +35,7 @@ public class Profile extends JFrame {
 
 
         // Botón volver
-        JButton volver = new RoundedButton("< volver", 15);
+        volver = new RoundedButton("< volver", 15);
         volver.setBounds(10, 10, 100, 30);
         volver.setBackground(Color.DARK_GRAY);
         volver.setForeground(Color.WHITE);
@@ -29,21 +48,21 @@ public class Profile extends JFrame {
         });
 
         // Título
-        JLabel titulo = new JLabel("Mi Perfil");
+        titulo = new JLabel("Mi Perfil");
         titulo.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 36));
         titulo.setForeground(Color.WHITE);
         titulo.setBounds(360, 20, 300, 40);
         add(titulo);
 
         // Panel lateral izquierdo (más alto)
-        RoundedPanel panelInfo = new RoundedPanel(30);
+        panelInfo = new RoundedPanel(30);
         panelInfo.setBackground(new Color(102, 102, 102));
         panelInfo.setBounds(60, 80, 420, 420);  // altura aumentada de 370 a 420
         panelInfo.setLayout(null);
         add(panelInfo);
 
         //fecha
-        JLabel txtFecha = new JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        txtFecha = new JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         txtFecha.setBounds(720, 480, 250, 30);
         txtFecha.setFont(new Font("Arial", Font.BOLD, 20));
         txtFecha.setForeground(Color.WHITE);
@@ -72,11 +91,13 @@ public class Profile extends JFrame {
             y += 75;
         }
 
-        // Área para imagen o avatar a la derecha (coordenada y igual que panel)
-        JLabel avatar = new JLabel();
-        avatar.setBounds(550, 110, 300, 300);
-        avatar.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
-        add(avatar);
+            originalIcon = new ImageIcon(getClass().getResource("/resources/images/user-interface.png"));
+            scaledImage = originalIcon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
+            resizedIcon = new ImageIcon(scaledImage);
+
+            avatar = new JLabel(resizedIcon);
+            avatar.setBounds(510, 110, 300, 300);
+            add(avatar);
     }
 
     public static void main(String[] args) {

@@ -7,19 +7,18 @@ public class Products {
     private String name;
     private String code;
     private float price;
-    private float purchase_price;
     private LinkedList products;
     private Boolean active;
+    private String date;
     private int contProducts;
     
     // builder
-    public Products(int pk, String name, String code, float price, Boolean
+    public Products(String name, String code, float price, String date, Boolean
     active) {
-        this.pk = pk;
         this.name = name;
         this.code = code;
         this.price = price;
-        this.purchase_price = purchase_price;
+        this.date = date;
         this.active = active;
         this.contProducts = 0;
     }
@@ -29,6 +28,12 @@ public class Products {
     }
     public void setPk(int pk) {
         this.pk = pk;
+    }
+    public String getDate() {
+        return this.date;
+    }
+    public void setDate(String date) {
+        this.date = date;
     }
     public String getName() {
         return name;
@@ -47,12 +52,6 @@ public class Products {
     }
     public void setPrice(float price) {
         this.price = price;
-    }
-    public float getPurchase_price() {
-        return purchase_price;
-    }
-    public void setPurchase_price(float purchase_price) {
-        this.purchase_price = purchase_price;
     }
     public Boolean getActive() {
         return active;

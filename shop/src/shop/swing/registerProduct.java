@@ -4,7 +4,7 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.*;
-
+import shop.CSVwriter.*;
 import shop.models.*;
 
 public class registerProduct extends JFrame {
@@ -140,11 +140,11 @@ public class registerProduct extends JFrame {
         }
 
             if ("producto".equalsIgnoreCase(tipo)) {
-                Products productos = new Products(idProductService, nombre, codigo, precio, true);
-                inventario.agregarProducto(productos);
                 JOptionPane.showMessageDialog(this, "Producto registrado correctamente...");
-                    this.dispose();
-                    inventario.setVisible(true);
+                Products productos = new Products(nombre, codigo, precio, LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), true);
+                WriterProduct.appendProductCSV(productos);
+                this.dispose();
+                inventario.setVisible(true);
             } else {
             Services servicios= new Services(idProductService, precio, nombre, true);
                 inventario.agregarServicio(servicios);

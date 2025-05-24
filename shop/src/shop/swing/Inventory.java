@@ -13,23 +13,23 @@ import shop.models.Services;
 
 public class  Inventory extends JFrame {
     // paneles
-    private JPanel north;
-    private JPanel south;
-    private JPanel panelCentral;
-    private JPanel panelProductos;
-    private JPanel panelCategorias;      // para productos
-    private JPanel panelServicios; // para servicios
+    private final JPanel north;
+    private final JPanel south;
+    private final JPanel panelCentral;
+    private final JPanel panelProductos;
+    private final JPanel panelCategorias;      // para productos
+    private final JPanel panelServicios; // para servicios
 
     //labels
-    private JLabel txtFecha;
-    private JLabel titulo;
-    private JLabel lblServ;
+    private final JLabel txtFecha;
+    private final JLabel titulo;
+    private final JLabel lblServ;
 
     //botones
-    private JButton volver;
+    private final JButton volver;
     private RoundedButton btnEliminar;
     private RoundedButton btnEditar;
-    private RoundedButton btnRegistrar;
+    private final RoundedButton btnRegistrar;
 
     //relojes
     private int relojEditar;

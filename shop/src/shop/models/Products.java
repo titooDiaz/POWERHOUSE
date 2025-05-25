@@ -10,7 +10,6 @@ public class Products {
     private LinkedList products;
     private Boolean active;
     private String date;
-    private int contProducts;
     
     // builder
     public Products(String name, String code, float price, String date, Boolean
@@ -20,7 +19,7 @@ public class Products {
         this.price = price;
         this.date = date;
         this.active = active;
-        this.contProducts = 0;
+        this.products = new LinkedList();
     }
     //getters and setters
     public int getPk() {
@@ -59,12 +58,6 @@ public class Products {
     public void setActive(Boolean active) {
         this.active = active;
     }
-    public int getContProducts() {
-        return contProducts;
-    }
-    public void setContProducts(int contProducts) {
-        this.contProducts = contProducts;
-    }
                                                     
     //methods
     public void addProduct(){
@@ -87,6 +80,10 @@ public class Products {
     public double percentageProducts(){
         double a = 0;
         return a*1;
+    }
+
+    public int cantProducts(){
+        return products.size();
     }
 
 }

@@ -1,6 +1,8 @@
 package shop.swing;
 
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
@@ -39,8 +41,8 @@ public class  Inventory extends JFrame {
     //listas
     private LinkedList<Products> listaProductos = new LinkedList<>();
     private LinkedList<Services> listaServicios = new LinkedList<>();
-    private LinkedList<RoundedPanel> productos= new LinkedList<RoundedPanel>();
-    private LinkedList<RoundedPanel> servicios = new LinkedList<RoundedPanel>();
+    public static LinkedList<RoundedPanel> productos= new LinkedList<RoundedPanel>();
+    public static LinkedList<RoundedPanel> servicios = new LinkedList<RoundedPanel>();
 
     // Estilos
     Color darkGray   = new Color(60, 60, 60);
@@ -53,6 +55,8 @@ public class  Inventory extends JFrame {
     Font  headerFont = new Font("SansSerif", Font.BOLD, 28);
     Font  buttonFont = new Font("SansSerif", Font.BOLD, 14);
     Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
+
+
 
 
     public Inventory() {
@@ -226,9 +230,9 @@ public class  Inventory extends JFrame {
 
     }
 
-    public void agregarProducto(Products producto) {
-        listaProductos.add(producto);
-        RoundedPanel nuevaFila = createFilaProducto(labelFont, labelFont  , lightGray, btnBlue, 15);
+    public void agregarProducto(Products products) {
+        listaProductos.add(products);
+        RoundedPanel nuevaFila = createFilaProducto(products.getName(), products.cantProducts(), labelFont, labelFont  , lightGray, btnBlue, 15);
         panelCategorias.add(nuevaFila);
         panelCategorias.add(Box.createVerticalStrut(5));
         panelCategorias.revalidate();
@@ -236,9 +240,9 @@ public class  Inventory extends JFrame {
         productos.add(nuevaFila);
     }
 
-    public void agregarServicio(Services servicio) {
-        listaServicios.add(servicio);
-        RoundedPanel nuevaFila = createFilaServicio(labelFont, labelFont, lightGray, btnBlue, 15);
+    public void agregarServicio(Services services) {
+        listaServicios.add(services);
+        RoundedPanel nuevaFila = createFilaServicio(services.getName(),labelFont, labelFont, lightGray, btnBlue, 15);
         panelServicios.add(nuevaFila);
         panelServicios.add(Box.createVerticalStrut(5));
         panelServicios.revalidate();
@@ -265,7 +269,7 @@ public class  Inventory extends JFrame {
     }
 
     // fila producto
-    private RoundedPanel createFilaProducto( Font labelFont, Font btnFont,
+    private RoundedPanel createFilaProducto(String name, int cant, Font labelFont, Font btnFont,
                                       Color bgRow, Color btnColor, int radius) {
         RoundedPanel row = new RoundedPanel(15);
             row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
@@ -273,7 +277,7 @@ public class  Inventory extends JFrame {
             row.setBorder(new EmptyBorder(5, 10, 5, 10));
             row.setLayout(new BorderLayout(10, 0));
 
-        JLabel lblNombre = new JLabel("product");
+        JLabel lblNombre = new JLabel(name);
             lblNombre.setFont(labelFont);
             row.add(lblNombre, BorderLayout.WEST);
 
@@ -284,7 +288,7 @@ public class  Inventory extends JFrame {
             btnDet.setFocusPainted(false);
         row.add(btnDet, BorderLayout.EAST);
 
-        JLabel lblCant = new JLabel("8");
+        JLabel lblCant = new JLabel("Cantidad: " + cant);
             lblCant.setFont(labelFont);
         row.add(lblCant, BorderLayout.CENTER);
 
@@ -292,7 +296,7 @@ public class  Inventory extends JFrame {
     }
 
     // fila servicio
-    private RoundedPanel createFilaServicio(
+    private RoundedPanel createFilaServicio(String name,
                                       Font labelFont, Font btnFont,
                                       Color bgRow, Color btnColor, int radius) {
         RoundedPanel row = new RoundedPanel(15);
@@ -301,7 +305,7 @@ public class  Inventory extends JFrame {
             row.setBorder(new EmptyBorder(5, 10, 5, 10));
             row.setLayout(new BorderLayout(10, 0));
 
-        JLabel nombre = new JLabel("Servicio");
+        JLabel nombre = new JLabel(name);
             nombre.setFont(labelFont);
             row.add(nombre, BorderLayout.WEST);
 
@@ -329,7 +333,7 @@ public class  Inventory extends JFrame {
 
             }
         return list;
-        
+    
     }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

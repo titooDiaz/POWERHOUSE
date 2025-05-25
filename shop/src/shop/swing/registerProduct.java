@@ -31,12 +31,10 @@ public class registerProduct extends JFrame {
     private JComboBox<String> comboTipo;
     private JTextField campoNombre;
     private JTextField campoCodigo;
-    private JTextField campoCategoria;
     private JTextField campoPrecio;
     private Inventory inventario;
 
-    //id
-    private int idProductService = 0;
+    
 
     public registerProduct(Inventory inventorio) {
 
@@ -44,7 +42,6 @@ public class registerProduct extends JFrame {
         comboTipo     = new JComboBox<>(new String[]{"producto", "servicio"});
         campoNombre   = new JTextField();
         campoCodigo   = new JTextField();
-        campoCategoria= new JTextField();
         campoPrecio   = new JTextField();
 
         setTitle("PowerApp - Registrar Producto/Servicio");
@@ -90,15 +87,13 @@ public class registerProduct extends JFrame {
             panelCentral.setBackground(darkGray);
             panelCentral.setBorder(BorderFactory.createEmptyBorder(30, 80, 30, 80));
             panelCentral.setLayout(new BoxLayout(panelCentral, BoxLayout.Y_AXIS));
-
+            //TextFields
             panelCentral.add(createFieldPanel("Tipo de registro:", comboTipo , labelFont));
-            panelCentral.add(Box.createVerticalStrut(10));
+            panelCentral.add(Box.createVerticalStrut(15));
             panelCentral.add(createFieldPanel("Nombre:", campoNombre, labelFont));
-            panelCentral.add(Box.createVerticalStrut(10));
+            panelCentral.add(Box.createVerticalStrut(15));
             panelCentral.add(createFieldPanel("Código:", campoCodigo, labelFont));
-            panelCentral.add(Box.createVerticalStrut(10));
-            panelCentral.add(createFieldPanel("Categoría:", campoCategoria, labelFont));
-            panelCentral.add(Box.createVerticalStrut(10));
+            panelCentral.add(Box.createVerticalStrut(15));
             panelCentral.add(createFieldPanel("Precio de venta:", campoPrecio, labelFont));
 
         add(panelCentral, BorderLayout.CENTER);
@@ -124,7 +119,6 @@ public class registerProduct extends JFrame {
             String tipo     = (String) comboTipo.getSelectedItem();
             String nombre   = campoNombre.getText().trim();
             String codigo   = campoCodigo.getText().trim();
-            String categoria= campoCategoria.getText().trim();
             float precio;
 
             try {
@@ -134,7 +128,7 @@ public class registerProduct extends JFrame {
             return;
             }
 
-            if (nombre.isEmpty() || codigo.isEmpty() || categoria.isEmpty() || campoPrecio.getText().trim().isEmpty()) {
+            if (nombre.isEmpty() || codigo.isEmpty() || campoPrecio.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos.");
             return;
         }
@@ -143,7 +137,7 @@ public class registerProduct extends JFrame {
                 JOptionPane.showMessageDialog(this, "Producto registrado correctamente...");
                 Products productos = new Products(nombre, codigo, precio, LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), true);
                 WriterProducts.appendProductCSV(productos);
-
+                
                 inventario.agregarProducto(productos);
                 this.dispose();
                 inventario.setVisible(true);

@@ -1,10 +1,16 @@
 package shop.CSVwriter;
 
+
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedList;
+
 import javax.swing.JOptionPane;
 import shop.models.Products;
+
 
 public class WriterProducts {
     static String basePath = System.getProperty("user.dir");
@@ -40,4 +46,26 @@ public class WriterProducts {
             e.printStackTrace();
         }
     }
+
+    public LinkedList<Products> loadFromCSV(LinkedList<Products> products) {
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            br.readLine(); // 
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                String name = parts[1];
+                String code = parts[2];
+                float price = Float.parseFloat(parts[3]);
+                String date = parts[4];
+                boolean active = Boolean.parseBoolean(parts[5]);
+                // Crear un nuevo objeto Products y agregarlo a la lista
+                products.add(new Products(name, code, price, date, active));
+            }
+        } catch (IOException e) {
+            System.out.println("Error leyendo el archivo: " + e.getMessage());
+        }
+        return products;
+    }
+
 }

@@ -1,1 +1,1 @@
-pk,name,code,price,date,active
+pk,purchase_price,date,price,purchased,paidMethod,productPK

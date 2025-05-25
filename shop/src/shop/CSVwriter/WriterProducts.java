@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.LinkedList;
-
 import javax.swing.JOptionPane;
 import shop.models.Products;
 
@@ -60,7 +59,10 @@ public class WriterProducts {
                 String date = parts[4];
                 boolean active = Boolean.parseBoolean(parts[5]);
                 // Crear un nuevo objeto Products y agregarlo a la lista
-                products.add(new Products(name, code, price, date, active));
+                Products newproduct = new Products(name, code, price, date, active);
+                newproduct.setPk(Integer.parseInt(parts[0]));
+                products.add(newproduct);
+                
             }
         } catch (IOException e) {
             System.out.println("Error leyendo el archivo: " + e.getMessage());

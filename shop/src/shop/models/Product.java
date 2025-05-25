@@ -1,25 +1,24 @@
 package shop.models;
 
-import java.util.Date;
-
 public class Product {
     // attributes
     private int pk;
     private float purchase_price;
-    private Date date;
+    private String date;
     private float price;
     private Boolean purchased;
-    private String paidMethod;
+    private int paidMethod;
+    private int products;
 
     // builder
-    public Product(int pk, float purchase_price, float price, Boolean purchased) {
-        this.pk = pk;
-        this.purchase_price = purchase_price;
+    public Product(float price, String date, int paidMethod, int products) {
         this.price = price;
-        this.purchased = purchased;
+        this.paidMethod = paidMethod;
+        this.date = date;
+        this.products = products;
     }
 
-    public Product(int pk, float purchase_price, float price, Boolean purchased, String paidMethod) {
+    public Product(int pk, float purchase_price, float price, Boolean purchased, int paidMethod) {
         this.pk = pk;
         this.purchase_price = purchase_price;
         this.price = price;
@@ -36,12 +35,20 @@ public class Product {
     this.pk = pk;
     }
 
-    public String getPaidMethod() {
-    return paidMethod;
+    public int getPaidMethod() {
+        return paidMethod;
     }
 
-    public void setPaidMethod(String paidMethod) {
-    this.paidMethod = paidMethod;
+    public void setPaidMethod(int paidMethod) {
+        this.paidMethod = paidMethod;
+    }
+
+    public int getProducts() {
+        return products;
+    }
+
+    public void setProducts(int products) {
+        this.products = products;
     }
 
     public float getPurchase_price() {
@@ -52,11 +59,11 @@ public class Product {
         this.purchase_price = purchase_price;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

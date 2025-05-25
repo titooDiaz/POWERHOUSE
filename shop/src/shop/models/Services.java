@@ -118,4 +118,9 @@ public class Services {
         double a = 0;
         return a*1;
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

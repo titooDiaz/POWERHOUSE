@@ -86,4 +86,8 @@ public class Products {
         return products.size();
     }
 
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

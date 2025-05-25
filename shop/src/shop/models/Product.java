@@ -40,7 +40,7 @@ public class Product {
     return paidMethod;
     }
 
-    public void setPaidMethod(int paidMethod) {
+    public void setPaidMethod(String paidMethod) {
     this.paidMethod = paidMethod;
     }
 

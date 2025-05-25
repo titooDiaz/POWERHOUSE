@@ -3,8 +3,8 @@ package shop.swing;
 import java.awt.*;
 import java.util.LinkedList;
 import javax.swing.*;
-import shop.CSVwriter.WriterPaidMethod;
 import shop.models.PaidMethod;
+import shop.CSVwriter.*;
 
 
 public class Buy extends JFrame {
@@ -39,6 +39,7 @@ public class Buy extends JFrame {
     private Color accent = new Color(0, 200, 150);
     private Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
     private Font font = new Font("SansSerif", Font.PLAIN, 14);
+
 
     public Buy() {
         setTitle("PowerApp - Comprar");
@@ -99,8 +100,11 @@ public class Buy extends JFrame {
             columnasPanel.setBackground(Color.GRAY);
             columnasPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 20));
             //COLUMNAS DE A DOS CADA UNO
-            columnasPanel.add(createFieldPanel("Tipo:", new JComboBox<>(), labelFont)); 
-
+            JComboBox<String> tipo = new JComboBox<>();
+            tipo.addItem("producto");
+            tipo.addItem("servicio");
+            columnasPanel.add(createFieldPanel("Tipo:", tipo, labelFont));
+            
             columnasPanel.add(createFieldPanel("Producto:", new JComboBox<>(), labelFont));
 
             columnasPanel.add(createFieldPanel("Cantidad:", new JTextField(), labelFont));
@@ -192,6 +196,3 @@ public class Buy extends JFrame {
         SwingUtilities.invokeLater(() -> new Buy().setVisible(true));
     }
 }
-
-
-

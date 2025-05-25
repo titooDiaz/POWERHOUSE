@@ -138,14 +138,12 @@ public class registerProduct extends JFrame {
                 Products productos = new Products(nombre, codigo, precio, LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), true);
                 WriterProducts.appendProductCSV(productos);
 
-                inventario.panelesProducto();
                 this.dispose();
                 inventario.setVisible(true);
             } else {
                 Services servicios= new Services(nombre, codigo, precio, LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), true);
                 WriterSerivices.appendServicesCSV(servicios);
 
-                inventario.panelesServicio();
                 JOptionPane.showMessageDialog(this, "Servicio registrado correctamente...");
                 this.dispose();
                 inventario.setVisible(true);

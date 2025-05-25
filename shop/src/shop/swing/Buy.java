@@ -16,6 +16,7 @@ public class Buy extends JFrame {
     private JPanel panelDerecho;
     private JPanel panelInferior;
     private JPanel panelTotales;
+    private JPanel panelBotonMetodo;
 
     //labels
     private JLabel foto;
@@ -39,9 +40,11 @@ public class Buy extends JFrame {
     private Color accent = new Color(0, 200, 150);
     private Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
     private Font font = new Font("SansSerif", Font.PLAIN, 14);
+    private Color btnYellow  = new Color(255, 211, 77);
 
 
     public Buy() {
+
         setTitle("PowerApp - Comprar");
         setSize(900, 550);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -85,31 +88,36 @@ public class Buy extends JFrame {
             panelIzquierdo.add(foto);
             panelIzquierdo.add(Box.createVerticalStrut(10));
             panelIzquierdo.add(usuario);
+            panelIzquierdo.add(Box.createVerticalStrut(10));
             panelIzquierdo.add(username);
+            panelIzquierdo.add(Box.createVerticalStrut(10));
             panelIzquierdo.add(email);
+            panelIzquierdo.add(Box.createVerticalStrut(10));
             panelIzquierdo.add(fecha);
         
             //Panel central
-            panelCentral = new RoundedPanel(100);      
+            panelCentral = new JPanel();      
             panelCentral.setBackground(Color.GRAY);
             panelCentral.setPreferredSize(new Dimension(500, 0));
             panelCentral.setLayout(new BoxLayout(panelCentral, BoxLayout.Y_AXIS));
             panelCentral.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-            panelCentral.setBorder(BorderFactory.createLineBorder(new Color(60,60,60) , 10));
+            panelCentral.setBorder(BorderFactory.createLineBorder(new Color(60,60,60) , 20));
+
+            //Panel que contine los text fileds
             columnasPanel = new JPanel(new GridLayout(4, 2, 100, 30)); 
             columnasPanel.setBackground(Color.GRAY);
-            columnasPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 20));
+            columnasPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
             //COLUMNAS DE A DOS CADA UNO
             JComboBox<String> tipo = new JComboBox<>();
             tipo.addItem("producto");
             tipo.addItem("servicio");
             columnasPanel.add(createFieldPanel("Tipo:", tipo, labelFont));
-            
             columnasPanel.add(createFieldPanel("Producto:", new JComboBox<>(), labelFont));
-
             columnasPanel.add(createFieldPanel("Cantidad:", new JTextField(), labelFont));
             columnasPanel.add(createFieldPanel("Fecha vencimiento:", new JTextField(), labelFont));
 
+            //lista de metodos de pago
             LinkedList<PaidMethod> metodos = WriterPaidMethod.loadPaidMethodsFromCSV();
             JComboBox<PaidMethod> metodoPagoCombo = new JComboBox<>();
             columnasPanel.add(createFieldPanel("Método de pago:", metodoPagoCombo, labelFont));
@@ -118,16 +126,37 @@ public class Buy extends JFrame {
                 metodoPagoCombo.addItem(metodo);
             }
 
+            //boton de agregar
             columnasPanel.add(createFieldPanel("Precio:", new JTextField(), labelFont));
-            JButton abrirDialogo = new JButton("Agregar Método de Pago");
-            columnasPanel.add(abrirDialogo);
+            RoundedButton abrirDialogo = new RoundedButton("+Metodo",15);
+            abrirDialogo.setBackground(new Color(50, 100, 200));
+            abrirDialogo.setFont(new Font("SansSerif", Font.PLAIN, 12));
+            abrirDialogo.setForeground(Color.WHITE);
+            abrirDialogo.setFocusPainted(false);
+            abrirDialogo.setPreferredSize(new Dimension(140, 30));
+
+            //panel contenedor de boton de metodo
+            panelBotonMetodo = new JPanel();
+            panelBotonMetodo.setOpaque(false);
+            panelBotonMetodo.setLayout(new FlowLayout(FlowLayout.CENTER));
+            panelBotonMetodo.add(abrirDialogo);
+            columnasPanel.add(panelBotonMetodo);
             abrirDialogo.addActionListener(e -> {
                 AddPaidMethod dialog = new AddPaidMethod(new Buy());
                 dialog.setVisible(true); // Abre la ventana emergente
             });
             
-            
             panelCentral.add(columnasPanel);
+
+
+
+            btnAgregar = new RoundedButton("Agregar", 15);
+            btnAgregar.setBackground(btnYellow);
+            btnAgregar.setForeground(Color.WHITE);
+            btnAgregar.setAlignmentX(Component.CENTER_ALIGNMENT);
+            btnAgregar.setMaximumSize(new Dimension(100, 30)); // más pequeño
+            panelCentral.add(btnAgregar);
+            panelCentral.add(Box.createVerticalStrut(10));
                 
         // Panel derecho: resumen de productos
             panelDerecho = new RoundedPanel(15,new BorderLayout());
@@ -182,6 +211,7 @@ public class Buy extends JFrame {
         RoundedPanel panel = new RoundedPanel(15);
             panel.setLayout(new BorderLayout(0,10)); // espacio entre label y field
             panel.setBackground(Color.GRAY);
+            field.setMinimumSize(new Dimension(20,30));
        
 
         JLabel lbl = new JLabel(label);

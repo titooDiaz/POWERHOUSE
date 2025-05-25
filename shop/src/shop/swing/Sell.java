@@ -113,9 +113,10 @@ public class Sell extends JFrame {
                 panelCentral.add(Box.createVerticalStrut(10));
                 btnAgregar.setBackground(new Color(255, 211, 77));
                 btnAgregar.setBounds(180, 280, 140, 40);
+                btnAgregar.setAlignmentX(Component.CENTER_ALIGNMENT);
                 panelCentral.add(btnAgregar);
                 panelCentral.add(Box.createVerticalStrut(10));
-                btnAgregar.setAlignmentX(Component.CENTER_ALIGNMENT);
+                
 
         // Panel derecho: resumen de productos
             panelDerecho = new JPanel(new BorderLayout());

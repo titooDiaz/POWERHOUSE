@@ -1,9 +1,6 @@
 package shop.swing;
 
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.Writer;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
@@ -22,9 +19,10 @@ public class  Inventory extends JFrame {
     private JPanel north;
     private JPanel south;
     private JPanel panelCentral;
-    private JPanel panelProductos;
-    private JScrollPane panelCategorias;      // para productos
-    private JPanel panelServicios; // para servicios
+    private JScrollPane panelProductos;      // para productos
+    private JScrollPane panelServicios;
+    private JPanel contenidoProductos; 
+    private JPanel contenidoServicios; // para servicios
 
     //labels
     private JLabel txtFecha;
@@ -120,44 +118,53 @@ public class  Inventory extends JFrame {
             c.fill    = GridBagConstraints.BOTH;
             c.insets  = new Insets(5, 5, 5, 5);
 
-        // Panel Productos 
-            panelProductos = new RoundedPanel(30);
-            panelProductos.setLayout(new BoxLayout(panelProductos, BoxLayout.Y_AXIS));
-            panelProductos.setBackground(midGray);
-            panelProductos.setBorder(new EmptyBorder(15, 15, 15, 15));
+       // Panel Productos con scroll
+        contenidoProductos = new JPanel();
+        contenidoProductos.setLayout(new BoxLayout(contenidoProductos, BoxLayout.Y_AXIS));
+        contenidoProductos.setBackground(midGray);
+        contenidoProductos.setBorder(new EmptyBorder(15, 15, 15, 15));
 
-            panelCategorias = createCategoriaPanel("Categoría Producto", labelFont, buttonFont, lightGray, btnRed);
-            panelProductos.add(panelCategorias);
-            panelProductos.add(Box.createVerticalStrut(10));
+        JLabel lblProd = new JLabel("PRODUCTOS");
+        lblProd.setFont(labelFont);
+        lblProd.setForeground(Color.WHITE);
+        lblProd.setAlignmentX(Component.CENTER_ALIGNMENT);
+        contenidoProductos.add(lblProd);
+        contenidoProductos.add(Box.createVerticalStrut(10));
 
-            
+        panelProductos = new JScrollPane(contenidoProductos);
+        panelProductos.setPreferredSize(new Dimension(300, 350));
+        panelProductos.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        panelProductos.setBorder(BorderFactory.createEmptyBorder());
 
-            c.gridx   = 0;
-            c.gridy   = 0;
-            c.weightx = 0.7;
-            c.weighty = 1.0;
-            panelCentral.add(panelProductos, c);
+        c.gridx = 0;
+        c.gridy = 0;
+        c.weightx = 0.7;
+        c.weighty = 1.0;
+        panelCentral.add(panelProductos, c);
 
-        
+        // Panel Servicios con scroll
+        contenidoServicios = new JPanel();
+        contenidoServicios.setLayout(new BoxLayout(contenidoServicios, BoxLayout.Y_AXIS));
+        contenidoServicios.setBackground(midGray);
+        contenidoServicios.setBorder(new EmptyBorder(15, 15, 15, 15));
 
-        //Panel Servicios 
-            panelServicios = new RoundedPanel(30);
-            panelServicios.setLayout(new BoxLayout(panelServicios, BoxLayout.Y_AXIS));
-            panelServicios.setBackground(midGray);
-            panelServicios.setBorder(new EmptyBorder(15, 15, 15, 15));
+        lblServ = new JLabel("SERVICIOS");
+        lblServ.setFont(labelFont);
+        lblServ.setForeground(Color.WHITE);
+        lblServ.setAlignmentX(Component.CENTER_ALIGNMENT);
+        contenidoServicios.add(lblServ);
+        contenidoServicios.add(Box.createVerticalStrut(10));
 
-        // label de panel servicios
-            lblServ = new JLabel("SERVICIOS", SwingConstants.CENTER);
-            lblServ.setFont(labelFont);
-            lblServ.setForeground(Color.WHITE);
-            lblServ.setAlignmentX(Component.CENTER_ALIGNMENT);
-            panelServicios.add(lblServ);
-            panelServicios.add(Box.createVerticalStrut(10));
-       
-            c.gridx   = 1;
-            c.gridy   = 0;
-            c.weightx = 0.3;
-            panelCentral.add(panelServicios, c);
+        panelServicios = new JScrollPane(contenidoServicios);
+        panelServicios.setPreferredSize(new Dimension(300, 350));
+        panelServicios.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        panelServicios.setBorder(BorderFactory.createEmptyBorder());
+
+        c.gridx = 1;
+        c.gridy = 0;
+        c.weightx = 0.3;
+        panelCentral.add(panelServicios, c);
+
 
         // botones 
             south = new JPanel(new GridLayout(1, 3, 10, 0));
@@ -250,6 +257,9 @@ public class  Inventory extends JFrame {
         panelProductos.add(Box.createVerticalStrut(5));
         panelProductos.revalidate();
         panelProductos.repaint();
+        contenidoProductos.add(nuevaFila);
+        contenidoProductos.add(Box.createVerticalStrut(10));
+        productos.add(nuevaFila);
         }
     }
          
@@ -258,38 +268,15 @@ public class  Inventory extends JFrame {
         for (Services s : listaServicios) {    
         RoundedPanel nuevaFila = createFilaServicio(s.getName(), labelFont, labelFont, lightGray, btnBlue, 15);
         panelServicios.add(nuevaFila);
-        panelServicios.add(Box.createVerticalStrut(5));
+        panelServicios.add(Box.createVerticalStrut(10));
         panelServicios.revalidate();
         panelServicios.repaint();
-        System.out.println(listaServicios);
+        contenidoServicios.add(nuevaFila);
+        contenidoServicios.add(Box.createVerticalStrut(10));
+        servicios.add(nuevaFila);
         }
     }
     
-    //panel categoria
- private JScrollPane createCategoriaPanel(String tituloCat,
-                                         Font labelFont, Font btnFont,
-                                         Color bgRow, Color btnColor) {
-    // Panel que contendrá las filas de productos
-    JPanel contenidoScroll = new JPanel();
-    contenidoScroll.setLayout(new BoxLayout(contenidoScroll, BoxLayout.Y_AXIS));
-    contenidoScroll.setBackground(new Color(100, 100, 100));  // midGray
-
-    JLabel lbl = new JLabel(tituloCat);
-    lbl.setFont(labelFont);
-    lbl.setForeground(Color.WHITE);
-    lbl.setAlignmentX(Component.LEFT_ALIGNMENT);
-    contenidoScroll.add(lbl);
-    contenidoScroll.add(Box.createVerticalStrut(8));
-
-    // Este es el panel scrollable
-    JScrollPane scrollPane = new JScrollPane(contenidoScroll);
-    scrollPane.setPreferredSize(new Dimension(300, 350)); // ajusta a tu gusto
-    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-    scrollPane.setBorder(BorderFactory.createEmptyBorder());
-
-    return scrollPane;
-}
-
     // fila producto
     private RoundedPanel createFilaProducto(String name, int cant, Font labelFont, Font btnFont,
                                       Color bgRow, Color btnColor, int radius) {

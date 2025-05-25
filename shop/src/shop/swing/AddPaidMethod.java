@@ -34,7 +34,7 @@ public class AddPaidMethod extends JDialog {
 
         cancelButton.addActionListener(e -> dispose());
 
-        setSize(300, 150);
+        setSize(200, 150);
         setLocationRelativeTo(parent); // Centra respecto a la ventana padre
     }
 }

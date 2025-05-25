@@ -37,6 +37,11 @@ public class TiendaVirtualGUI extends JFrame {
 
         // Etiqueta usuario
         txtUsuario = new JLabel("¡Hola! <Username>");
+        String[] datosUsuario = WriterUsers.leerUsuarioActual();
+        if (datosUsuario != null && datosUsuario.length == 3) {
+            String nombreUsuario = datosUsuario[1]; // 1=usuario guardado
+            txtUsuario.setText("¡Hola! " + nombreUsuario);
+        }
         txtUsuario.setBounds(50, 20, 250, 30);
         txtUsuario.setFont(new Font("Arial", Font.BOLD, 20));
         txtUsuario.setForeground(Color.WHITE);

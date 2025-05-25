@@ -47,39 +47,36 @@ public class WriterUsers {
     }
     // logica de inicio de sesion
     static public Boolean AproveUser(String username, String pass){
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            boolean isFirstLine = true;
+    try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        String line;
+        boolean isFirstLine = true;
 
-            while ((line = br.readLine()) != null) {
-                // Saltar la cabecera
-                if (isFirstLine) {
-                    isFirstLine = false;
-                    continue;
-                }
-
-                String[] fields = line.split(",", -1);
-                if (fields.length > 2) {
-                    String existingUsername = fields[2].trim();
-                    //obtener pk
-                    int pk = Integer.parseInt(fields[0].trim());
-                    guardarPK(pk);
-
-                    if (existingUsername.equals(username)) {
-                        // LA CONTRASEÑA ES CORRECTA?
-                        String password = fields[3].trim();
-                        if (password.equals(pass)){
-                            return true;
-                        }else{
-                            return false;
-                        }
-                    }
-                }
+        while ((line = br.readLine()) != null) {
+            if (isFirstLine) {
+                isFirstLine = false;
+                continue;
             }
+
+            String[] fields = line.split(",", -1);
+            if (fields.length > 3) {
+                String existingUsername = fields[2].trim();
+                String password = fields[3].trim();
+                int pk = Integer.parseInt(fields[0].trim());
+
+                if (existingUsername.equals(username)) {
+                    if (password.equals(pass)) {
+                        guardarUsuarioActual(pk, existingUsername, password);
+                        return true;
+                    } else {
+                        return false;
+                    }
+                  }
+             }
+         }
         } catch (IOException e) {
-            e.printStackTrace();
+        e.printStackTrace();
         }
-        return false;
+    return false;
     }
 
     static public Boolean login(String username, String pass) {
@@ -93,12 +90,24 @@ public class WriterUsers {
         return java.util.UUID.randomUUID().toString();
     }
 
-    public static void guardarPK(int pk) {
-        try (FileWriter escritor = new FileWriter(filePath2, false)) { // sobreescribir
-            escritor.write(pk + "\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void guardarUsuarioActual(int pk, String username, String password) { 
+        try (FileWriter escritor = new FileWriter(filePath2, false)) { 
+            escritor.write(pk + "," + username + "," + password + "\n");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+
+    public static String[] leerUsuarioActual() {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath2))) {
+            String linea = br.readLine();
+            if (linea != null && !linea.trim().isEmpty()) {
+                return linea.split(",", -1); // [pk, username, password]
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    return null;
     }
 
     public static void sobrescribirConCero() {

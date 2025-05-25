@@ -32,13 +32,11 @@ public class registerProduct extends JFrame {
     private JTextField campoNombre;
     private JTextField campoCodigo;
     private JTextField campoPrecio;
-    private Inventory inventario;
 
     
 
-    public registerProduct(Inventory inventorio) {
+    public registerProduct() {
 
-        this.inventario = inventorio;
         comboTipo     = new JComboBox<>(new String[]{"producto", "servicio"});
         campoNombre   = new JTextField();
         campoCodigo   = new JTextField();
@@ -139,14 +137,15 @@ public class registerProduct extends JFrame {
                 WriterProducts.appendProductCSV(productos);
 
                 this.dispose();
-                inventario.setVisible(true);
+                Inventory inv = new Inventory();
+                inv.setVisible(true);
             } else {
                 Services servicios= new Services(nombre, codigo, precio, LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), true);
                 WriterSerivices.appendServicesCSV(servicios);
-
+               
                 JOptionPane.showMessageDialog(this, "Servicio registrado correctamente...");
-                this.dispose();
-                inventario.setVisible(true);
+                Inventory inv = new Inventory();
+                inv.setVisible(true);
             }
             });
     }
@@ -167,6 +166,6 @@ public class registerProduct extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new registerProduct(null).setVisible(true));
+        SwingUtilities.invokeLater(() -> new registerProduct().setVisible(true));
     }
 }

@@ -178,7 +178,7 @@ public class  Inventory extends JFrame {
             btnRegistrar.setFont(buttonFont);
             btnRegistrar.setFocusPainted(false);
             btnRegistrar.addActionListener(e -> {
-                registerProduct registro = new registerProduct(this); // le pasas "this" como Inventory
+                registerProduct registro = new registerProduct(); // le pasas "this" como Inventory
                 registro.setVisible(true);
                 this.dispose(); // O this.dispose() si quieres cerrarla
             });

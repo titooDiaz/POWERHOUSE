@@ -1,8 +1,13 @@
 package shop.swing;
 
 import java.awt.*;
+import java.util.LinkedList;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+
+import shop.CSVwriter.WriterPaidMethod;
+import shop.models.PaidMethod;
 
 
 public class Sell extends JFrame {
@@ -105,8 +110,15 @@ public class Sell extends JFrame {
             columnasPanel.add(createFieldPanel("Producto:", new JComboBox<>(), labelFont));
             columnasPanel.add(createFieldPanel("Código:", new JTextField(), labelFont));
             columnasPanel.add(createFieldPanel("Cantidad:", new JTextField(), labelFont));
-            columnasPanel.add(createFieldPanel("Método de pago:", new JTextField(), labelFont));
-           
+            //lista de metodos de pago
+            LinkedList<PaidMethod> metodos = WriterPaidMethod.loadPaidMethodsFromCSV();
+            JComboBox<PaidMethod> metodoPagoCombo = new JComboBox<>();
+            columnasPanel.add(createFieldPanel("Método de pago:", metodoPagoCombo, labelFont));
+
+            for (PaidMethod metodo : metodos) {
+                metodoPagoCombo.addItem(metodo);
+            }
+
             panelCentral.add(columnasPanel);
           
                 btnAgregar = new RoundedButton("Agregar", 15);

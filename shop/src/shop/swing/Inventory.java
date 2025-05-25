@@ -3,6 +3,7 @@ package shop.swing;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.Writer;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
@@ -10,6 +11,7 @@ import java.util.LinkedList;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import shop.CSVwriter.WriterProducts;
 import shop.models.Products;
 import shop.models.Services;
 
@@ -20,7 +22,7 @@ public class  Inventory extends JFrame {
     private JPanel south;
     private JPanel panelCentral;
     private JPanel panelProductos;
-    private JPanel panelCategorias;      // para productos
+    private JScrollPane panelCategorias;      // para productos
     private JPanel panelServicios; // para servicios
 
     //labels
@@ -39,10 +41,11 @@ public class  Inventory extends JFrame {
     private int relojEliminar;
 
     //listas
-    private LinkedList<Products> listaProductos = new LinkedList<>();
+    private WriterProducts wp = new WriterProducts();
     private LinkedList<Services> listaServicios = new LinkedList<>();
-    public static LinkedList<RoundedPanel> productos= new LinkedList<RoundedPanel>();
-    public static LinkedList<RoundedPanel> servicios = new LinkedList<RoundedPanel>();
+    private LinkedList<Products> listaProductos = new LinkedList<>();
+    LinkedList<RoundedPanel> productos= new LinkedList<RoundedPanel>();
+    LinkedList<RoundedPanel> servicios = new LinkedList<RoundedPanel>();
 
     // Estilos
     Color darkGray   = new Color(60, 60, 60);
@@ -60,6 +63,11 @@ public class  Inventory extends JFrame {
 
 
     public Inventory() {
+
+        //listaServicios = wp.loadFromCSV();
+        
+        listaProductos = wp.loadFromCSV(listaProductos);
+        
         setTitle("PowerApp - Inventario");
         setSize(900, 550);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -227,18 +235,19 @@ public class  Inventory extends JFrame {
 
         add(south,BorderLayout.SOUTH);
         // fin botones
-
+            panelesProducto();
     }
 
-    public void agregarProducto(Products products) {
-        listaProductos.add(products);
-        RoundedPanel nuevaFila = createFilaProducto(products.getName(), products.cantProducts(), labelFont, labelFont  , lightGray, btnBlue, 15);
-        panelCategorias.add(nuevaFila);
-        panelCategorias.add(Box.createVerticalStrut(5));
-        panelCategorias.revalidate();
-        panelCategorias.repaint();;
-        productos.add(nuevaFila);
+    public void panelesProducto() {
+        for (Products p : listaProductos) {    
+        RoundedPanel nuevaFila = createFilaProducto(p.getName(), p.cantProducts(), labelFont, labelFont, lightGray, btnBlue, 15);
+        panelProductos.add(nuevaFila);
+        panelProductos.add(Box.createVerticalStrut(5));
+        panelProductos.revalidate();
+        panelProductos.repaint();
+        }
     }
+         
 
     public void agregarServicio(Services services) {
         listaServicios.add(services);
@@ -250,23 +259,30 @@ public class  Inventory extends JFrame {
         servicios.add(nuevaFila);
     }
     
-    // crea categoría vacía
-    private JPanel createCategoriaPanel(String tituloCat,
-                                        Font labelFont, Font btnFont,
-                                        Color bgRow, Color btnColor) {
-    JPanel catPanel = new JPanel();
-        catPanel.setLayout(new BoxLayout(catPanel, BoxLayout.Y_AXIS));
-        catPanel.setBackground(new Color(100, 100, 100));  // midGray
+    //panel categoria
+ private JScrollPane createCategoriaPanel(String tituloCat,
+                                         Font labelFont, Font btnFont,
+                                         Color bgRow, Color btnColor) {
+    // Panel que contendrá las filas de productos
+    JPanel contenidoScroll = new JPanel();
+    contenidoScroll.setLayout(new BoxLayout(contenidoScroll, BoxLayout.Y_AXIS));
+    contenidoScroll.setBackground(new Color(100, 100, 100));  // midGray
 
     JLabel lbl = new JLabel(tituloCat);
-        lbl.setFont(labelFont);
-        lbl.setForeground(Color.WHITE);
-        lbl.setAlignmentX(Component.LEFT_ALIGNMENT);
-        catPanel.add(lbl);
-        catPanel.add(Box.createVerticalStrut(8));
+    lbl.setFont(labelFont);
+    lbl.setForeground(Color.WHITE);
+    lbl.setAlignmentX(Component.LEFT_ALIGNMENT);
+    contenidoScroll.add(lbl);
+    contenidoScroll.add(Box.createVerticalStrut(8));
 
-        return catPanel;
-    }
+    // Este es el panel scrollable
+    JScrollPane scrollPane = new JScrollPane(contenidoScroll);
+    scrollPane.setPreferredSize(new Dimension(300, 350)); // ajusta a tu gusto
+    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+    scrollPane.setBorder(BorderFactory.createEmptyBorder());
+
+    return scrollPane;
+}
 
     // fila producto
     private RoundedPanel createFilaProducto(String name, int cant, Font labelFont, Font btnFont,

@@ -51,13 +51,16 @@ public class WriterSerivices {
             br.readLine(); // 
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
+                int pk = Integer.parseInt(parts[0]);
                 String name = parts[1];
                 String code = parts[2];
                 float price = Float.parseFloat(parts[3]);
                 String date = parts[4];
                 boolean active = Boolean.parseBoolean(parts[5]);
                 // Crear un nuevo objeto Products y agregarlo a la lista
-                services.add(new Services(name, code, price, date, active));
+                Services servicioNuevo = new Services(name, code, price, date, active);
+                servicioNuevo.setPk(pk);
+                services.add(servicioNuevo);
             }
         } catch (IOException e) {
             System.out.println("Error leyendo el archivo: " + e.getMessage());

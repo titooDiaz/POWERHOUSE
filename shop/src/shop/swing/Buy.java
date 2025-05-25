@@ -7,9 +7,10 @@ import java.util.LinkedList;
 import javax.swing.*;
 import shop.CSVwriter.*;
 import shop.models.PaidMethod;
-import shop.models.Products;
-import shop.models.Services;
 import shop.models.Product;
+import shop.models.Products;
+import shop.models.Service;
+import shop.models.Services;
 
 
 public class Buy extends JFrame {
@@ -37,7 +38,6 @@ public class Buy extends JFrame {
     //botones
     private final JButton volver;
     private final JButton btnConfirmar;
-    private final JButton btnAgregar;
   
     //estilos
     private final Color darkGray = new Color(45, 45, 45);
@@ -46,7 +46,6 @@ public class Buy extends JFrame {
     private final Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
     private final Font font = new Font("SansSerif", Font.PLAIN, 14);
     private final Color btnYellow  = new Color(255, 211, 77);
-
 
 
     public Buy() {
@@ -149,7 +148,7 @@ public class Buy extends JFrame {
             JPanel precioPanel = createFieldPanel("precio:", precio, labelFont);
             columnasPanel.add(precioPanel);
 
-            //boton de agregar metodo
+            //boton de agregar
             RoundedButton abrirDialogo = new RoundedButton("+Metodo",15);
             abrirDialogo.setBackground(new Color(50, 100, 200));
             abrirDialogo.setFont(new Font("SansSerif", Font.PLAIN, 12));
@@ -169,14 +168,6 @@ public class Buy extends JFrame {
             });
             
             panelCentral.add(columnasPanel);
-            //btn agregar al resumen
-                btnAgregar = new RoundedButton("Agregar", 15);
-                panelCentral.add(Box.createVerticalStrut(10));
-                btnAgregar.setBackground(btnYellow);
-                btnAgregar.setBounds(180, 280, 140, 40);
-                btnAgregar.setAlignmentX(Component.CENTER_ALIGNMENT);
-                panelCentral.add(btnAgregar);
-                panelCentral.add(Box.createVerticalStrut(10));
                 
         // Panel derecho: resumen de productos
             panelDerecho = new RoundedPanel(15,new BorderLayout());
@@ -217,6 +208,7 @@ public class Buy extends JFrame {
             btnConfirmar.setForeground(Color.WHITE);
             btnConfirmar.setFont(font);
             btnConfirmar.setFocusPainted(false);
+
             btnConfirmar.addActionListener(e -> {
                 // get all data
                 String canString = getComponentByType(cantidadPanel, JTextField.class).getText();
@@ -232,12 +224,20 @@ public class Buy extends JFrame {
                     System.out.print(pPK);
                     for (int i = 0; i < canINT; i++){
                         // guardar cada producto comprado
-                     Product newProduct = new Product(preINT, date, metINT, pPK);
-                     WriterProduct.appendProductCSV(newProduct);
-                    }
+                        Product newProduct = new Product(preINT, date, metINT, pPK);
+                        WriterProduct.appendProductCSV(newProduct);
+                    }  
                 }else{
-                    Services s = (Services) getComponentByType(metodoP, JComboBox.class).getSelectedItem();
+                    Services s = (Services) getComponentByType(productService, JComboBox.class).getSelectedItem();
                     int sPK = (int) s.getPk();
+                    float price = (float) s.getPrice();
+                    System.out.print(price);
+                    for (int i = 0; i < canINT; i++){
+                        // guardar cada producto comprado
+                        Service newService = new Service(date, metINT, sPK, price);
+                        WriterService.appendProductCSV(newService);
+                    }  
+
                 }
             });
 
@@ -277,7 +277,17 @@ public class Buy extends JFrame {
                         nuevoCombo.addItem(servicio);
                     }
                     productService.remove(oldField);
-                    productService.add(nuevoCombo, BorderLayout.CENTER);   
+                    productService.add(nuevoCombo, BorderLayout.CENTER);
+
+                    JTextField cantPanel = getComponentByType(precioPanel, JTextField.class);
+
+                    cantPanel.setEditable(false);
+                    Services s = (Services) getComponentByType(productService, JComboBox.class).getSelectedItem();
+                    float price = (float) s.getPrice();
+                    
+                    String priceStr = String.valueOf(price);
+                    System.out.println(price);
+                    cantPanel.setText(priceStr);
                 }
 
                 // Actualizar el panel

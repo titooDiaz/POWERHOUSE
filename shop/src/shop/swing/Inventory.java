@@ -12,6 +12,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import shop.CSVwriter.WriterProducts;
+import shop.CSVwriter.WriterSerivices;
 import shop.models.Products;
 import shop.models.Services;
 
@@ -42,10 +43,11 @@ public class  Inventory extends JFrame {
 
     //listas
     private WriterProducts wp = new WriterProducts();
+    private WriterSerivices ws = new WriterSerivices();
     private LinkedList<Services> listaServicios = new LinkedList<>();
     private LinkedList<Products> listaProductos = new LinkedList<>();
-    LinkedList<RoundedPanel> productos= new LinkedList<RoundedPanel>();
-    LinkedList<RoundedPanel> servicios = new LinkedList<RoundedPanel>();
+    private LinkedList<RoundedPanel> productos= new LinkedList<RoundedPanel>();
+    private LinkedList<RoundedPanel> servicios = new LinkedList<RoundedPanel>();
 
     // Estilos
     Color darkGray   = new Color(60, 60, 60);
@@ -64,8 +66,8 @@ public class  Inventory extends JFrame {
 
     public Inventory() {
 
-        //listaServicios = wp.loadFromCSV();
-        
+        //leer cvs para los paneles
+        listaServicios = ws.loadFromCSV(listaServicios);
         listaProductos = wp.loadFromCSV(listaProductos);
         
         setTitle("PowerApp - Inventario");
@@ -235,7 +237,10 @@ public class  Inventory extends JFrame {
 
         add(south,BorderLayout.SOUTH);
         // fin botones
-            panelesProducto();
+        // recordar paneles de productos/servicios
+        panelesProducto();
+        panelesServicio();
+        
     }
 
     public void panelesProducto() {
@@ -249,14 +254,15 @@ public class  Inventory extends JFrame {
     }
          
 
-    public void agregarServicio(Services services) {
-        listaServicios.add(services);
-        RoundedPanel nuevaFila = createFilaServicio(services.getName(),labelFont, labelFont, lightGray, btnBlue, 15);
+    public void panelesServicio() {
+        for (Services s : listaServicios) {    
+        RoundedPanel nuevaFila = createFilaServicio(s.getName(), labelFont, labelFont, lightGray, btnBlue, 15);
         panelServicios.add(nuevaFila);
         panelServicios.add(Box.createVerticalStrut(5));
         panelServicios.revalidate();
         panelServicios.repaint();
-        servicios.add(nuevaFila);
+        System.out.println(listaServicios);
+        }
     }
     
     //panel categoria

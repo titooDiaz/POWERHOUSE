@@ -145,7 +145,7 @@ public class registerProduct extends JFrame {
                 Services servicios= new Services(nombre, codigo, precio, LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), true);
                 WriterSerivices.appendServicesCSV(servicios);
 
-                //inventario.agregarServicio(servicios);
+                inventario.panelesServicio();
                 JOptionPane.showMessageDialog(this, "Servicio registrado correctamente...");
                 this.dispose();
                 inventario.setVisible(true);

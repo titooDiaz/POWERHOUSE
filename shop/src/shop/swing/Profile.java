@@ -14,7 +14,7 @@ public class Profile extends JFrame {
     private JLabel txtFecha;
     private JLabel avatar;
 
-
+    //a
     //botones
     private JButton volver;
 

@@ -31,7 +31,7 @@ public class WriterProducts {
                     products.getCode() + "," +
                     products.getPrice() + "," +
                     products.getDate() + "," +
-                    products.getActive() + ",";
+                    products.getActive();
 
             pw.print(line);
             }

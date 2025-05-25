@@ -32,7 +32,7 @@ public class WriterSerivices {
                     services.getCode() + "," +
                     services.getPrice() + "," +
                     services.getDate() + "," +
-                    services.isActive() + ",";
+                    services.isActive();
             pw.print(line);
             }
 

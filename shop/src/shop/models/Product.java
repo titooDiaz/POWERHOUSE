@@ -9,6 +9,7 @@ public class Product {
     private Date date;
     private float price;
     private Boolean purchased;
+    private String paidMethod;
 
     // builder
     public Product(int pk, float purchase_price, float price, Boolean purchased) {
@@ -18,6 +19,14 @@ public class Product {
         this.purchased = purchased;
     }
 
+    public Product(int pk, float purchase_price, float price, Boolean purchased, String paidMethod) {
+        this.pk = pk;
+        this.purchase_price = purchase_price;
+        this.price = price;
+        this.purchased = purchased;
+        this.paidMethod = paidMethod;
+    }
+
     // getters and setters
     public int getPk() {
     return pk;
@@ -25,6 +34,14 @@ public class Product {
 
     public void setPk(int pk) {
     this.pk = pk;
+    }
+
+    public String getPaidMethod() {
+    return paidMethod;
+    }
+
+    public void setPaidMethod(int paidMethod) {
+    this.paidMethod = paidMethod;
     }
 
     public float getPurchase_price() {

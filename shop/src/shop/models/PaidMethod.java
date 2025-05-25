@@ -5,7 +5,10 @@ public class PaidMethod {
     private String name;
 
     //builder
-    public PaidMethod(int pk, String name) {
+    public PaidMethod(String name) {
+        this.name = name;
+    }
+    public PaidMethod(int pk,String name) {
         this.pk = pk;
         this.name = name;
     }
@@ -27,4 +30,8 @@ public class PaidMethod {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

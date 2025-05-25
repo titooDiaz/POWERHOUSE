@@ -1,7 +1,10 @@
 package shop.swing;
 
 import java.awt.*;
+import java.util.LinkedList;
 import javax.swing.*;
+import shop.CSVwriter.WriterPaidMethod;
+import shop.models.PaidMethod;
 
 
 public class Buy extends JFrame {
@@ -92,35 +95,35 @@ public class Buy extends JFrame {
             panelCentral.setLayout(new BoxLayout(panelCentral, BoxLayout.Y_AXIS));
             panelCentral.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
             panelCentral.setBorder(BorderFactory.createLineBorder(new Color(60,60,60) , 10));
-             
             columnasPanel = new JPanel(new GridLayout(4, 2, 100, 30)); 
             columnasPanel.setBackground(Color.GRAY);
             columnasPanel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 20));
             //COLUMNAS DE A DOS CADA UNO
             columnasPanel.add(createFieldPanel("Tipo:", new JComboBox<>(), labelFont)); 
-            columnasPanel.add(createFieldPanel("Nombre del Producto:", new JTextField(), labelFont));
 
             columnasPanel.add(createFieldPanel("Producto:", new JComboBox<>(), labelFont));
-            columnasPanel.add(createFieldPanel("Código:", new JTextField(), labelFont));
 
             columnasPanel.add(createFieldPanel("Cantidad:", new JTextField(), labelFont));
             columnasPanel.add(createFieldPanel("Fecha vencimiento:", new JTextField(), labelFont));
 
-            columnasPanel.add(createFieldPanel("Método de pago:", new JTextField(), labelFont));
+            LinkedList<PaidMethod> metodos = WriterPaidMethod.loadPaidMethodsFromCSV();
+            JComboBox<PaidMethod> metodoPagoCombo = new JComboBox<>();
+            columnasPanel.add(createFieldPanel("Método de pago:", metodoPagoCombo, labelFont));
+
+            for (PaidMethod metodo : metodos) {
+                metodoPagoCombo.addItem(metodo);
+            }
+
             columnasPanel.add(createFieldPanel("Precio:", new JTextField(), labelFont));
+            JButton abrirDialogo = new JButton("Agregar Método de Pago");
+            columnasPanel.add(abrirDialogo);
+            abrirDialogo.addActionListener(e -> {
+                AddPaidMethod dialog = new AddPaidMethod(new Buy());
+                dialog.setVisible(true); // Abre la ventana emergente
+            });
             
             
             panelCentral.add(columnasPanel);
-          
-                btnAgregar = new RoundedButton("Agregar", 15);
-                panelCentral.add(Box.createVerticalStrut(10));
-                btnAgregar.setBackground(new Color(255, 211, 77));
-                btnAgregar.setBounds(180, 380, 140, 40);
-                panelCentral.add(btnAgregar);
-                panelCentral.add(Box.createVerticalStrut(10));
-                btnAgregar.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-                
                 
         // Panel derecho: resumen de productos
             panelDerecho = new RoundedPanel(15,new BorderLayout());
@@ -156,7 +159,7 @@ public class Buy extends JFrame {
             panelTotales.add(totalProductos);
             panelTotales.add(totalGeneral);
 
-            btnConfirmar = new RoundedButton("Confirmar venta", 15);
+            btnConfirmar = new RoundedButton("Confirmar compras", 15);
             btnConfirmar.setBackground(accent);
             btnConfirmar.setForeground(Color.WHITE);
             btnConfirmar.setFont(font);

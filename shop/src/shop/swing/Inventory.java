@@ -290,12 +290,24 @@ public class  Inventory extends JFrame {
             lblNombre.setFont(labelFont);
             row.add(lblNombre, BorderLayout.WEST);
 
+       /*  RoundedButton btnDet = new RoundedButton("detalles", 15);
+            btnDet.setFont(btnFont);
+            btnDet.setBackground(btnColor);
+            btnDet.setForeground(Color.WHITE);
+            btnDet.setFocusPainted(false);
+        row.add(btnDet, BorderLayout.EAST);*/
         RoundedButton btnDet = new RoundedButton("detalles", 15);
             btnDet.setFont(btnFont);
             btnDet.setBackground(btnColor);
             btnDet.setForeground(Color.WHITE);
             btnDet.setFocusPainted(false);
+            btnDet.addActionListener(e -> {
+        if (btnDet.getText().equalsIgnoreCase("editar")) {
+            mostrarDialogoProducto(name);
+            }
+        });
         row.add(btnDet, BorderLayout.EAST);
+
 
         JLabel lblCant = new JLabel("Cantidad: " + cant);
             lblCant.setFont(labelFont);
@@ -318,11 +330,22 @@ public class  Inventory extends JFrame {
             nombre.setFont(labelFont);
             row.add(nombre, BorderLayout.WEST);
 
-        RoundedButton btnDet = new RoundedButton("detalles", radius);
+        /*RoundedButton btnDet = new RoundedButton("detalles", radius);
             btnDet.setFont(btnFont);
             btnDet.setBackground(btnColor);
             btnDet.setForeground(Color.WHITE);
             btnDet.setFocusPainted(false);
+            row.add(btnDet, BorderLayout.EAST);*/
+            RoundedButton btnDet = new RoundedButton("detalles", radius);
+            btnDet.setFont(btnFont);
+            btnDet.setBackground(btnColor);
+            btnDet.setForeground(Color.WHITE);
+            btnDet.setFocusPainted(false);
+            btnDet.addActionListener(e -> {
+            if (btnDet.getText().equalsIgnoreCase("editar")) {
+                 mostrarDialogServicio(name);
+                }
+            });
             row.add(btnDet, BorderLayout.EAST);
 
         return row;
@@ -344,6 +367,85 @@ public class  Inventory extends JFrame {
         return list;
     
     }
+
+    private void mostrarDialogoProducto(String nombre) {
+        JDialog dialogo = new JDialog(this, "Editar Producto", true);
+        dialogo.setSize(300, 250);
+        dialogo.setResizable(false);
+        dialogo.setLocationRelativeTo(this);
+        dialogo.setLayout(new BorderLayout(10, 10));
+
+        JPanel camposPanel = new JPanel();
+        camposPanel.setLayout(new BoxLayout(camposPanel, BoxLayout.Y_AXIS));
+        camposPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JLabel nombreLabel = new JLabel("Nombre Producto:");
+        JTextField nombreField = new JTextField(nombre);
+        nombreField.setMaximumSize(new Dimension(200, 50)); 
+
+        camposPanel.add(nombreLabel);
+        camposPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+        camposPanel.add(nombreField);
+
+        dialogo.add(camposPanel, BorderLayout.CENTER);
+
+        JPanel botonesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
+        JButton guardarBtn = new JButton("Guardar");
+        JButton cerrarBtn = new JButton("Cerrar");
+
+        guardarBtn.addActionListener(e -> {
+            // falta colocar para guardar información
+            dialogo.dispose();
+        });
+
+        cerrarBtn.addActionListener(e -> dialogo.dispose());
+
+        botonesPanel.add(guardarBtn);
+        botonesPanel.add(cerrarBtn);
+
+        dialogo.add(botonesPanel, BorderLayout.SOUTH);
+        dialogo.setVisible(true);
+    }
+
+    private void mostrarDialogServicio(String nombre) {
+        JDialog dialogo = new JDialog(this, "Editar Servicio", true);
+        dialogo.setSize(300, 250);
+        dialogo.setResizable(false);
+        dialogo.setLocationRelativeTo(this);
+        dialogo.setLayout(new BorderLayout(10, 10));
+
+        JPanel camposPanel = new JPanel();
+        camposPanel.setLayout(new BoxLayout(camposPanel, BoxLayout.Y_AXIS));
+        camposPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JLabel nombreLabel = new JLabel("Nombre Servicio:");
+        JTextField nombreField = new JTextField(nombre);
+        nombreField.setMaximumSize(new Dimension(200, 50)); 
+
+        camposPanel.add(nombreLabel);
+        camposPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+        camposPanel.add(nombreField);
+
+        dialogo.add(camposPanel, BorderLayout.CENTER);
+
+        JPanel botonesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
+        JButton guardarBtn = new JButton("Guardar");
+        JButton cerrarBtn = new JButton("Cerrar");
+
+        guardarBtn.addActionListener(e -> {
+            // falta colocar para guardar información
+            dialogo.dispose();
+        });
+
+        cerrarBtn.addActionListener(e -> dialogo.dispose());
+
+        botonesPanel.add(guardarBtn);
+        botonesPanel.add(cerrarBtn);
+
+        dialogo.add(botonesPanel, BorderLayout.SOUTH);
+        dialogo.setVisible(true);
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             new Inventory().setVisible(true);

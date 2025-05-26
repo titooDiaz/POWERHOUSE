@@ -36,12 +36,8 @@ public class TiendaVirtualGUI extends JFrame {
         getContentPane().setBackground(new Color(60,60,60)); // Fondo oscuro
 
         // Etiqueta usuario
-        txtUsuario = new JLabel("¡Hola! <Username>");
-        String[] datosUsuario = WriterUsers.leerUsuarioActual();
-        if (datosUsuario != null && datosUsuario.length == 3) {
-            String nombreUsuario = datosUsuario[1]; // 1=usuario guardado
-            txtUsuario.setText("¡Hola! " + nombreUsuario);
-        }
+        String username = WriterUsers.obtenerUsernamePorPk();
+        txtUsuario = new JLabel("¡Hola, " + username + "!");
         txtUsuario.setBounds(50, 20, 250, 30);
         txtUsuario.setFont(new Font("Arial", Font.BOLD, 20));
         txtUsuario.setForeground(Color.WHITE);

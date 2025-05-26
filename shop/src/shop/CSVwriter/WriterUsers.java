@@ -47,9 +47,9 @@ public class WriterUsers {
     }
     // logica de inicio de sesion
     static public Boolean AproveUser(String username, String pass){
-    try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-        String line;
-        boolean isFirstLine = true;
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            boolean isFirstLine = true;
 
         while ((line = br.readLine()) != null) {
             if (isFirstLine) {
@@ -71,14 +71,13 @@ public class WriterUsers {
                         return false;
                     }
                   }
-             }
-         }
+                }
+            }
         } catch (IOException e) {
-        e.printStackTrace();
+            e.printStackTrace();
         }
-    return false;
+        return false;
     }
-
     static public Boolean login(String username, String pass) {
         if (AproveUser(username, pass)){
             return true;
@@ -109,6 +108,22 @@ public class WriterUsers {
             }
     return null;
     }
+    
+    public static String obtenerUsernamePorPk() {
+    try (BufferedReader br = new BufferedReader(new FileReader(filePath2))) {
+        String linea = br.readLine();
+        if (linea != null && !linea.trim().isEmpty()) {
+            String[] partes = linea.split(",", -1); // [pk, username, password]
+            if (partes.length >= 2) {
+                return partes[1].trim(); // username
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+    return "Usuario";
+}
 
     public static void sobrescribirConCero() {
         try (FileWriter escritor = new FileWriter(filePath2, false)) {
@@ -117,5 +132,5 @@ public class WriterUsers {
             e.printStackTrace();
         }
     }
-
+    
 }

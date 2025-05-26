@@ -216,7 +216,7 @@ public class Buy extends JFrame {
                 PaidMethod paidmt = (PaidMethod) getComponentByType(metodoP, JComboBox.class).getSelectedItem();
                 int metINT = (int) paidmt.getPk();
                 String preString = getComponentByType(precioPanel, JTextField.class).getText();
-                int preINT = Integer.parseInt(preString);
+                float preINT = Float.parseFloat(preString);
                 String select = (String) tipo.getSelectedItem();
                 if (select.equals("producto")){
                     Products p = (Products) getComponentByType(productService, JComboBox.class).getSelectedItem();
@@ -253,44 +253,56 @@ public class Buy extends JFrame {
         tipo.addActionListener(e -> {
             JLabel label = getComponentByType(productService, JLabel.class);
             Component oldField = getComponentByType(productService, JComboBox.class);
-
             String seleccionado = (String) tipo.getSelectedItem();
+            JTextField cantPanel = getComponentByType(precioPanel, JTextField.class);
 
             if (label != null && oldField != null) {
                 if ("producto".equals(seleccionado)) {
                     WriterProducts writer = new WriterProducts();
                     LinkedList<Products> productos = writer.loadFromCSV(new LinkedList<>());
                     label.setText("Producto:");
+
                     JComboBox<Products> nuevoCombo = new JComboBox<>();
                     for (Products producto : productos) {
                         nuevoCombo.addItem(producto);
                     }
+
+                    // Agrega un listener si también quieres manejar producto seleccionado
+                    nuevoCombo.addActionListener(ev -> {
+                        // aquí puedes poner lógica si necesitas cuando se seleccione un producto
+                        cantPanel.setEditable(true);
+                        cantPanel.setText(""); // o setear algo relacionado con el producto
+                    });
+
                     productService.remove(oldField);
                     productService.add(nuevoCombo, BorderLayout.CENTER);
+                    cantPanel.setEditable(true);
+                    cantPanel.setText("");
+
                 } else if ("servicio".equals(seleccionado)) {
                     WriterSerivices writer = new WriterSerivices();
                     LinkedList<Services> servicios = writer.loadFromCSV(new LinkedList<>());
                     label.setText("Servicio:");
-                    JComboBox<Services> nuevoCombo = new JComboBox<>();
 
+                    JComboBox<Services> nuevoCombo = new JComboBox<>();
                     for (Services servicio : servicios) {
                         nuevoCombo.addItem(servicio);
                     }
+
+                    // reescribir funcion
+                    nuevoCombo.addActionListener(ev -> {
+                        Services s = (Services) nuevoCombo.getSelectedItem();
+                        if (s != null) {
+                            float price = (float) s.getPrice();
+                            String priceStr = String.valueOf(price);
+                            System.out.println(price);
+                            cantPanel.setText(priceStr);
+                        }
+                    });
                     productService.remove(oldField);
                     productService.add(nuevoCombo, BorderLayout.CENTER);
-
-                    JTextField cantPanel = getComponentByType(precioPanel, JTextField.class);
-
                     cantPanel.setEditable(false);
-                    Services s = (Services) getComponentByType(productService, JComboBox.class).getSelectedItem();
-                    float price = (float) s.getPrice();
-                    
-                    String priceStr = String.valueOf(price);
-                    System.out.println(price);
-                    cantPanel.setText(priceStr);
                 }
-
-                // Actualizar el panel
                 productService.revalidate();
                 productService.repaint();
             }

@@ -2,11 +2,9 @@ package shop.swing;
 
 import java.awt.*;
 import java.util.LinkedList;
-
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-
 import shop.CSVwriter.WriterPaidMethod;
+import shop.CSVwriter.WriterUsers;
 import shop.models.PaidMethod;
 
 
@@ -30,6 +28,11 @@ public class Sell extends JFrame {
     private JLabel resumenArea;
     private JLabel totalProductos;
     private JLabel totalGeneral;
+
+    //imagen
+    private ImageIcon originalIcon;
+    private Image scaledImage;
+    private ImageIcon resizedIcon;
 
     //botones
     private JButton volver;
@@ -65,33 +68,43 @@ public class Sell extends JFrame {
         });
 
         // Panel izquierdo: información del usuario
-            panelIzquierdo = new JPanel();
+            panelIzquierdo = new RoundedPanel(30);
             panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
             panelIzquierdo.setPreferredSize(new Dimension(200, 0));
             panelIzquierdo.setBackground(new Color(100,100,100));
-            panelIzquierdo.setBorder(new EmptyBorder(20, 10, 20, 10));
             panelIzquierdo.setBorder(BorderFactory.createLineBorder(new Color(60,60,60) , 10));
 
-            foto = new JLabel(new ImageIcon("usuario.png"));
-            usuario = new JLabel("<Usuario>");
-            username = new JLabel("<username>");
-            email = new JLabel("<email>");
-            fecha = new JLabel("<current date>");
+            String name = WriterUsers.obtenerCampoPorPk(2);
+            String usernameString = WriterUsers.obtenerCampoPorPk(1);
+            String emailString= WriterUsers.obtenerCampoPorPk(4);
 
 
-        for (JLabel label : new JLabel[]{usuario, username, email, fecha}) {
+            originalIcon = new ImageIcon(getClass().getResource("/resources/images/user-interface.png"));
+            scaledImage = originalIcon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+            resizedIcon = new ImageIcon(scaledImage);
+
+            foto = new JLabel(resizedIcon);
+            foto.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            usuario = new JLabel(name);
+            username = new JLabel(usernameString);
+            email = new JLabel(emailString);
+
+        for (JLabel label : new JLabel[]{usuario, username, email}) {
             label.setForeground(Color.WHITE);
             label.setAlignmentX(Component.CENTER_ALIGNMENT);
             label.setFont(font);
         }
 
-            panelIzquierdo.add(Box.createVerticalStrut(50));
+            panelIzquierdo.add(Box.createVerticalStrut(60));
             panelIzquierdo.add(foto);
             panelIzquierdo.add(Box.createVerticalStrut(10));
             panelIzquierdo.add(usuario);
+            panelIzquierdo.add(Box.createVerticalStrut(10));
             panelIzquierdo.add(username);
+            panelIzquierdo.add(Box.createVerticalStrut(10));
             panelIzquierdo.add(email);
-            panelIzquierdo.add(fecha);
+            panelIzquierdo.add(Box.createVerticalStrut(10));
 
            //Panel central
             panelCentral = new RoundedPanel(100);      

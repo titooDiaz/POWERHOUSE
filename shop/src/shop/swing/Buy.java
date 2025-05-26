@@ -24,11 +24,15 @@ public class Buy extends JFrame {
     private final JPanel panelTotales;
     private final JPanel panelBotonMetodo;
 
+
+    private ImageIcon originalIcon;
+    private Image scaledImage;
+    private ImageIcon resizedIcon;
+
     //labels
     private final JLabel foto;
     private final JLabel usuario;
     private final JLabel username;
-    private final JLabel fecha;
     private final JLabel email;
     private final JLabel resumenLabel;
     private final JLabel resumenArea;
@@ -45,7 +49,6 @@ public class Buy extends JFrame {
     private final Color accent = new Color(0, 200, 150);
     private final Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
     private final Font font = new Font("SansSerif", Font.PLAIN, 14);
-    private final Color btnYellow  = new Color(255, 211, 77);
 
 
     public Buy() {
@@ -78,19 +81,29 @@ public class Buy extends JFrame {
             panelIzquierdo.setBackground(new Color(100,100,100));
             panelIzquierdo.setBorder(BorderFactory.createLineBorder(new Color(60,60,60) , 10));
 
-            foto = new JLabel(new ImageIcon("usuario.png"));
-            usuario = new JLabel("<Usuario>");
-            username = new JLabel("<username>");
-            email = new JLabel("<email>");
-            fecha = new JLabel("<current date>");
+            String name = WriterUsers.obtenerCampoPorPk(2);
+            String usernameString = WriterUsers.obtenerCampoPorPk(1);
+            String emailString= WriterUsers.obtenerCampoPorPk(4);
 
-        for (JLabel label : new JLabel[]{usuario, username, email, fecha}) {
+
+            originalIcon = new ImageIcon(getClass().getResource("/resources/images/user-interface.png"));
+            scaledImage = originalIcon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+            resizedIcon = new ImageIcon(scaledImage);
+
+            foto = new JLabel(resizedIcon);
+            foto.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            usuario = new JLabel(name);
+            username = new JLabel(usernameString);
+            email = new JLabel(emailString);
+
+        for (JLabel label : new JLabel[]{usuario, username, email}) {
             label.setForeground(Color.WHITE);
             label.setAlignmentX(Component.CENTER_ALIGNMENT);
             label.setFont(font);
         }
 
-            panelIzquierdo.add(Box.createVerticalStrut(50));
+            panelIzquierdo.add(Box.createVerticalStrut(60));
             panelIzquierdo.add(foto);
             panelIzquierdo.add(Box.createVerticalStrut(10));
             panelIzquierdo.add(usuario);
@@ -99,8 +112,7 @@ public class Buy extends JFrame {
             panelIzquierdo.add(Box.createVerticalStrut(10));
             panelIzquierdo.add(email);
             panelIzquierdo.add(Box.createVerticalStrut(10));
-            panelIzquierdo.add(fecha);
-        
+
             //Panel central
             panelCentral = new JPanel();      
             panelCentral.setBackground(Color.GRAY);

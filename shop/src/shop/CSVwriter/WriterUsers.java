@@ -1,6 +1,7 @@
 package shop.CSVwriter;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -67,7 +68,7 @@ public class WriterUsers {
                 if (existingUsername.equals(username)) {
                     if (password.equals(pass)) {
                         pkString = fields[0].trim();
-                        guardarUsuarioActual(fields[0]);
+                       guardarUsuarioActual();
                         return true;
                     } else {
                         return false;
@@ -92,9 +93,9 @@ public class WriterUsers {
         return java.util.UUID.randomUUID().toString();
     }
 
-    public static void guardarUsuarioActual(String pk) { 
+    public static void guardarUsuarioActual() { 
         try (FileWriter escritor = new FileWriter(filePath2, false)) { 
-            escritor.write(obtenerLineaPorPk(pk));
+            escritor.write(obtenerLineaPorPk(pkString));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -126,13 +127,27 @@ public class WriterUsers {
         }
     }
 
+    public static Boolean IsInSession() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(new File(filePath2)))) {
+            if (!reader.readLine().equals("0")){
+                return true;
+            }else{
+                return false;
+            }
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public static String obtenerCampoPorPk(int posicionCampo) {
-    try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+    try (BufferedReader br = new BufferedReader(new FileReader(filePath2))) {
         String linea;
         while ((linea = br.readLine()) != null) {
             if (!linea.trim().isEmpty()) {
                 String[] partes = linea.split(",");
-                if (partes.length > posicionCampo && partes[0].equals(pkString)) {
+                if (partes.length > posicionCampo && partes[0].equals(partes[0])) {
                     return partes[posicionCampo]; // Retorna el campo deseado
                 }
             }

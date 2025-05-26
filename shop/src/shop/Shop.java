@@ -2,6 +2,7 @@ package shop;
 
 import javax.swing.JOptionPane;
 import shop.CSVwriter.PkManager;
+import shop.CSVwriter.WriterUsers;
 import shop.swing.*;
 
 public class Shop {
@@ -13,8 +14,13 @@ public class Shop {
                 JOptionPane.showMessageDialog(null, "Error, no se obtuvo el pk", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 if (currentPk != 1){
-                    Login login = new Login();
-                    login.setVisible(true);
+                    if (WriterUsers.IsInSession()){
+                        TiendaVirtualGUI home = new TiendaVirtualGUI();
+                        home.setVisible(true);
+                    }else{
+                        Login login = new Login();
+                        login.setVisible(true);
+                    }
                 }else{
                     AddUser register = new AddUser();
                     register.setVisible(true);

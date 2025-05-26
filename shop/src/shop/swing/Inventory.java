@@ -267,7 +267,7 @@ public class  Inventory extends JFrame {
 
     public void panelesServicio() {
         for (Services s : listaServicios) {    
-        RoundedPanel nuevaFila = createFilaServicio(s.getName(), labelFont, labelFont, lightGray, btnBlue, 15);
+        RoundedPanel nuevaFila = createFilaServicio(s.getName(), s.getPrice(),labelFont, labelFont, lightGray, btnBlue, 15);
         panelServicios.add(nuevaFila);
         panelServicios.add(Box.createVerticalStrut(10));
         panelServicios.revalidate();
@@ -291,12 +291,6 @@ public class  Inventory extends JFrame {
             lblNombre.setFont(labelFont);
             row.add(lblNombre, BorderLayout.WEST);
 
-       /*  RoundedButton btnDet = new RoundedButton("detalles", 15);
-            btnDet.setFont(btnFont);
-            btnDet.setBackground(btnColor);
-            btnDet.setForeground(Color.WHITE);
-            btnDet.setFocusPainted(false);
-        row.add(btnDet, BorderLayout.EAST);*/
         RoundedButton btnDet = new RoundedButton("detalles", 15);
             btnDet.setFont(btnFont);
             btnDet.setBackground(btnColor);
@@ -306,7 +300,11 @@ public class  Inventory extends JFrame {
             if (btnDet.getText().equalsIgnoreCase("editar")) {
                 mostrarDialogoProducto(name);
             } else {
-                mostrarDetallesProducto(name, cant, price, code);
+                if(btnDet.getText().equalsIgnoreCase("detalles")){
+                    mostrarDetallesProducto(name, cant, price, code);
+                }else{
+
+                }    
             }
         });
         row.add(btnDet, BorderLayout.EAST);
@@ -320,7 +318,7 @@ public class  Inventory extends JFrame {
     }
 
     // fila servicio
-    private RoundedPanel createFilaServicio(String name,
+    private RoundedPanel createFilaServicio(String name, float price,
                                       Font labelFont, Font btnFont,
                                       Color bgRow, Color btnColor, int radius) {
         RoundedPanel row = new RoundedPanel(15);
@@ -333,12 +331,7 @@ public class  Inventory extends JFrame {
             nombre.setFont(labelFont);
             row.add(nombre, BorderLayout.WEST);
 
-        /*RoundedButton btnDet = new RoundedButton("detalles", radius);
-            btnDet.setFont(btnFont);
-            btnDet.setBackground(btnColor);
-            btnDet.setForeground(Color.WHITE);
-            btnDet.setFocusPainted(false);
-            row.add(btnDet, BorderLayout.EAST);*/
+
             RoundedButton btnDet = new RoundedButton("detalles", radius);
             btnDet.setFont(btnFont);
             btnDet.setBackground(btnColor);
@@ -347,6 +340,10 @@ public class  Inventory extends JFrame {
             btnDet.addActionListener(e -> {
             if (btnDet.getText().equalsIgnoreCase("editar")) {
                  mostrarDialogServicio(name);
+                }else{
+                    if(btnDet.getText().equalsIgnoreCase("detalles")){
+                        mostrarDetallesServicio(name, price);
+                    }
                 }
             });
             row.add(btnDet, BorderLayout.EAST);
@@ -525,6 +522,49 @@ public class  Inventory extends JFrame {
         dialogo.add(panel);
         dialogo.setVisible(true);
 
+    }
+
+    private void mostrarDetallesServicio(String nombre, float precio){
+        JDialog dialogo = new JDialog(this, "Detalles Servicio", true);
+        dialogo.setSize(300, 250);
+        dialogo.setResizable(false);
+        dialogo.setLocationRelativeTo(this);
+        dialogo.setLayout(new BorderLayout(10, 10));
+        
+        //panel para colocar los labels
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5,5,5,5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        Border border = BorderFactory.createLineBorder(Color.GRAY);
+        
+        //label servicio
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(new JLabel("Nombre Servicio:"), gbc);
+        gbc.gridx = 1;
+        JLabel nombreField = crearCampoFijo(nombre, new Dimension(225,30), border);
+        nombreField.setBorder(border);
+        nombreField.setOpaque(true);
+        nombreField.setBackground(Color.WHITE);
+        panel.add(nombreField, gbc);
+
+        //label precio
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        panel.add(new JLabel("Precio:"));
+        gbc.gridx = 1;
+        JLabel precioField = crearCampoFijo(String.format("%.2f", precio),new Dimension(225,30), border);
+        precioField.setBorder(border);
+        precioField.setOpaque(true);
+        precioField.setBackground(Color.WHITE);
+        panel.add(precioField, gbc);
+
+        dialogo.add(panel);
+        dialogo.setVisible(true);
     }
 
     public static void main(String[] args) {

@@ -122,7 +122,7 @@ public class Buy extends JFrame {
             panelCentral.setBorder(BorderFactory.createLineBorder(new Color(60,60,60) , 20));
 
             //Panel que contine los text fileds
-            columnasPanel = new JPanel(new GridLayout(4, 2, 100, 30)); 
+            columnasPanel = new JPanel(new GridLayout(6, 0, 10, 5)); 
             columnasPanel.setBackground(Color.GRAY);
             columnasPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
@@ -157,10 +157,10 @@ public class Buy extends JFrame {
             }
 
             JTextField precio = new JTextField();
-            JPanel precioPanel = createFieldPanel("precio:", precio, labelFont);
+            JPanel precioPanel = createFieldPanel("precio de compra:", precio, labelFont);
             columnasPanel.add(precioPanel);
 
-            //boton de agregar
+            //boton de agregar metodo de pago
             RoundedButton abrirDialogo = new RoundedButton("+Metodo",15);
             abrirDialogo.setBackground(new Color(50, 100, 200));
             abrirDialogo.setFont(new Font("SansSerif", Font.PLAIN, 12));
@@ -307,7 +307,6 @@ public class Buy extends JFrame {
                         if (s != null) {
                             float price = (float) s.getPrice();
                             String priceStr = String.valueOf(price);
-                            System.out.println(price);
                             cantPanel.setText(priceStr);
                         }
                     });

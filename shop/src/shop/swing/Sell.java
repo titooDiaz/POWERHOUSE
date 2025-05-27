@@ -1,60 +1,58 @@
 package shop.swing;
 
 import java.awt.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import javax.swing.*;
-import shop.CSVwriter.WriterPaidMethod;
-import shop.CSVwriter.WriterUsers;
+import shop.CSVwriter.*;
 import shop.models.PaidMethod;
-
+import shop.models.Product;
+import shop.models.Products;
 
 public class Sell extends JFrame {
 
-    //paneles
-    private JPanel panelIzquierdo;
-    private JPanel panelCentral;
-    private JPanel columnasPanel;
-    private JPanel panelDerecho;
-    private JPanel panelInferior;
-    private JPanel panelTotales;
+    private final JPanel panelIzquierdo;
+    private final JPanel panelCentral;
+    private final JPanel columnasPanel;
+    private final JPanel panelDerecho;
+    private final JPanel panelInferior;
+    private final JPanel panelTotales;
+    private final JPanel panelBotonMetodo;
 
-    //labels
-    private JLabel foto;
-    private JLabel usuario;
-    private JLabel username;
-    private JLabel fecha;
-    private JLabel email;
-    private JLabel resumenLabel;
-    private JLabel resumenArea;
-    private JLabel totalProductos;
-    private JLabel totalGeneral;
-
-    //imagen
     private ImageIcon originalIcon;
     private Image scaledImage;
     private ImageIcon resizedIcon;
 
-    //botones
-    private JButton volver;
-    private JButton btnAgregar;
-    private JButton btnConfirmar;
-  
-    //estilos
-    private Color darkGray = new Color(45, 45, 45);
-    private Color lightGray = new Color(230, 230, 230);
-    private Color accent = new Color(0, 200, 150);
-    private Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
-    private Font font = new Font("SansSerif", Font.PLAIN, 14);
+    private final JLabel foto;
+    private final JLabel usuario;
+    private final JLabel username;
+    private final JLabel email;
+    private final JLabel resumenLabel;
+    private final JLabel resumenArea;
+    private final JLabel totalProductos;
+    private final JLabel totalGeneral;
+
+    private final JButton volver;
+    private final JButton btnConfirmar;
+
+    private final Color darkGray = new Color(45, 45, 45);
+    private final Color lightGray = new Color(230, 230, 230);
+    private final Color accent = new Color(0, 200, 150);
+    private final Font labelFont = new Font("SansSerif", Font.PLAIN, 14);
+    private final Font font = new Font("SansSerif", Font.PLAIN, 14);
 
     public Sell() {
+
         setTitle("PowerApp - Vender");
         setSize(900, 550);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
-        getContentPane().setBackground(new Color(60,60,60));
+        getContentPane().setBackground(new Color(60, 60, 60));
+        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
-        // Boton volver
+        //boton volver
         volver = new RoundedButton("< volver", 15);
         volver.setBounds(50, 30, 100, 30);
         volver.setBackground(Color.DARK_GRAY);
@@ -67,28 +65,27 @@ public class Sell extends JFrame {
             this.dispose();
         });
 
-        // Panel izquierdo: información del usuario
-            panelIzquierdo = new RoundedPanel(30);
-            panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
-            panelIzquierdo.setPreferredSize(new Dimension(200, 0));
-            panelIzquierdo.setBackground(new Color(100,100,100));
-            panelIzquierdo.setBorder(BorderFactory.createLineBorder(new Color(60,60,60) , 10));
+        //panel de datos
+        panelIzquierdo = new RoundedPanel(30);
+        panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
+        panelIzquierdo.setPreferredSize(new Dimension(200, 0));
+        panelIzquierdo.setBackground(new Color(100, 100, 100));
+        panelIzquierdo.setBorder(BorderFactory.createLineBorder(new Color(60, 60, 60), 10));
 
-            String name = WriterUsers.obtenerCampoPorPk(2);
-            String usernameString = WriterUsers.obtenerCampoPorPk(1);
-            String emailString= WriterUsers.obtenerCampoPorPk(4);
+        String name = WriterUsers.obtenerCampoPorPk(2);
+        String usernameString = WriterUsers.obtenerCampoPorPk(1);
+        String emailString = WriterUsers.obtenerCampoPorPk(4);
 
+        originalIcon = new ImageIcon(getClass().getResource("/resources/images/user-interface.png"));
+        scaledImage = originalIcon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+        resizedIcon = new ImageIcon(scaledImage);
 
-            originalIcon = new ImageIcon(getClass().getResource("/resources/images/user-interface.png"));
-            scaledImage = originalIcon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
-            resizedIcon = new ImageIcon(scaledImage);
+        foto = new JLabel(resizedIcon);
+        foto.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-            foto = new JLabel(resizedIcon);
-            foto.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-            usuario = new JLabel(name);
-            username = new JLabel(usernameString);
-            email = new JLabel(emailString);
+        usuario = new JLabel(name);
+        username = new JLabel(usernameString);
+        email = new JLabel(emailString);
 
         for (JLabel label : new JLabel[]{usuario, username, email}) {
             label.setForeground(Color.WHITE);
@@ -96,120 +93,162 @@ public class Sell extends JFrame {
             label.setFont(font);
         }
 
-            panelIzquierdo.add(Box.createVerticalStrut(60));
-            panelIzquierdo.add(foto);
-            panelIzquierdo.add(Box.createVerticalStrut(10));
-            panelIzquierdo.add(usuario);
-            panelIzquierdo.add(Box.createVerticalStrut(10));
-            panelIzquierdo.add(username);
-            panelIzquierdo.add(Box.createVerticalStrut(10));
-            panelIzquierdo.add(email);
-            panelIzquierdo.add(Box.createVerticalStrut(10));
+        panelIzquierdo.add(Box.createVerticalStrut(60));
+        panelIzquierdo.add(foto);
+        panelIzquierdo.add(Box.createVerticalStrut(10));
+        panelIzquierdo.add(usuario);
+        panelIzquierdo.add(Box.createVerticalStrut(10));
+        panelIzquierdo.add(username);
+        panelIzquierdo.add(Box.createVerticalStrut(10));
+        panelIzquierdo.add(email);
+        // panel de info
+        panelCentral = new JPanel();
+        panelCentral.setBackground(Color.GRAY);
+        panelCentral.setPreferredSize(new Dimension(500, 0));
+        panelCentral.setLayout(new BoxLayout(panelCentral, BoxLayout.Y_AXIS));
+        panelCentral.setBorder(BorderFactory.createLineBorder(new Color(60, 60, 60), 20));
+        //panel de columnas donde va cada dato
+        columnasPanel = new JPanel(new GridLayout(6, 0, 10, 5));
+        columnasPanel.setBackground(Color.GRAY);
+        columnasPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-           //Panel central
-            panelCentral = new RoundedPanel(100);      
-            panelCentral.setBackground(Color.GRAY);
-            panelCentral.setPreferredSize(new Dimension(500, 0));
-            panelCentral.setLayout(new BoxLayout(panelCentral, BoxLayout.Y_AXIS));
-            panelCentral.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-            panelCentral.setBorder(BorderFactory.createLineBorder(new Color(60,60,60) , 10));
-             
-            columnasPanel = new JPanel(new GridLayout(6, 0, 10, 5)); 
-            columnasPanel.setBackground(Color.GRAY);
-            columnasPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-            //COLUMNAS DE A DOS CADA UNO
-            columnasPanel.add(createFieldPanel("Tipo:", new JComboBox<>(), labelFont)); 
-            columnasPanel.add(createFieldPanel("Nombre del Producto:", new JTextField(), labelFont));
-            columnasPanel.add(createFieldPanel("Producto:", new JComboBox<>(), labelFont));
-            columnasPanel.add(createFieldPanel("Código:", new JTextField(), labelFont));
-            columnasPanel.add(createFieldPanel("Cantidad:", new JTextField(), labelFont));
-            //lista de metodos de pago
-            LinkedList<PaidMethod> metodos = WriterPaidMethod.loadPaidMethodsFromCSV();
-            JComboBox<PaidMethod> metodoPagoCombo = new JComboBox<>();
-            columnasPanel.add(createFieldPanel("Método de pago:", metodoPagoCombo, labelFont));
+        JLabel tipo = new JLabel("Producto");
+        tipo.setOpaque(true);
+        tipo.setBackground(Color.WHITE);
+        columnasPanel.add(createFieldPanel("Tipo:", tipo, labelFont));
 
-            for (PaidMethod metodo : metodos) {
-                metodoPagoCombo.addItem(metodo);
+        JComboBox<Products> productosLabel = new JComboBox<>();
+        JPanel productService = createFieldPanel("Producto:", productosLabel, labelFont);
+        columnasPanel.add(productService);
+        // añadir productos al combo box
+        WriterProducts writer = new WriterProducts();
+        LinkedList<Products> productos = writer.loadFromCSV(new LinkedList<>());
+        for (Products producto : productos) {
+            productosLabel.addItem(producto);
+        }
+
+        JTextField cantidad = new JTextField();
+        JPanel cantidadPanel = createFieldPanel("Cantidad:", cantidad, labelFont);
+        columnasPanel.add(cantidadPanel);
+
+        LinkedList<PaidMethod> metodos = WriterPaidMethod.loadPaidMethodsFromCSV();
+        JComboBox<PaidMethod> metodoPagoCombo = new JComboBox<>();
+        JPanel metodoP = createFieldPanel("Método de pago:", metodoPagoCombo, labelFont);
+        columnasPanel.add(metodoP);
+
+        for (PaidMethod metodo : metodos) {
+            metodoPagoCombo.addItem(metodo);
+        }
+
+        JTextField precio = new JTextField();
+        precio.setEditable(false);
+        JPanel precioPanel = createFieldPanel("Precio:", precio, labelFont);
+        columnasPanel.add(precioPanel);
+        //logica para que se ponga el precio
+        productosLabel.addActionListener(ev -> {
+            Products seleccionado = (Products) productosLabel.getSelectedItem();
+            if (seleccionado != null) {
+                float price = (float) seleccionado.getPrice();
+                precio.setText(String.valueOf(price));
             }
+        });
 
-            panelCentral.add(columnasPanel);
-          
-                btnAgregar = new RoundedButton("Agregar", 15);
-                panelCentral.add(Box.createVerticalStrut(10));
-                btnAgregar.setBackground(new Color(255, 211, 77));
-                btnAgregar.setBounds(180, 280, 140, 40);
-                btnAgregar.setAlignmentX(Component.CENTER_ALIGNMENT);
-                panelCentral.add(btnAgregar);
-                panelCentral.add(Box.createVerticalStrut(10));
-                
+        RoundedButton abrirDialogo = new RoundedButton("+Metodo", 15);
+        abrirDialogo.setBackground(new Color(50, 100, 200));
+        abrirDialogo.setFont(new Font("SansSerif", Font.PLAIN, 12));
+        abrirDialogo.setForeground(Color.WHITE);
+        abrirDialogo.setFocusPainted(false);
+        abrirDialogo.setPreferredSize(new Dimension(140, 30));
 
-        // Panel derecho: resumen de productos
-            panelDerecho = new JPanel(new BorderLayout());
-            panelDerecho.setPreferredSize(new Dimension(200, 0));
-            panelDerecho.setBackground(lightGray);
-            panelDerecho.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
-            panelDerecho.setBorder(BorderFactory.createLineBorder(new Color(60,60,60) , 10));
+        panelBotonMetodo = new JPanel();
+        panelBotonMetodo.setOpaque(false);
+        panelBotonMetodo.setLayout(new FlowLayout(FlowLayout.CENTER));
+        panelBotonMetodo.add(abrirDialogo);
+        columnasPanel.add(panelBotonMetodo);
+        abrirDialogo.addActionListener(e -> {
+            AddPaidMethod dialog = new AddPaidMethod(new Buy());
+            dialog.setVisible(true);
+        });
 
-            resumenLabel = new JLabel("Resumen");
-            resumenLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
-            resumenLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        panelCentral.add(columnasPanel);
+        // panel derecho
+        panelDerecho = new RoundedPanel(15, new BorderLayout());
+        panelDerecho.setPreferredSize(new Dimension(200, 0));
+        panelDerecho.setBackground(lightGray);
+        panelDerecho.setBorder(BorderFactory.createLineBorder(new Color(60, 60, 60), 10));
 
-            resumenArea = new JLabel();
-            resumenArea.setFont(font);
-            panelDerecho.add(resumenLabel, BorderLayout.NORTH);
-            panelDerecho.add(new JScrollPane(resumenArea), BorderLayout.CENTER);
+        resumenLabel = new JLabel("Resumen");
+        resumenLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
+        resumenLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        // Panel inferior: total y botón de confirmar
-            panelInferior = new RoundedPanel(16, new BorderLayout());
-            panelInferior.setPreferredSize(new Dimension(900, 70));
-            panelInferior.setBackground(darkGray);
-            panelInferior.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        resumenArea = new JLabel();
+        resumenArea.setFont(font);
+        panelDerecho.add(resumenLabel, BorderLayout.NORTH);
+        panelDerecho.add(new JScrollPane(resumenArea), BorderLayout.CENTER);
 
-            totalProductos = new JLabel("TOTAL PRODUCTOS: <total>");
-            totalGeneral = new JLabel("TOTAL: <total>");
-            totalProductos.setForeground(Color.WHITE);
-            totalGeneral.setForeground(Color.WHITE);
-            totalProductos.setFont(font);
-            totalGeneral.setFont(font);
+        panelInferior = new RoundedPanel(16, new BorderLayout());
+        panelInferior.setPreferredSize(new Dimension(900, 70));
+        panelInferior.setBackground(darkGray);
+        panelInferior.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
-            panelTotales = new JPanel(new GridLayout(2, 1));
-            panelTotales.setOpaque(false);
-            panelTotales.add(totalProductos);
-            panelTotales.add(totalGeneral);
+        totalProductos = new JLabel("TOTAL PRODUCTOS: <total>");
+        totalGeneral = new JLabel("TOTAL: <total>");
+        totalProductos.setForeground(Color.WHITE);
+        totalGeneral.setForeground(Color.WHITE);
+        totalProductos.setFont(font);
+        totalGeneral.setFont(font);
 
-            btnConfirmar = new RoundedButton("Confirmar venta", 15);
-            btnConfirmar.setBackground(accent);
-            btnConfirmar.setForeground(Color.WHITE);
-            btnConfirmar.setFont(font);
-            btnConfirmar.setFocusPainted(false);
+        panelTotales = new JPanel(new GridLayout(2, 1));
+        panelTotales.setOpaque(false);
+        panelTotales.add(totalProductos);
+        panelTotales.add(totalGeneral);
 
-            panelInferior.add(panelTotales, BorderLayout.WEST);
-            panelInferior.add(btnConfirmar, BorderLayout.EAST);
+        btnConfirmar = new RoundedButton("Confirmar compras", 15);
+        btnConfirmar.setBackground(accent);
+        btnConfirmar.setForeground(Color.WHITE);
+        btnConfirmar.setFont(font);
+        btnConfirmar.setFocusPainted(false);
 
-        // Agregar todo al JFrame
+        btnConfirmar.addActionListener(e -> {
+            String canString = cantidad.getText();
+            int canINT = Integer.parseInt(canString);
+            PaidMethod paidmt = (PaidMethod) metodoPagoCombo.getSelectedItem();
+            int metINT = paidmt.getPk();
+            float preINT = Float.parseFloat(precio.getText());
+            Products p = (Products) productosLabel.getSelectedItem();
+            if (p != null) {
+                int pPK = p.getPk();
+                for (int i = 0; i < canINT; i++) {
+                    Product newProduct = new Product(preINT, date, metINT, pPK);
+                    WriterProduct.appendProductCSV(newProduct);
+                }
+            }
+        });
+
+        panelInferior.add(panelTotales, BorderLayout.WEST);
+        panelInferior.add(btnConfirmar, BorderLayout.EAST);
+
         add(panelIzquierdo, BorderLayout.WEST);
         add(panelCentral, BorderLayout.CENTER);
         add(panelDerecho, BorderLayout.EAST);
         add(panelInferior, BorderLayout.SOUTH);
     }
+
     private JPanel createFieldPanel(String label, JComponent field, Font labelFont) {
         RoundedPanel panel = new RoundedPanel(15);
-            panel.setLayout(new BorderLayout(0,10)); // espacio entre label y field
-            panel.setBackground(Color.GRAY);
-       
+        panel.setLayout(new BorderLayout(0, 10));
+        panel.setBackground(Color.GRAY);
+        field.setMinimumSize(new Dimension(20, 30));
 
         JLabel lbl = new JLabel(label);
-            lbl.setFont(labelFont);
-            panel.add(lbl, BorderLayout.NORTH);
+        lbl.setFont(labelFont);
+        panel.add(lbl, BorderLayout.NORTH);
+        panel.add(field, BorderLayout.CENTER);
 
-       
-            panel.add(field, BorderLayout.CENTER);
-    return panel;
+        return panel;
     }
-        public static void main(String[] args) {
+
+    public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new Sell().setVisible(true));
     }
-}
-
-
-
+} 

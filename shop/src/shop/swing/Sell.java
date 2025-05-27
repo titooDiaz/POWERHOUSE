@@ -76,7 +76,7 @@ public class Sell extends JFrame {
         String usernameString = WriterUsers.obtenerCampoPorPk(1);
         String emailString = WriterUsers.obtenerCampoPorPk(4);
 
-        originalIcon = new ImageIcon(getClass().getResource("/resources/images/user-interface.png"));
+        originalIcon = new ImageIcon(getClass().getResource("/resources/images/empresario.png"));
         scaledImage = originalIcon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
         resizedIcon = new ImageIcon(scaledImage);
 
@@ -220,7 +220,7 @@ public class Sell extends JFrame {
                 int pPK = p.getPk();
                 for (int i = 0; i < canINT; i++) {
                     Product newProduct = new Product(preINT, date, metINT, pPK);
-                    WriterProduct.appendProductCSV(newProduct);
+                   // WriterProduct.appendProductCSV(newProduct);
                 }
             }
         });

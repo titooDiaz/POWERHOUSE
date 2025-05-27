@@ -86,7 +86,7 @@ public class Buy extends JFrame {
             String emailString= WriterUsers.obtenerCampoPorPk(4);
 
 
-            originalIcon = new ImageIcon(getClass().getResource("/resources/images/user-interface.png"));
+            originalIcon = new ImageIcon(getClass().getResource("/resources/images/empresario.png"));
             scaledImage = originalIcon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
             resizedIcon = new ImageIcon(scaledImage);
 
@@ -122,7 +122,7 @@ public class Buy extends JFrame {
             panelCentral.setBorder(BorderFactory.createLineBorder(new Color(60,60,60) , 20));
 
             //Panel que contine los text fileds
-            columnasPanel = new JPanel(new GridLayout(6, 0, 10, 5)); 
+            columnasPanel = new JPanel(new GridLayout(4, 2, 100, 30)); 
             columnasPanel.setBackground(Color.GRAY);
             columnasPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
@@ -237,7 +237,8 @@ public class Buy extends JFrame {
                     for (int i = 0; i < canINT; i++){
                         // guardar cada producto comprado
                         Product newProduct = new Product(preINT, date, metINT, pPK);
-                        WriterProduct.appendProductCSV(newProduct);
+                        p.addProduct(newProduct);
+                        WriterProduct.appendProductCSV(p, p.getPk());
                     }  
                 }else{
                     Services s = (Services) getComponentByType(productService, JComboBox.class).getSelectedItem();

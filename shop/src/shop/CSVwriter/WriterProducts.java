@@ -14,6 +14,7 @@ import shop.models.Products;
 public class WriterProducts {
     static String basePath = System.getProperty("user.dir");
     static String filePath = basePath + "/shop/src/resources/data/Categories/Product/products.csv";
+    static String filePath3 = basePath + "/shop/src/resources/data/sale.cvs";
 
     public static void appendProductCSV(Products products) {
 
@@ -69,5 +70,28 @@ public class WriterProducts {
         }
         return products;
     }
+
+    public LinkedList<Products> DeleteFromCSV(LinkedList<Products> products) {
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            br.readLine(); // 
+            if (products.isEmpty()) {
+                System.out.println("No hay productos para vender.");
+                return products;
+            }
+            else {
+                while ((line = br.readLine()) != null) {
+                    String[] parts = line.split(",");
+            }
+                
+            }
+        } catch (IOException e) {
+            System.out.println("Error leyendo el archivo: " + e.getMessage());
+        }
+        return products;
+    }
+
+
 
 }

@@ -303,7 +303,7 @@ public class  Inventory extends JFrame {
                 if(btnDet.getText().equalsIgnoreCase("detalles")){
                     mostrarDetallesProducto(name, cant, price, code);
                 }else{
-
+                    confirmarEliminacionProducto(name);
                 }    
             }
         });
@@ -343,6 +343,8 @@ public class  Inventory extends JFrame {
                 }else{
                     if(btnDet.getText().equalsIgnoreCase("detalles")){
                         mostrarDetallesServicio(name, price);
+                    }else{
+                        confirmarEliminacionServicio(name);
                     }
                 }
             });
@@ -566,6 +568,20 @@ public class  Inventory extends JFrame {
         dialogo.add(panel);
         dialogo.setVisible(true);
     }
+
+    private boolean confirmarEliminacionProducto(String nombre) {
+        int opcion = JOptionPane.showConfirmDialog(null,"¿Está seguro de eliminar el Producto \"" + nombre + "\"?",
+            "Confirmar eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        return opcion == JOptionPane.YES_OPTION;
+    }
+
+    private boolean confirmarEliminacionServicio(String nombre){
+        int opcion = JOptionPane.showConfirmDialog(null,"¿Está seguro de eliminar el Servicio \"" + nombre + "\"?",
+            "Confirmar eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+        return opcion == JOptionPane.YES_OPTION;
+    }
+
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

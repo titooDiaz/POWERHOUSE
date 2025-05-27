@@ -87,7 +87,7 @@ public class Profile extends JFrame {
             if (i==3){
             // Valor del campo (JLabel blanco)
             i++;
-            String use = WriterUsers.obtenerCampoPorPk("1", i);
+            String use = WriterUsers.obtenerCampoPorPk(i);
             JLabel valor = new JLabel(use);
             valor.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
             valor.setOpaque(true);
@@ -120,7 +120,7 @@ public class Profile extends JFrame {
 
             else{
 
-            String user = WriterUsers.obtenerCampoPorPk("1", i);
+            String user = WriterUsers.obtenerCampoPorPk(i);
             JLabel valor = new JLabel(user);
             valor.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
             valor.setOpaque(true);

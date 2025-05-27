@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 import shop.models.User;
 
 public class WriterUsers {
+
+    static String pkString = "0";
     static String basePath = System.getProperty("user.dir");
     static String filePath = basePath + "/shop/src/resources/data/Users/user.csv";
     static String filePath2 = basePath + "/shop/src/resources/data/currentUser.txt";
@@ -64,6 +66,7 @@ public class WriterUsers {
                 String password = fields[3].trim();
                 if (existingUsername.equals(username)) {
                     if (password.equals(pass)) {
+                        pkString = fields[0].trim();
                         guardarUsuarioActual(fields[0]);
                         return true;
                     } else {
@@ -123,13 +126,13 @@ public class WriterUsers {
         }
     }
 
-    public static String obtenerCampoPorPk(String pkBuscado, int posicionCampo) {
+    public static String obtenerCampoPorPk(int posicionCampo) {
     try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
         String linea;
         while ((linea = br.readLine()) != null) {
             if (!linea.trim().isEmpty()) {
                 String[] partes = linea.split(",");
-                if (partes.length > posicionCampo && partes[0].equals(pkBuscado)) {
+                if (partes.length > posicionCampo && partes[0].equals(pkString)) {
                     return partes[posicionCampo]; // Retorna el campo deseado
                 }
             }

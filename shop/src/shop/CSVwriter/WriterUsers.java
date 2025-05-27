@@ -45,6 +45,7 @@ public class WriterUsers {
             e.printStackTrace();
         }
     }
+    
     // logica de inicio de sesion
     static public Boolean AproveUser(String username, String pass){
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -61,11 +62,9 @@ public class WriterUsers {
             if (fields.length > 3) {
                 String existingUsername = fields[2].trim();
                 String password = fields[3].trim();
-                int pk = Integer.parseInt(fields[0].trim());
-
                 if (existingUsername.equals(username)) {
                     if (password.equals(pass)) {
-                        guardarUsuarioActual(pk, existingUsername, password);
+                        guardarUsuarioActual(fields[0]);
                         return true;
                     } else {
                         return false;
@@ -78,52 +77,43 @@ public class WriterUsers {
         }
         return false;
     }
-    static public Boolean login(String username, String pass) {
+ 
+    public static Boolean login(String username, String pass) {
         if (AproveUser(username, pass)){
             return true;
         }
         return false;
     }
-
+ 
     private static String generateRandomKey() {
         return java.util.UUID.randomUUID().toString();
     }
 
-    public static void guardarUsuarioActual(int pk, String username, String password) { 
+    public static void guardarUsuarioActual(String pk) { 
         try (FileWriter escritor = new FileWriter(filePath2, false)) { 
-            escritor.write(pk + "," + username + "," + password + "\n");
+            escritor.write(obtenerLineaPorPk(pk));
             } catch (IOException e) {
                 e.printStackTrace();
             }
     }
 
-    public static String[] leerUsuarioActual() {
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath2))) {
-            String linea = br.readLine();
-            if (linea != null && !linea.trim().isEmpty()) {
-                return linea.split(",", -1); // [pk, username, password]
+    public static String obtenerLineaPorPk(String pkBuscado) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        String linea;
+        while ((linea = br.readLine()) != null) {
+            if (!linea.trim().isEmpty()) {
+                String[] partes = linea.split(",");
+                if (partes.length >= 1 && partes[0].equals(pkBuscado)) {
+                    return linea; // Retorna la línea completa
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-    return null;
-    }
-    
-    public static String obtenerUsernamePorPk() {
-    try (BufferedReader br = new BufferedReader(new FileReader(filePath2))) {
-        String linea = br.readLine();
-        if (linea != null && !linea.trim().isEmpty()) {
-            String[] partes = linea.split(",", -1); // [pk, username, password]
-            if (partes.length >= 2) {
-                return partes[1].trim(); // username
             }
         }
     } catch (IOException e) {
         e.printStackTrace();
     }
 
-    return "Usuario";
-}
+    return null; 
+    }
 
     public static void sobrescribirConCero() {
         try (FileWriter escritor = new FileWriter(filePath2, false)) {
@@ -132,5 +122,23 @@ public class WriterUsers {
             e.printStackTrace();
         }
     }
+
+    public static String obtenerCampoPorPk(String pkBuscado, int posicionCampo) {
+    try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        String linea;
+        while ((linea = br.readLine()) != null) {
+            if (!linea.trim().isEmpty()) {
+                String[] partes = linea.split(",");
+                if (partes.length > posicionCampo && partes[0].equals(pkBuscado)) {
+                    return partes[posicionCampo]; // Retorna el campo deseado
+                }
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+    return null;
+}
     
 }

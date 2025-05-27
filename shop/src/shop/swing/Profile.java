@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.*;
 
+import shop.CSVwriter.WriterUsers;
+
 public class Profile extends JFrame {
     //paneles
     private JPanel panelInfo;
@@ -72,7 +74,9 @@ public class Profile extends JFrame {
         String[] campos = {"Nombre", "nombre de usuario", "Correo electrónico", "Tipo de usuario", "Estado"};
         int y = 20;
 
+        int i = 1;
         for (String campo : campos) {
+            
             // Etiqueta del campo
             JLabel etiqueta = new JLabel(campo);
             etiqueta.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
@@ -80,15 +84,55 @@ public class Profile extends JFrame {
             etiqueta.setBounds(20, y, 200, 20);
             panelInfo.add(etiqueta);
 
+            if (i==3){
             // Valor del campo (JLabel blanco)
-            JLabel valor = new JLabel("  Aquí va el dato...");
+            i++;
+            String use = WriterUsers.obtenerCampoPorPk("1", i);
+            JLabel valor = new JLabel(use);
             valor.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
             valor.setOpaque(true);
             valor.setBackground(Color.WHITE);
             valor.setBounds(20, y + 25, 380, 30);
             panelInfo.add(valor);
+            
+            }
 
+            else if(i==5){
+            // Valor del campo (JLabel blanco)
+            JLabel valor = new JLabel("Administrador");
+            valor.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
+            valor.setOpaque(true);
+            valor.setBackground(Color.WHITE);
+            valor.setBounds(20, y + 25, 380, 30);
+            panelInfo.add(valor);
+            
+            }
+
+            else if(i==6){
+            JLabel valor = new JLabel("activo");
+            valor.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
+            valor.setOpaque(true);
+            valor.setBackground(Color.WHITE);
+            valor.setBounds(20, y + 25, 380, 30);
+            panelInfo.add(valor);
+            
+            }
+
+            else{
+
+            String user = WriterUsers.obtenerCampoPorPk("1", i);
+            JLabel valor = new JLabel(user);
+            valor.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 14));
+            valor.setOpaque(true);
+            valor.setBackground(Color.WHITE);
+            valor.setBounds(20, y + 25, 380, 30);
+            
+            panelInfo.add(valor);
+            
+            }
+            i++;
             y += 75;
+           
         }
 
             originalIcon = new ImageIcon(getClass().getResource("/resources/images/user-interface.png"));

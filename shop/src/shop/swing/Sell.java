@@ -108,7 +108,7 @@ public class Sell extends JFrame {
         panelCentral.setLayout(new BoxLayout(panelCentral, BoxLayout.Y_AXIS));
         panelCentral.setBorder(BorderFactory.createLineBorder(new Color(60, 60, 60), 20));
         //panel de columnas donde va cada dato
-        columnasPanel = new JPanel(new GridLayout(6, 0, 10, 5));
+        columnasPanel = new JPanel(new GridLayout(4, 2, 100, 30));
         columnasPanel.setBackground(Color.GRAY);
         columnasPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 

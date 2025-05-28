@@ -26,10 +26,10 @@ public class  Inventory extends JFrame {
     private JPanel north;
     private JPanel south;
     private JPanel panelCentral;
-    private JScrollPane panelProductos;      // para productos
+    private JScrollPane panelProductos;// para productos
     private JScrollPane panelServicios;
     private JPanel contenidoProductos; 
-    private JPanel contenidoServicios; // para servicios
+    private JPanel contenidoServicios;// para servicios
 
     //labels
     private JLabel txtFecha;
@@ -68,7 +68,7 @@ public class  Inventory extends JFrame {
 
 
 
-
+    //Contructor Inventario
     public Inventory() {
 
         //leer cvs para los paneles
@@ -99,7 +99,7 @@ public class  Inventory extends JFrame {
                 TiendaVirtualGUI tienda = new TiendaVirtualGUI();
                 tienda.setVisible(true);
                 this.dispose();
-        });
+            });
 
         // Fecha
             txtFecha = new JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
@@ -173,7 +173,7 @@ public class  Inventory extends JFrame {
         panelCentral.add(panelServicios, c);
 
 
-        // botones 
+            //ESTABLECIMIENTO DE LOS BOTONES 
             south = new JPanel(new GridLayout(1, 3, 10, 0));
             south.setBackground(darkGray);
             south.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -185,12 +185,13 @@ public class  Inventory extends JFrame {
             btnRegistrar.setFont(buttonFont);
             btnRegistrar.setFocusPainted(false);
             btnRegistrar.addActionListener(e -> {
-                registerProduct registro = new registerProduct(); // le pasas "this" como Inventory
+                registerProduct registro = new registerProduct(); 
                 registro.setVisible(true);
-                this.dispose(); // O this.dispose() si quieres cerrarla
+                this.dispose(); 
             });
         south.add(btnRegistrar);
 
+            //BoOTON EDITAR INVENTARIO
             btnEditar = new RoundedButton("EDITAR", 15);
             btnEditar.setBackground(btnYellow);
             btnEditar.setForeground(Color.WHITE);
@@ -217,7 +218,8 @@ public class  Inventory extends JFrame {
                     relojEditar = 0;
                 }
             });
- 
+            
+            //BOTON ELIMINAR INVENTARIO
             btnEliminar = new RoundedButton("ELIMINAR", 15);
             btnEliminar.setBackground(btnRed);
             btnEliminar.setForeground(Color.WHITE);
@@ -249,44 +251,54 @@ public class  Inventory extends JFrame {
         south.add(btnEditar);
         south.add(btnEliminar);
 
+        //BOTON PARA BUSCAR EN EL INVENTARIO PRODUCTO O SERVICIOS
+        JButton btnBuscar = new RoundedButton("BUSCAR", 15);
+
+        btnBuscar.setFont(buttonFont);
+        btnBuscar.setBackground(new Color(0, 120, 215));
+        btnBuscar.setForeground(Color.WHITE);
+        btnBuscar.setPreferredSize(new Dimension(200, 50));
+        btnBuscar.setFocusPainted(false);
+        btnBuscar.addActionListener(e -> buscarProductoOServicio());
+        south.add(btnBuscar); 
+
         add(south,BorderLayout.SOUTH);
-        // fin botones
-        // recordar paneles de productos/servicios
         panelesProducto();
         panelesServicio();
         
     }
 
+    //PANEL EN DONDE SE MUESTRAN LOS PRODUCTOS
     public void panelesProducto() {
         for (Products p : listaProductos) {  
             if(!p.getActive())continue;  //con esto se verifica si está en true o false para aparecer o no en el panel
-        RoundedPanel nuevaFila = createFilaProducto(p.getName(), p.getPrice(), p.getCode(), labelFont, labelFont, lightGray, btnBlue, 15);
-        panelProductos.add(nuevaFila);
-        panelProductos.add(Box.createVerticalStrut(5));
-        panelProductos.revalidate();
-        panelProductos.repaint();
-        contenidoProductos.add(nuevaFila);
-        contenidoProductos.add(Box.createVerticalStrut(10));
-        productos.add(nuevaFila);
+                RoundedPanel nuevaFila = createFilaProducto(p.getName(), p.getPrice(), p.getCode(), labelFont, labelFont, lightGray, btnBlue, 15);
+                panelProductos.add(nuevaFila);
+                panelProductos.add(Box.createVerticalStrut(5));
+                panelProductos.revalidate();
+                panelProductos.repaint();
+                contenidoProductos.add(nuevaFila);
+                contenidoProductos.add(Box.createVerticalStrut(10));
+                productos.add(nuevaFila);
         }
     }
          
-
+    //PANEL EN DONDE SE MUESTRAN LOS SERVICIOS
     public void panelesServicio() {
         for (Services s : listaServicios) {   
-            if(!s.isActive())continue;  //verificacion para aparecer en el panel
-        RoundedPanel nuevaFila = createFilaServicio(s.getName(), s.getPrice(),labelFont, labelFont, lightGray, btnBlue, 15);
-        panelServicios.add(nuevaFila);
-        panelServicios.add(Box.createVerticalStrut(10));
-        panelServicios.revalidate();
-        panelServicios.repaint();
-        contenidoServicios.add(nuevaFila);
-        contenidoServicios.add(Box.createVerticalStrut(10));
-        servicios.add(nuevaFila);
+            if(!s.isActive())continue;  //verificacion para aparecer en el panel como en productos
+                RoundedPanel nuevaFila = createFilaServicio(s.getName(), s.getPrice(), s.getCode(), labelFont, labelFont, lightGray, btnBlue, 15);
+                panelServicios.add(nuevaFila);
+                panelServicios.add(Box.createVerticalStrut(10));
+                panelServicios.revalidate();
+                panelServicios.repaint();
+                contenidoServicios.add(nuevaFila);
+                contenidoServicios.add(Box.createVerticalStrut(10));
+                servicios.add(nuevaFila);
         }
     }
     
-    // fila producto
+    // BOTONES PARA LOS PRODUCTOS MOSTRADOS
     private RoundedPanel createFilaProducto(String name, float price, String code, Font labelFont, Font btnFont,
                                       Color bgRow, Color btnColor, int radius) {
         int cantidadDisponible = WriterProduct.contarProductosDisponiblesPorCodigo(code);                                
@@ -328,8 +340,8 @@ public class  Inventory extends JFrame {
         return row;
     }
 
-    // fila servicio
-    private RoundedPanel createFilaServicio(String name, float price,
+    // BOTONES PARA LOS SERVICIOS MOSTRADOS
+    private RoundedPanel createFilaServicio(String name, float price, String code,
                                       Font labelFont, Font btnFont,
                                       Color bgRow, Color btnColor, int radius) {
         RoundedPanel row = new RoundedPanel(15);
@@ -353,7 +365,7 @@ public class  Inventory extends JFrame {
                  mostrarDialogServicio(name, price);
                 }else{
                     if(btnDet.getText().equalsIgnoreCase("detalles")){
-                        mostrarDetallesServicio(name, price);
+                        mostrarDetallesServicio(name, price, code);
                     }else{
                         confirmarEliminacionServicio(name);
                     }
@@ -365,9 +377,7 @@ public class  Inventory extends JFrame {
     }
 
     private LinkedList<RoundedPanel> editarFilaProductAndServicio(LinkedList<RoundedPanel> list, Color color, String textoButton) {
-
         for(JPanel ser: list){
-
             if (list != null) {
                 RoundedButton btn = (RoundedButton) ser.getComponent(1);
                 btn.setText(textoButton); // cambia el texto
@@ -375,12 +385,11 @@ public class  Inventory extends JFrame {
             } else {
                 JOptionPane.showMessageDialog(this, "No hay no hay servicios/productos para " + textoButton);
             }
-
-            }
+        }
         return list;
-    
     }
 
+    //J DIALOG PARA CUANDO SE PRESIONA EL BOTON DE EDITAR EN ALGUN PRODUCTO PARA PODER CAMBIAR LOS DATOS Y GUARDARLOS EN EL CSV
     private void mostrarDialogoProducto(String nombre, float price, String code) {
         JDialog dialogo = new JDialog(this, "Editar Producto", true);
         dialogo.setSize(300, 250);
@@ -425,14 +434,14 @@ public class  Inventory extends JFrame {
                 String precioTexto = precioField.getText().trim().replace(",", ".");
                 float nuevoPrecio = Float.parseFloat(precioTexto);
 
-            if (!nuevoNombre.isEmpty() && !nuevoCodigo.isEmpty()) {
-            actualizarProductoEnCSV(nombre, nuevoCodigo, nuevoNombre, nuevoPrecio);
-            dialogo.dispose();
-            } else {
-            JOptionPane.showMessageDialog(null, "Código y Nombre son obligatorios");
-            }
-            } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(null, "El precio debe ser un número válido");
+                if (!nuevoNombre.isEmpty() && !nuevoCodigo.isEmpty()) {
+                    actualizarProductoEnCSV(nombre, nuevoCodigo, nuevoNombre, nuevoPrecio);
+                    dialogo.dispose();
+                }else {
+                    JOptionPane.showMessageDialog(null, "Código y Nombre son obligatorios");
+                }
+            }catch(NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "El precio debe ser un número válido");
             }
         });
 
@@ -445,34 +454,35 @@ public class  Inventory extends JFrame {
         dialogo.setVisible(true);
     }
 
+    //FUNCION PARA GUARDAR LOS METODOS EN EL CSV SIGUIENDO UNA RUTA PARA LOS PRODUCTOS
     private void actualizarProductoEnCSV(String nombreOriginal, String nuevoCodigo, String nuevoNombre, float nuevoPrecio) {
-            try {
-        File archivo = new File("shop/src/resources/data/Categories/Product/products.csv");
-        List<String> lineas = Files.readAllLines(archivo.toPath());
-        List<String> nuevasLineas = new ArrayList<>();
+        try {
+            File archivo = new File("shop/src/resources/data/Categories/Product/products.csv");
+            List<String> lineas = Files.readAllLines(archivo.toPath());
+            List<String> nuevasLineas = new ArrayList<>();
 
-        for (String linea : lineas) {
-            String[] partes = linea.split(",");
-            if (partes.length >= 6 && partes[1].equals(nombreOriginal)) {
-                // Actualiza solo los campos requeridos
-                partes[1] = nuevoNombre;    // Nombre
-                partes[2] = nuevoCodigo;    // Código
-                partes[3] = String.valueOf(nuevoPrecio); // Precio
-                linea = String.join(",", partes);
+            for (String linea : lineas) {
+                String[] partes = linea.split(",");
+                if (partes.length >= 6 && partes[1].equals(nombreOriginal)) {
+                    // Actualiza solo los campos requeridos
+                    partes[1] = nuevoNombre;    // Nombre
+                    partes[2] = nuevoCodigo;    // Código
+                    partes[3] = String.valueOf(nuevoPrecio); // Precio
+                    linea = String.join(",", partes);
+                }
+                nuevasLineas.add(linea);
             }
-            nuevasLineas.add(linea);
-        }
 
-            Files.write(archivo.toPath(), nuevasLineas);
-            JOptionPane.showMessageDialog(null, "Producto actualizado correctamente");
+                Files.write(archivo.toPath(), nuevasLineas);
+                JOptionPane.showMessageDialog(null, "Producto actualizado correctamente");
        
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error al guardar los datos");
-        }
+            }catch (IOException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error al guardar los datos");
+            }
     }
 
-
+    //J DIALOG PARA CUANDO SE PRESIONA EL BOTON DE EDITAR EN ALGUN SERVICIO PARA PODER CAMBIAR LOS DATOS Y GUARDARLOS EN EL CSV
     private void mostrarDialogServicio(String nombre, float price) {
         JDialog dialogo = new JDialog(this, "Editar Servicio", true);
         dialogo.setSize(300, 250);
@@ -504,22 +514,22 @@ public class  Inventory extends JFrame {
         JButton guardarBtn = new JButton("Guardar");
         JButton cerrarBtn = new JButton("Cerrar");
 
-     guardarBtn.addActionListener(e -> {
-        String nuevoNombre = nombreField.getText().trim();
+        guardarBtn.addActionListener(e -> {
+            String nuevoNombre = nombreField.getText().trim();
         
-        try {
-            float nuevoPrecio = Float.parseFloat(precioField.getText().replace(",", "."));
+            try {
+                float nuevoPrecio = Float.parseFloat(precioField.getText().replace(",", "."));
             
-            if (!nuevoNombre.isEmpty()) {
-                actualizarServicioEnCSV(nombre, nuevoNombre, nuevoPrecio);
-                dialogo.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "El nombre es obligatorio");
+                if (!nuevoNombre.isEmpty()) {
+                    actualizarServicioEnCSV(nombre, nuevoNombre, nuevoPrecio);
+                    dialogo.dispose();
+                }else {
+                    JOptionPane.showMessageDialog(null, "El nombre es obligatorio");
+                }
+            }catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "El precio debe ser un número válido");
             }
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "El precio debe ser un número válido");
-        }
-    });
+        });
 
         cerrarBtn.addActionListener(e -> dialogo.dispose());
 
@@ -530,28 +540,29 @@ public class  Inventory extends JFrame {
         dialogo.setVisible(true);
     }
 
+    //FUNCION PARA GUARDAR LOS METODOS EN EL CSV SIGUIENDO UNA RUTA PARA LOS SERVICIOS
     private void actualizarServicioEnCSV(String nombreOriginal, String nuevoNombre, float nuevoPrecio) {
-    try {
-        File archivo = new File("shop/src/resources/data/Categories/Service/services.csv");
-        List<String> lineas = Files.readAllLines(archivo.toPath());
-        List<String> nuevasLineas = new ArrayList<>();
+        try {
+            File archivo = new File("shop/src/resources/data/Categories/Service/services.csv");
+            List<String> lineas = Files.readAllLines(archivo.toPath());
+            List<String> nuevasLineas = new ArrayList<>();
 
-        for (String linea : lineas) {
-            String[] partes = linea.split(",");
-            if (partes.length == 6 && partes[1].equals(nombreOriginal)) {
-                partes[1] = nuevoNombre;
-                partes[3] = String.valueOf(nuevoPrecio);
-                linea = String.join(",", partes);
+            for (String linea : lineas) {
+                String[] partes = linea.split(",");
+                if (partes.length == 6 && partes[1].equals(nombreOriginal)) {
+                    partes[1] = nuevoNombre;
+                    partes[3] = String.valueOf(nuevoPrecio);
+                    linea = String.join(",", partes);
+                }
+                nuevasLineas.add(linea);
             }
-            nuevasLineas.add(linea);
-        }
 
-            Files.write(archivo.toPath(), nuevasLineas);
-            JOptionPane.showMessageDialog(null, "Servicio actualizado correctamente");
-         } catch (IOException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error al guardar los datos");
-        }
+                Files.write(archivo.toPath(), nuevasLineas);
+                JOptionPane.showMessageDialog(null, "Servicio actualizado correctamente");
+            }catch (IOException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error al guardar los datos");
+                }
     }
 
     // Crea un JLabel con fondo blanco y tamaño fijo para el panel de detalles
@@ -567,7 +578,7 @@ public class  Inventory extends JFrame {
         return label;
     }
 
-    //DETALLES
+    //DETALLES PARA LOS PRODUCTOS
     private void mostrarDetallesProducto(String nombre, int cantidad, float precio, String code){
         JDialog dialogo = new JDialog(this, "Detalles Producto", true);
         dialogo.setSize(300, 250);
@@ -634,7 +645,8 @@ public class  Inventory extends JFrame {
 
     }
 
-    private void mostrarDetallesServicio(String nombre, float precio){
+    //DETALLES PARA LOS SERVICIOS
+    private void mostrarDetallesServicio(String nombre, float precio, String code){
         JDialog dialogo = new JDialog(this, "Detalles Servicio", true);
         dialogo.setSize(300, 250);
         dialogo.setResizable(false);
@@ -662,6 +674,17 @@ public class  Inventory extends JFrame {
         nombreField.setBackground(Color.WHITE);
         panel.add(nombreField, gbc);
 
+        //label codigo
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        panel.add(new JLabel("Codigo:"));
+        gbc.gridx = 1;
+        JLabel codigoField = crearCampoFijo(code, new Dimension(225,30), border);
+        codigoField.setBorder(border);
+        codigoField.setOpaque(true);
+        codigoField.setBackground(Color.WHITE);
+        panel.add(codigoField, gbc);
+
         //label precio
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -684,31 +707,31 @@ public class  Inventory extends JFrame {
                                                     JOptionPane.YES_NO_OPTION,
                                                     JOptionPane.WARNING_MESSAGE);
     
-    if (opcion == JOptionPane.YES_OPTION) {
-        try {
-            File archivo = new File("shop/src/resources/data/Categories/Product/products.csv");
-            List<String> lineas = Files.readAllLines(archivo.toPath());
-            List<String> nuevasLineas = new ArrayList<>();
+        if (opcion == JOptionPane.YES_OPTION) {
+            try {
+                File archivo = new File("shop/src/resources/data/Categories/Product/products.csv");
+                List<String> lineas = Files.readAllLines(archivo.toPath());
+                List<String> nuevasLineas = new ArrayList<>();
 
-            for (String linea : lineas) {
-                String[] partes = linea.split(",");
-                if (partes.length >= 6 && partes[1].equals(nombre)) {
-                    partes[5] = "false"; // Cambia el estado active a false
-                    linea = String.join(",", partes);
+                for (String linea : lineas) {
+                    String[] partes = linea.split(",");
+                    if (partes.length >= 6 && partes[1].equals(nombre)) {
+                        partes[5] = "false"; // Cambia el estado active a false
+                        linea = String.join(",", partes);
+                    }
+                    nuevasLineas.add(linea);
                 }
-                nuevasLineas.add(linea);
+
+                Files.write(archivo.toPath(), nuevasLineas);
+                JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.");
+
+                return true;
+            }catch (IOException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error al eliminar el producto.");
             }
-
-            Files.write(archivo.toPath(), nuevasLineas);
-            JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.");
-
-            return true;
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error al eliminar el producto.");
         }
-    }
-    return false;
+        return false;
     }
 
 
@@ -744,6 +767,63 @@ public class  Inventory extends JFrame {
         return false;
     }
 
+
+    //OPCION PARA BUSCAR PRODUCTOS O SERVICIOS
+    private void buscarProductoOServicio() {
+    String input = JOptionPane.showInputDialog(this, "Ingrese el Nombre o Código del Producto/Servicio", "Bucar Producto o Servicio", JOptionPane.QUESTION_MESSAGE);
+    
+        if (input == null || input.trim().isEmpty()) {
+            return;
+        }
+
+        String buscado = input.trim().toLowerCase();
+        boolean encontrado = false;
+
+        // Buscar en productos
+        for (Products p : listaProductos) {
+            if ((p.getName().equalsIgnoreCase(buscado) || p.getCode().equalsIgnoreCase(buscado))) {
+                String estado = p.getActive() ? "Activo" : "Inactivo";
+                JOptionPane.showMessageDialog(this,
+                    "Producto encontrado:\n\nNombre: " + p.getName() +
+                    "\nCódigo: " + p.getCode() +
+                    "\nCantidad: " + p.cantProducts() +
+                    "\nPrecio: $" + p.getPrice() +
+                    "\nEstado: " + estado,
+                    "Resultado de búsqueda",
+                    JOptionPane.INFORMATION_MESSAGE
+                    );
+                encontrado = true;
+            break;
+            }
+        }
+
+        // Si no fue encontrado en productos, buscar en servicios
+        if (!encontrado) {
+            for (Services s : listaServicios) {
+                if ((s.getName().equalsIgnoreCase(buscado) || s.getCode().equalsIgnoreCase(buscado))) {
+                    String estado = s.isActive() ? "Activo" : "Inactivo";
+                    JOptionPane.showMessageDialog(this,
+                        "Servicio encontrado:\n\nNombre: " + s.getName() +
+                        "\nCódigo: " + s.getCode() +
+                        "\nPrecio: $" + s.getPrice() +
+                        "\nEstado: " + estado,
+                        "Resultado de búsqueda",
+                        JOptionPane.INFORMATION_MESSAGE
+                    );
+                    encontrado = true;
+                break;
+                }
+            }
+        }
+
+        if (!encontrado) {
+            JOptionPane.showMessageDialog(this,
+                "No se encontró ningún producto o servicio con ese nombre o código.",
+                "Sin resultados",
+                JOptionPane.WARNING_MESSAGE
+            );
+        }
+    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {

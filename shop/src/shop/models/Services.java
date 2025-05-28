@@ -3,7 +3,6 @@ package shop.models;
 import java.util.LinkedList;
 
 public class Services {
-    //pk,name,code,price,date,active
     // attributes
     private int pk;
     private float price;
@@ -95,32 +94,5 @@ public class Services {
     
     public void setServices(LinkedList<Service> services) {
         this.services = services;
-    }
-    
-    public void addService(){
-
-    }
-
-    public void deleteService(){
-
-    }
-
-    public void editService(){
-
-    }
-
-    public String[] viewServices(){
-        String string[] = new String[5];
-        return string ;
-    }
-
-    public double percentageService(){
-        double a = 0;
-        return a*1;
-    }
-
-    @Override
-    public String toString() {
-        return this.name;
     }
 }

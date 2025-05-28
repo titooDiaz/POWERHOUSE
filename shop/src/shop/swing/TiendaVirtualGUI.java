@@ -36,11 +36,11 @@ public class TiendaVirtualGUI extends JFrame {
         getContentPane().setBackground(new Color(60,60,60)); // Fondo oscuro
 
         // Etiqueta usuario
-        String username = WriterUsers.obtenerCampoPorPk(2);
-        txtUsuario = new JLabel("¡Hola, " + username + "!");
-        txtUsuario.setBounds(50, 20, 250, 30);
-        txtUsuario.setFont(new Font("Arial", Font.BOLD, 20));
-        txtUsuario.setForeground(Color.WHITE);
+            String username = WriterUsers.obtenerCampoPorPk(2);
+            txtUsuario = new JLabel("¡Hola, " + username + "!");
+            txtUsuario.setBounds(50, 20, 250, 30);
+            txtUsuario.setFont(new Font("Arial", Font.BOLD, 20));
+            txtUsuario.setForeground(Color.WHITE);
         add(txtUsuario);
 
         // Botón Cerrar Sesión
@@ -49,6 +49,7 @@ public class TiendaVirtualGUI extends JFrame {
         btnCerrarSesion.setBackground( new Color(240, 80, 80));
         btnCerrarSesion.setForeground(Color.WHITE);
         btnCerrarSesion.addActionListener(e -> {
+            
             // Pregunta tipo
             String[] opciones = {"confirmar", "cancelar"};
             int sel = JOptionPane.showOptionDialog(
@@ -86,10 +87,10 @@ public class TiendaVirtualGUI extends JFrame {
         add(btnVerUsuarios);
 
         // Título
-        titulo = new JLabel("BIENVENIDO A TU TIENDA VIRTUAL");
-        titulo.setFont(new Font("Arial", Font.BOLD, 20));
-        titulo.setForeground(Color.WHITE);
-        titulo.setBounds(280, 60, 400, 30);
+            titulo = new JLabel("BIENVENIDO A TU TIENDA VIRTUAL");
+            titulo.setFont(new Font("Arial", Font.BOLD, 20));
+            titulo.setForeground(Color.WHITE);
+            titulo.setBounds(280, 60, 400, 30);
         add(titulo);
 
         // Paneles de funciones
@@ -99,20 +100,19 @@ public class TiendaVirtualGUI extends JFrame {
         addPanelBoton("VER INVENTARIO", "/resources/images/inventario.png", 470, 300, new Color(220, 200, 50), new Inventory());
 
         // Fecha
-        txtFecha = new JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        txtFecha.setBounds(700, 450, 250, 30);
-        txtFecha.setFont(new Font("Arial", Font.BOLD, 20));
-        txtFecha.setForeground(Color.WHITE);
+            txtFecha = new JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+            txtFecha.setBounds(700, 450, 250, 30);
+            txtFecha.setFont(new Font("Arial", Font.BOLD, 20));
+            txtFecha.setForeground(Color.WHITE);
         add(txtFecha);
     }
-
+    // funcion para crear los recuadros principles
     private void addPanelBoton(String texto, String icono, int x, int y, Color colorBoton, Object move) {
         JPanel panel = new JPanel(null);
         panel.setBounds(x, y, 275, 140);
         panel.setBackground(new Color(100, 100, 100));
 
         // Icono
-
         originalIcon = new ImageIcon(getClass().getResource(icono));
         scaledImage = originalIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         resizedIcon = new ImageIcon(scaledImage);
@@ -127,6 +127,7 @@ public class TiendaVirtualGUI extends JFrame {
         boton.setBackground(colorBoton);
         boton.setForeground(Color.WHITE);
         panel.add(boton);
+
         if (move != null){
             if (move instanceof JFrame) {
                 boton.addActionListener(e -> {

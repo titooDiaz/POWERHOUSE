@@ -55,10 +55,5 @@ public class Service {
     public void setPrice(float price) {
         this.price = price;
     }
-
-    //methods
-    public String viewService(){
-        String a = "";
-        return a;
-    }
 }
+

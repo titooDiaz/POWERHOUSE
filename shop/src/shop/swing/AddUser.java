@@ -30,6 +30,7 @@ public class AddUser extends JFrame {
 
 
     public AddUser() {
+
         setTitle("PowerApp");
         setSize(900, 550);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -95,7 +96,7 @@ public class AddUser extends JFrame {
             campo.setText(placeholder);
         
             // Simula el placeholder
-            JTextField finalCampo = campo; // necesario para usar en clase interna
+        JTextField finalCampo = campo; // necesario para usar en clase interna
             campo.addFocusListener(new FocusAdapter() {
                 public void focusGained(FocusEvent e) {
                     if (finalCampo.getText().equals(placeholder)) {
@@ -103,7 +104,6 @@ public class AddUser extends JFrame {
                         finalCampo.setForeground(Color.BLACK);
                     }
                 }
-        
                 public void focusLost(FocusEvent e) {
                     if (finalCampo.getText().isEmpty()) {
                         finalCampo.setText(placeholder);
@@ -117,38 +117,39 @@ public class AddUser extends JFrame {
         }
 
         // Boton registrar
-            registrar = new RoundedButton("REGISTRAR", 15);
-            registrar.setBounds(100, 310, 200, 35);
-            registrar.setBackground(new Color(0, 200, 100)); // verde
-            registrar.setForeground(Color.WHITE);
-            registrar.setFont(new Font("Arial", Font.BOLD, 14));
-            registrar.setFocusPainted(false);
-            registrar.setBorder(BorderFactory.createEmptyBorder());
-            panel.add(registrar);
+        registrar = new RoundedButton("REGISTRAR", 15);
+        registrar.setBounds(100, 310, 200, 35);
+        registrar.setBackground(new Color(0, 200, 100)); // verde
+        registrar.setForeground(Color.WHITE);
+        registrar.setFont(new Font("Arial", Font.BOLD, 14));
+        registrar.setFocusPainted(false);
+        registrar.setBorder(BorderFactory.createEmptyBorder());
+        panel.add(registrar);
 
+        // logica para que la imagen se muestre en el panel con el tamaño requerido
+        originalIcon = new ImageIcon(getClass().getResource("/resources/images/icon.png"));
+        scaledImage = originalIcon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
+        resizedIcon = new ImageIcon(scaledImage);
 
-            originalIcon = new ImageIcon(getClass().getResource("/resources/images/icon.png"));
-            scaledImage = originalIcon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
-            resizedIcon = new ImageIcon(scaledImage);
-
-            logo = new JLabel(resizedIcon);
-            logo.setBounds(510, 110, 300, 300);
-        add(logo);
+        logo = new JLabel(resizedIcon);
+        logo.setBounds(510, 110, 300, 300);
+         add(logo);
         
-            shadow = new JLabel();
-            shadow.setBounds(510, 110, 300, 300);
-            shadow.setOpaque(true);
-            shadow.setBackground(Color.WHITE);
-            shadow.setBorder(BorderFactory.createEmptyBorder());
-            shadow.setLocation(510 + 8, 110 + 8); // slight offset for 3D effect
-            add(shadow);
+        // sombra detras de la imagen :)
+        shadow = new JLabel();
+        shadow.setBounds(510, 110, 300, 300);
+        shadow.setOpaque(true);
+        shadow.setBackground(Color.WHITE);
+        shadow.setBorder(BorderFactory.createEmptyBorder());
+        shadow.setLocation(510 + 8, 110 + 8); // slight offset for 3D effect
+        add(shadow);
 
         // llamar al boton
         registrar.addActionListener(e -> {
             boolean todoValido = true;
         
             for (int i = 0; i < campos.length; i++) {
-                String texto;
+                    String texto;
         
                 if (campos[i] instanceof JPasswordField) {
                     texto = new String(((JPasswordField) campos[i]).getPassword());

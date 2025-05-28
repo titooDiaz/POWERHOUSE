@@ -83,7 +83,7 @@ public class Login extends JFrame {
         
             if (placeholder.toLowerCase().contains("contraseña")) {
                 campo = new JPasswordField();
-            } else {
+            }else {
                 campo = new JTextField(); 
             }
         
@@ -143,14 +143,14 @@ public class Login extends JFrame {
         });
 
 
-        // "Recuperar contraseña" button (red)
+        // Recuperar contraseña 
         recuperar = new RoundedButton("recuperar contraseña", 15);
         recuperar.setBackground(new Color(255, 102, 102)); // verde
         recuperar.setForeground(Color.WHITE);
         recuperar.setBounds(30, 230, 240, 35);
         panelLogin.add(recuperar);
 
-        // Logo with 3D effect (drop shadow)
+        // logica de las imagenes
         originalIcon = new ImageIcon(getClass().getResource("/resources/images/icon.png"));
         scaledImage = originalIcon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
         resizedIcon = new ImageIcon(scaledImage);

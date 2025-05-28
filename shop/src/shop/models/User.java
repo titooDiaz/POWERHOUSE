@@ -69,43 +69,4 @@ public class User{
         this.key = key;
     }
 
-    // methods
-    public void Login(){
-
-    } 
-
-    public String viewUser(){
-        return "";
-    }
-
-    public void logout(){
-
-    }
-
-    public void createUser(){
-
-    }
-
-    public void deleteUser(){
-        
-    }
-
-    public void editUser(){
-        
-    }
-
-    public void rememberPassword(){
-        
-    }
-
-    public void upgratePassword(){
-        
-    }
-
-    public  String[] generateReport(){
-        String vector[] = new String[100];
-
-        return vector;
-    }
-
 }

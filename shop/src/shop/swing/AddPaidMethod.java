@@ -6,7 +6,6 @@ import shop.models.PaidMethod;
 
 public class AddPaidMethod extends JDialog {
     private JTextField nameField;
-    private JTextField codeField;   
     private JButton saveButton;
     private JButton cancelButton;
 

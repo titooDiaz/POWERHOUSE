@@ -134,14 +134,14 @@ public class Profile extends JFrame {
             y += 75;
            
         }
+        //logica imagen
+        originalIcon = new ImageIcon(getClass().getResource("/resources/images/user-interface.png"));
+        scaledImage = originalIcon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
+        resizedIcon = new ImageIcon(scaledImage);
 
-            originalIcon = new ImageIcon(getClass().getResource("/resources/images/user-interface.png"));
-            scaledImage = originalIcon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
-            resizedIcon = new ImageIcon(scaledImage);
-
-            avatar = new JLabel(resizedIcon);
-            avatar.setBounds(510, 110, 300, 300);
-            add(avatar);
+        avatar = new JLabel(resizedIcon);
+        avatar.setBounds(510, 110, 300, 300);
+        add(avatar);
     }
 
     public static void main(String[] args) {

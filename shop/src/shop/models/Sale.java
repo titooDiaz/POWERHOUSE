@@ -49,14 +49,5 @@ public class Sale {
     }
     public void setUser_pk(String user_pk) {
         this.user_pk = user_pk;
-        }
-    // methods
-    public void saleInventory(){
-
-    }
-
-    public Product[] viewSales(){
-        Product sales[] = new Product[100];
-    return sales;    
     }
 }

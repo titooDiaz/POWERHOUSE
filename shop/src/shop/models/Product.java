@@ -83,10 +83,4 @@ public class Product {
     public void setPurchased(Boolean purchased) {
         this.purchased = purchased;
     }
-    
-    // methods
-    public String viewProduct(){
-        String a = "";
-        return a;
-    }
 }

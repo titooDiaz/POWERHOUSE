@@ -64,30 +64,7 @@ public class Products {
         products.add(p);
     }
 
-    public void saleProduct(){
-
-    }
-
-    public void editProducts(){
-
-    }
-
-    public String[] viewProducts(){
-        String string[] = new String[5];
-        return string ;
-    }
-
-    public double percentageProducts(){
-        double a = 0;
-        return a*1;
-    }
-
     public int cantProducts(){
         return products.size();
-    }
-
-    @Override
-    public String toString() {
-        return this.name;
     }
 }

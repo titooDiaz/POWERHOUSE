@@ -3,15 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/POWERHOUSE/shop/src/shop/swing/Profile.java</file>
-            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/POWERHOUSE/shop/src/shop/swing/Sell.java</file>
-            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/POWERHOUSE/shop/src/shop/swing/TiendaVirtualGUI.java</file>
-            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/POWERHOUSE/shop/src/shop/Shop.java</file>
-            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/POWERHOUSE/shop/src/shop/swing/Buy.java</file>
-            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/POWERHOUSE/shop/src/shop/swing/registerProduct.java</file>
-            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/POWERHOUSE/shop/src/shop/swing/login.java</file>
-            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/POWERHOUSE/shop/src/shop/swing/AddUser.java</file>
-            <file>file:/C:/Users/USUARIO/Documents/NetBeansProjects/POWERHOUSE/shop/src/shop/swing/Inventory.java</file>
+            <file>file:/home/jheiber/Desktop/power%20house/POWERHOUSE/shop/src/resources/data/Categories/Product/product.csv</file>
+            <file>file:/home/jheiber/Desktop/power%20house/POWERHOUSE/shop/src/shop/models/User.java</file>
+            <file>file:/home/jheiber/Desktop/power%20house/POWERHOUSE/shop/src/shop/models/Service.java</file>
         </group>
     </open-files>
 </project-private>

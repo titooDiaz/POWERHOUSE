@@ -4,19 +4,17 @@ public class Product {
     // attributes
     private int pk;
     private float purchase_price;
-    private String dateBuy;
-    private String dateSell;
+    private String date;
     private float price;
     private Boolean purchased;
     private int paidMethod;
     private int products;
 
     // builder
-    public Product(float price, String dateBuy, int paidMethod, int products) {
+    public Product(float price, String date, int paidMethod, int products) {
         this.price = price;
         this.paidMethod = paidMethod;
-        this.dateBuy = dateBuy;
-        this.dateSell = "";
+        this.date = date;
         this.products = products;
     }
 
@@ -60,25 +58,15 @@ public class Product {
     public void setPurchase_price(float purchase_price) {
         this.purchase_price = purchase_price;
     }
-    public String getDateBuy() {
-        return dateBuy;
+
+    public String getDate() {
+        return date;
     }
 
-    public void setDateBuy(String dateBuy) {
-        this.dateBuy = dateBuy;
+    public void setDate(String date) {
+        this.date = date;
     }
-    public String getDateSell() {
-        return dateSell;
-    }
-    public void setDateSell(String dateSell) {
-        this.dateSell = dateSell;
-    }
-    public Boolean isPurchased() {
-        return purchased;
-    }
-    public void setPurchased(boolean purchased) {
-        this.purchased = purchased;
-    }
+
 
     public float getPrice() {
         return price;

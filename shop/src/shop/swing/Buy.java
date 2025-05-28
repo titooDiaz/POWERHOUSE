@@ -86,7 +86,7 @@ public class Buy extends JFrame {
             String emailString= WriterUsers.obtenerCampoPorPk(4);
 
 
-            originalIcon = new ImageIcon(getClass().getResource("/resources/images/empresario.png"));
+            originalIcon = new ImageIcon(getClass().getResource(""));
             scaledImage = originalIcon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
             resizedIcon = new ImageIcon(scaledImage);
 
@@ -237,8 +237,7 @@ public class Buy extends JFrame {
                     for (int i = 0; i < canINT; i++){
                         // guardar cada producto comprado
                         Product newProduct = new Product(preINT, date, metINT, pPK);
-                        p.addProduct(newProduct);
-                        WriterProduct.appendProductCSV(p, p.getPk());
+                        WriterProduct.appendProductCSV(newProduct);
                     }  
                 }else{
                     Services s = (Services) getComponentByType(productService, JComboBox.class).getSelectedItem();

@@ -76,7 +76,7 @@ public class Sell extends JFrame {
         String usernameString = WriterUsers.obtenerCampoPorPk(1);
         String emailString = WriterUsers.obtenerCampoPorPk(4);
 
-        originalIcon = new ImageIcon(getClass().getResource("/resources/images/empresario.png"));
+        originalIcon = new ImageIcon(getClass().getResource(""));
         scaledImage = originalIcon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
         resizedIcon = new ImageIcon(scaledImage);
 

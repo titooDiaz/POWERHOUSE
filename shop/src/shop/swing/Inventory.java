@@ -344,7 +344,7 @@ public class  Inventory extends JFrame {
             btnDet.setFocusPainted(false);
             btnDet.addActionListener(e -> {
             if (btnDet.getText().equalsIgnoreCase("editar")) {
-                 mostrarDialogServicio(name);
+                 mostrarDialogServicio(name, price);
                 }else{
                     if(btnDet.getText().equalsIgnoreCase("detalles")){
                         mostrarDetallesServicio(name, price);
@@ -391,7 +391,7 @@ public class  Inventory extends JFrame {
         nombreField.setMaximumSize(new Dimension(200, 25)); 
 
         JLabel precioPanel = new JLabel("Precio Producto:");
-        JTextField precioField = new JTextField(String.format("%.2f", price));
+        JTextField precioField = new JTextField(String.format("%.5f", price));
         precioField.setMaximumSize(new Dimension(200, 25));
 
         JLabel codigoPanel = new JLabel("Codigo Producto:");
@@ -467,7 +467,7 @@ public class  Inventory extends JFrame {
     }
 
 
-    private void mostrarDialogServicio(String nombre) {
+    private void mostrarDialogServicio(String nombre, float price) {
         JDialog dialogo = new JDialog(this, "Editar Servicio", true);
         dialogo.setSize(300, 250);
         dialogo.setResizable(false);
@@ -480,11 +480,17 @@ public class  Inventory extends JFrame {
 
         JLabel nombreLabel = new JLabel("Nombre Servicio:");
         JTextField nombreField = new JTextField(nombre);
-        nombreField.setMaximumSize(new Dimension(200, 50)); 
+        nombreField.setMaximumSize(new Dimension(200, 25)); 
+
+        JLabel precioPanel = new JLabel("Precio Servicio:");
+        JTextField precioField = new JTextField(String.format("%.5f", price));
+        precioField.setMaximumSize(new Dimension(200, 25));
 
         camposPanel.add(nombreLabel);
         camposPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         camposPanel.add(nombreField);
+        camposPanel.add(precioPanel);
+        camposPanel.add(precioField);
 
         dialogo.add(camposPanel, BorderLayout.CENTER);
 
@@ -492,40 +498,22 @@ public class  Inventory extends JFrame {
         JButton guardarBtn = new JButton("Guardar");
         JButton cerrarBtn = new JButton("Cerrar");
 
-        guardarBtn.addActionListener(e -> {
-            String nuevoNombre = nombreField.getText().trim();
-
-        if (!nuevoNombre.isEmpty()) {
-            try {
-                File archivo = new File("shop/src/resources/data/Categories/Service/services.csv");  
-
-                List<String> lineas = Files.readAllLines(archivo.toPath());
-                List<String> nuevasLineas = new ArrayList<>();
-
-            for (String linea : lineas) {
-                String[] partes = linea.split(",");
-
-                if (partes.length == 6 && partes[1].equals(nombre)) {
-                    partes[1] = nuevoNombre; // Actualizar solo el nombre
-                    linea = String.join(",", partes);
-                }
-
-                nuevasLineas.add(linea);
+     guardarBtn.addActionListener(e -> {
+        String nuevoNombre = nombreField.getText().trim();
+        
+        try {
+            float nuevoPrecio = Float.parseFloat(precioField.getText().replace(",", "."));
+            
+            if (!nuevoNombre.isEmpty()) {
+                actualizarServicioEnCSV(nombre, nuevoNombre, nuevoPrecio);
+                dialogo.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "El nombre es obligatorio");
             }
-
-            Files.write(archivo.toPath(), nuevasLineas);
-            JOptionPane.showMessageDialog(null, "Servicio actualizado correctamente.");
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Error al guardar los datos.");
-            }
-        } else {
-        JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío.");
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "El precio debe ser un número válido");
         }
-
-            dialogo.dispose();
-            dialogo.dispose();
-        });
+    });
 
         cerrarBtn.addActionListener(e -> dialogo.dispose());
 
@@ -535,6 +523,31 @@ public class  Inventory extends JFrame {
         dialogo.add(botonesPanel, BorderLayout.SOUTH);
         dialogo.setVisible(true);
     }
+
+    private void actualizarServicioEnCSV(String nombreOriginal, String nuevoNombre, float nuevoPrecio) {
+    try {
+        File archivo = new File("shop/src/resources/data/Categories/Service/services.csv");
+        List<String> lineas = Files.readAllLines(archivo.toPath());
+        List<String> nuevasLineas = new ArrayList<>();
+
+        for (String linea : lineas) {
+            String[] partes = linea.split(",");
+            if (partes.length == 6 && partes[1].equals(nombreOriginal)) {
+                partes[1] = nuevoNombre;
+                partes[3] = String.valueOf(nuevoPrecio);
+                linea = String.join(",", partes);
+            }
+            nuevasLineas.add(linea);
+        }
+
+            Files.write(archivo.toPath(), nuevasLineas);
+            JOptionPane.showMessageDialog(null, "Servicio actualizado correctamente");
+         } catch (IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al guardar los datos");
+        }
+    }
+
     // Crea un JLabel con fondo blanco y tamaño fijo
     private JLabel crearCampoFijo(String texto, Dimension size, Border border) {
         JLabel label = new JLabel(texto);

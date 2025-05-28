@@ -1,11 +1,13 @@
 package shop.swing;
 
 import java.awt.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.*;
-
-import shop.CSVwriter.WriterUsers;
+import shop.CSVwriter.*;
 
 public class TiendaVirtualGUI extends JFrame {
 
@@ -99,6 +101,7 @@ public class TiendaVirtualGUI extends JFrame {
         addPanelBoton("GENERAR REPORTE", "/resources/images/reporte-de-negocios.png", 150, 300, new Color(255, 165, 0), null);
         addPanelBoton("VER INVENTARIO", "/resources/images/inventario.png", 470, 300, new Color(220, 200, 50), new Inventory());
 
+    
         // Fecha
             txtFecha = new JLabel(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             txtFecha.setBounds(700, 450, 250, 30);
@@ -128,15 +131,67 @@ public class TiendaVirtualGUI extends JFrame {
         boton.setForeground(Color.WHITE);
         panel.add(boton);
 
-        if (move != null){
-            if (move instanceof JFrame) {
-                boton.addActionListener(e -> {
-                    ((JFrame) move).setVisible(true);
-                    this.dispose();
-                });
-            }
+        if (move instanceof JFrame) {
+            boton.addActionListener(e -> {
+                ((JFrame) move).setVisible(true);
+                this.dispose();
+            });
+        } else if (texto.equals("GENERAR REPORTE")) {
+            boton.addActionListener(e -> modalreport());
         }
+
         add(panel);
+    }
+
+    public void modalreport() {
+        // Crear el diálogo
+        JDialog dialogo = new JDialog();
+        dialogo.setTitle("Generar reporte de...");
+        dialogo.setSize(300, 150);
+        dialogo.setLocationRelativeTo(null); // Centrar ventana
+        dialogo.setModal(true); // Bloquea hasta que se cierre
+
+        // Crear panel y botones
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(3, 1, 10, 10));
+        JLabel label = new JLabel("¿Qué mes quieres reportar?", SwingConstants.CENTER);
+        JButton btnEsteMes = new JButton("Este mes");
+        JButton btnMesPasado = new JButton("Mes pasado");
+
+        // Acciones para los botones
+        btnEsteMes.addActionListener(e -> {
+            dialogo.dispose();
+            String mesActual = LocalDate.now().format(DateTimeFormatter.ofPattern("MM"));
+            String ruta = Paths.get("shop/src/resources/data/mes.txt").toString();
+            // Escribir en el archivo
+            try (FileWriter writer = new FileWriter(ruta)) {
+                writer.write(mesActual);
+            } catch (IOException a) {
+                a.printStackTrace();
+            }
+            GenerateReport.generate();
+        });
+
+        btnMesPasado.addActionListener(e -> {
+            dialogo.dispose(); // Cierra el diálogo
+            String mesPasado = LocalDate.now().minusMonths(1).format(DateTimeFormatter.ofPattern("MM"));
+            String ruta = Paths.get("shop/src/resources/data/mes.txt").toString();
+            try (FileWriter writer = new FileWriter(ruta)) {
+                writer.write(mesPasado);
+            } catch (IOException a) {
+                a.printStackTrace();
+            }
+            GenerateReport.generate();
+        });
+
+        // Agregar componentes al panel
+        panel.add(label);
+        panel.add(btnEsteMes);
+        panel.add(btnMesPasado);
+
+        // Agregar panel al diálogo
+        dialogo.add(panel);
+        dialogo.setVisible(true);
     }
 
     public static void main(String[] args) {

@@ -2,12 +2,14 @@ package shop;
 
 import javax.swing.JOptionPane;
 import shop.CSVwriter.PkManager;
+import shop.CSVwriter.WriterProduct;
 import shop.CSVwriter.WriterUsers;
 import shop.swing.*;
 
 public class Shop {
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(() -> {
+            System.out.println(WriterProduct.contarCompradosPorMes(4, "05"));
             
             int currentPk = PkManager.getLastPk(0);
             if (currentPk == -1) {

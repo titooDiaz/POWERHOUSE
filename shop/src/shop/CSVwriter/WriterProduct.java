@@ -50,88 +50,94 @@ public class WriterProduct {
         }
     }
 
-    public static void moverLineasPorPK(int pk, int cantidad) {
-    int contador = 0;
+    public static void moverLineasPorPK(int pk, int cantidad, float precioVenta, int metodoPago) {
+        int contador = 0;
 
-    try (
-        BufferedReader br = new BufferedReader(new FileReader(filePath));
-        PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(filePath2, false)))
-    ) {
-        // Verifica si el archivo de destino ya existe
-        File archivoDestino = new File(filePath2);
-        boolean fileExists = archivoDestino.exists();
+        try (
+            BufferedReader br = new BufferedReader(new FileReader(filePath));
+            PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(filePath2, false)))
+        ) {
+            // Verifica si el archivo de destino ya existe
+            File archivoDestino = new File(filePath2);
+            boolean fileExists = archivoDestino.exists();
 
-        // Si no existe, escribe el encabezado
-        if (!fileExists || archivoDestino.length() == 0) {
-            pw.println("pk,name,code,price,date,active"); // encabezado 
-        }
+            // Si no existe, escribe el encabezado
+            if (!fileExists || archivoDestino.length() == 0) {
+                pw.println("pk,name,code,price,date,active"); // encabezado 
+            }
 
-        String linea;
-        while ((linea = br.readLine()) != null) {
-            String[] partes = linea.split(",");
-            if (partes.length > 6) {
-                try {
-                    int pkEncontrado = Integer.parseInt(partes[6]);
-                    if (pkEncontrado == pk) {
-                        contador ++;
-                        System.out.println(contador);
-                    }
-                } catch (NumberFormatException e) {
-                    System.out.println("Error: PK inválida -> " + partes[6]);
-                }
-            } 
-        }
-        //pw.println(linea);
-        if (contador >= cantidad) {
-            List<String> todasLasLineas = new ArrayList<>();
-            BufferedReader br2 = new BufferedReader(new FileReader(filePath));
-            String linea2;
-            int contadorModificados = 0;
-
-            while ((linea2 = br2.readLine()) != null) {
-                String[] partes = linea2.split(",");
-
-                // Verifica que tenga al menos 7 columnas
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
                 if (partes.length > 6) {
                     try {
                         int pkEncontrado = Integer.parseInt(partes[6]);
-                        if (pkEncontrado == pk && contadorModificados < cantidad) {
-                            if (partes[4].equals("false")){
-                                partes[4] = "true"; // cambiamos "purchased" a true
-                                contadorModificados++;
-                                linea2 = String.join(",", partes);
-                            }
+                        if (pkEncontrado == pk) {
+                            contador ++;
+                            System.out.println(contador);
                         }
                     } catch (NumberFormatException e) {
                         System.out.println("Error: PK inválida -> " + partes[6]);
                     }
+                } 
+            }
+            //pw.println(linea);
+            if (contador >= cantidad) {
+                List<String> todasLasLineas = new ArrayList<>();
+                BufferedReader br2 = new BufferedReader(new FileReader(filePath));
+                String linea2;
+                int contadorModificados = 0;
+
+                while ((linea2 = br2.readLine()) != null) {
+                    String[] partes = linea2.split(",");
+
+                    // Verifica que tenga al menos 7 columnas
+                    if (partes.length > 6) {
+                        try {
+                            int pkEncontrado = Integer.parseInt(partes[6]);
+                            if (pkEncontrado == pk && contadorModificados < cantidad) {
+                                if (partes[4].equals("false")){
+                                    partes[4] = "true"; // cambiamos "purchased" a true
+                                    partes[1] = String.valueOf(precioVenta);
+                                    contadorModificados++;
+                                    linea2 = String.join(",", partes);
+                                    int currentPk = PkManager.getAndIncrementPk(7);
+                                    // ya con la verificacion de que existen suficientes productos para la venta, vamos a guardar todo el sale.csv
+                                    pw.println(currentPk+","+partes[0]+","+metodoPago);
+                                }
+                            }
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error: PK inválida -> " + partes[6]);
+                        }
+                    }
+
+                    todasLasLineas.add(linea2);
                 }
+                br2.close();
 
-                todasLasLineas.add(linea2);
+                // Reescribimos el archivo con las líneas modificadas
+                BufferedWriter bw = new BufferedWriter(new FileWriter(filePath));
+                for (String l : todasLasLineas) {
+                    bw.write(l);
+                    bw.newLine();
+                }
+                bw.close();
+
+                System.out.println("Modificados " + contadorModificados + " registros.");
             }
-            br2.close();
+            pw.flush();
 
-            // Reescribimos el archivo con las líneas modificadas
-            BufferedWriter bw = new BufferedWriter(new FileWriter(filePath));
-            for (String l : todasLasLineas) {
-                bw.write(l);
-                bw.newLine();
-            }
-            bw.close();
-
-            System.out.println("Modificados " + contadorModificados + " registros.");
+        } catch (IOException e) {
+            System.out.println("Error de E/S: " + e.getMessage());
         }
-        pw.flush();
-
-    } catch (IOException e) {
-        System.out.println("Error de E/S: " + e.getMessage());
     }
-}
 
     public static int contarVendidosPorMes(int pk, String mes) {
         int vendidos = 0;
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            // saltar encabezado
+            br.readLine();
             String linea;
 
             while ((linea = br.readLine()) != null) {
@@ -139,15 +145,44 @@ public class WriterProduct {
 
                 if (partes.length >= 7) {
                     String fecha = partes[2].trim(); // formato: dd/MM/yyyy
-                    String purchased = partes[4].trim();
-                    int productPK = Integer.parseInt(partes[6].trim());
+                    String purchased = partes[4].trim(); // esta vendidO?
+                    System.out.println(purchased);
+                    int productPK = Integer.parseInt(partes[6].trim()); // obtener el pk
 
-                    if (productPK == pk && purchased.equalsIgnoreCase("true")) {
-                        System.out.println("mas");
+                    if (productPK == pk && purchased.equals("true")) {
                         String[] fechaPartes = fecha.split("/");
                         if (fechaPartes.length == 3 && fechaPartes[1].equals(mes)) {
                             vendidos++;
                         }
+                    }
+                }
+            }
+        } catch (IOException | NumberFormatException e) {
+            System.out.println("Error al leer o procesar el archivo: " + e.getMessage());
+        }
+
+        return vendidos;
+    }
+
+    public static int contarCompradosPorMes(int pk, String mes) {
+        int vendidos = 0;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            // saltar encabezado
+            br.readLine();
+            String linea;
+
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+
+                if (partes.length >= 7) {
+                    String fecha = partes[2].trim(); // formato: dd/MM/yyyy
+                    String purchased = partes[4].trim(); // esta vendidO?
+                    System.out.println(purchased);
+                    int productPK = Integer.parseInt(partes[6].trim()); // obtener el pk
+                    String[] fechaPartes = fecha.split("/");
+                    if (fechaPartes.length == 3 && fechaPartes[1].equals(mes)) {
+                        vendidos++;
                     }
                 }
             }

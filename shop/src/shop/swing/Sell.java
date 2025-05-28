@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import javax.swing.*;
 import shop.CSVwriter.*;
 import shop.models.PaidMethod;
-import shop.models.Product;
 import shop.models.Products;
 
 public class Sell extends JFrame {
@@ -218,8 +217,7 @@ public class Sell extends JFrame {
             Products p = (Products) productosLabel.getSelectedItem();
             if (p != null) {
                 int pPK = p.getPk();
-                   WriterProduct.moverLineasPorPK(pPK, canINT);
-                
+                WriterProduct.moverLineasPorPK(pPK, canINT, preINT, metINT);
             }
         });
 

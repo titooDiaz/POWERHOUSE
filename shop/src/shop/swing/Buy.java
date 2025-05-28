@@ -225,7 +225,7 @@ public class Buy extends JFrame {
             btnConfirmar.setFont(font);
             btnConfirmar.setFocusPainted(false);
             btnConfirmar.addActionListener(e -> {
-                // get all data
+        // get all data
         String canString = getComponentByType(cantidadPanel, JTextField.class).getText();
         int canINT = Integer.parseInt(canString);
         PaidMethod paidmt = (PaidMethod) getComponentByType(metodoP, JComboBox.class).getSelectedItem();

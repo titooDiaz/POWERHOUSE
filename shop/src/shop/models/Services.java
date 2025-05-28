@@ -95,4 +95,9 @@ public class Services {
     public void setServices(LinkedList<Service> services) {
         this.services = services;
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

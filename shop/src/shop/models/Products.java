@@ -67,4 +67,9 @@ public class Products {
     public int cantProducts(){
         return products.size();
     }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

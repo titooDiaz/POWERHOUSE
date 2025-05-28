@@ -45,7 +45,7 @@ public class TiendaVirtualGUI extends JFrame {
 
         // Botón Cerrar Sesión
         btnCerrarSesion = new RoundedButton("Cerrar sesión", 15);
-        btnCerrarSesion.setBounds(320, 20, 120, 30);
+        btnCerrarSesion.setBounds(387, 20, 120, 30);
         btnCerrarSesion.setBackground( new Color(240, 80, 80));
         btnCerrarSesion.setForeground(Color.WHITE);
         btnCerrarSesion.addActionListener(e -> {

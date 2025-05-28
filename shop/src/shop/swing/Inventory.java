@@ -783,10 +783,11 @@ public class  Inventory extends JFrame {
         for (Products p : listaProductos) {
             if ((p.getName().equalsIgnoreCase(buscado) || p.getCode().equalsIgnoreCase(buscado))) {
                 String estado = p.getActive() ? "Activo" : "Inactivo";
+                int cantidadActual = WriterProduct.contarProductosDisponiblesPorCodigo(p.getCode());
                 JOptionPane.showMessageDialog(this,
                     "Producto encontrado:\n\nNombre: " + p.getName() +
                     "\nCódigo: " + p.getCode() +
-                    "\nCantidad: " + p.cantProducts() +
+                    "\nCantidad: " + cantidadActual +
                     "\nPrecio: $" + p.getPrice() +
                     "\nEstado: " + estado,
                     "Resultado de búsqueda",

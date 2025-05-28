@@ -1,8 +1,13 @@
 package shop.swing;
 
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.swing.*;
@@ -298,7 +303,7 @@ public class  Inventory extends JFrame {
             btnDet.setFocusPainted(false);
             btnDet.addActionListener(e -> {
             if (btnDet.getText().equalsIgnoreCase("editar")) {
-                mostrarDialogoProducto(name);
+                mostrarDialogoProducto(name, price, code);
             } else {
                 if(btnDet.getText().equalsIgnoreCase("detalles")){
                     mostrarDetallesProducto(name, cant, price, code);
@@ -370,7 +375,7 @@ public class  Inventory extends JFrame {
     
     }
 
-    private void mostrarDialogoProducto(String nombre) {
+    private void mostrarDialogoProducto(String nombre, float price, String code) {
         JDialog dialogo = new JDialog(this, "Editar Producto", true);
         dialogo.setSize(300, 250);
         dialogo.setResizable(false);
@@ -383,21 +388,46 @@ public class  Inventory extends JFrame {
 
         JLabel nombreLabel = new JLabel("Nombre Producto:");
         JTextField nombreField = new JTextField(nombre);
-        nombreField.setMaximumSize(new Dimension(200, 50)); 
+        nombreField.setMaximumSize(new Dimension(200, 25)); 
+
+        JLabel precioPanel = new JLabel("Precio Producto:");
+        JTextField precioField = new JTextField(String.format("%.2f", price));
+        precioField.setMaximumSize(new Dimension(200, 25));
+
+        JLabel codigoPanel = new JLabel("Codigo Producto:");
+        JTextField codigoField = new JTextField(code);
+        codigoField.setMaximumSize(new Dimension(200, 25));
 
         camposPanel.add(nombreLabel);
         camposPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         camposPanel.add(nombreField);
+        camposPanel.add(precioPanel);
+        camposPanel.add(precioField);
+        camposPanel.add(codigoPanel);
+        camposPanel.add(codigoField);
 
-        dialogo.add(camposPanel, BorderLayout.CENTER);
+        dialogo.add(camposPanel);
 
         JPanel botonesPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
         JButton guardarBtn = new JButton("Guardar");
         JButton cerrarBtn = new JButton("Cerrar");
 
         guardarBtn.addActionListener(e -> {
-            // falta colocar para guardar información
+            try {
+                String nuevoCodigo = codigoField.getText().trim();
+                String nuevoNombre = nombreField.getText().trim();
+                String precioTexto = precioField.getText().trim().replace(",", ".");
+                float nuevoPrecio = Float.parseFloat(precioTexto);
+
+            if (!nuevoNombre.isEmpty() && !nuevoCodigo.isEmpty()) {
+            actualizarProductoEnCSV(nombre, nuevoCodigo, nuevoNombre, nuevoPrecio);
             dialogo.dispose();
+            } else {
+            JOptionPane.showMessageDialog(null, "Código y Nombre son obligatorios");
+            }
+            } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(null, "El precio debe ser un número válido");
+            }
         });
 
         cerrarBtn.addActionListener(e -> dialogo.dispose());
@@ -408,6 +438,34 @@ public class  Inventory extends JFrame {
         dialogo.add(botonesPanel, BorderLayout.SOUTH);
         dialogo.setVisible(true);
     }
+
+    private void actualizarProductoEnCSV(String nombreOriginal, String nuevoCodigo, String nuevoNombre, float nuevoPrecio) {
+            try {
+        File archivo = new File("shop/src/resources/data/Categories/Product/products.csv");
+        List<String> lineas = Files.readAllLines(archivo.toPath());
+        List<String> nuevasLineas = new ArrayList<>();
+
+        for (String linea : lineas) {
+            String[] partes = linea.split(",");
+            if (partes.length >= 6 && partes[1].equals(nombreOriginal)) {
+                // Actualiza solo los campos requeridos
+                partes[1] = nuevoNombre;    // Nombre
+                partes[2] = nuevoCodigo;    // Código
+                partes[3] = String.valueOf(nuevoPrecio); // Precio
+                linea = String.join(",", partes);
+            }
+            nuevasLineas.add(linea);
+        }
+
+            Files.write(archivo.toPath(), nuevasLineas);
+            JOptionPane.showMessageDialog(null, "Producto actualizado correctamente");
+       
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al guardar los datos");
+        }
+    }
+
 
     private void mostrarDialogServicio(String nombre) {
         JDialog dialogo = new JDialog(this, "Editar Servicio", true);
@@ -435,7 +493,37 @@ public class  Inventory extends JFrame {
         JButton cerrarBtn = new JButton("Cerrar");
 
         guardarBtn.addActionListener(e -> {
-            // falta colocar para guardar información
+            String nuevoNombre = nombreField.getText().trim();
+
+        if (!nuevoNombre.isEmpty()) {
+            try {
+                File archivo = new File("shop/src/resources/data/Categories/Service/services.csv");  
+
+                List<String> lineas = Files.readAllLines(archivo.toPath());
+                List<String> nuevasLineas = new ArrayList<>();
+
+            for (String linea : lineas) {
+                String[] partes = linea.split(",");
+
+                if (partes.length == 6 && partes[1].equals(nombre)) {
+                    partes[1] = nuevoNombre; // Actualizar solo el nombre
+                    linea = String.join(",", partes);
+                }
+
+                nuevasLineas.add(linea);
+            }
+
+            Files.write(archivo.toPath(), nuevasLineas);
+            JOptionPane.showMessageDialog(null, "Servicio actualizado correctamente.");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error al guardar los datos.");
+            }
+        } else {
+        JOptionPane.showMessageDialog(null, "El nombre no puede estar vacío.");
+        }
+
+            dialogo.dispose();
             dialogo.dispose();
         });
 

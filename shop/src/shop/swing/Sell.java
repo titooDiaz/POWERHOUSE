@@ -218,10 +218,8 @@ public class Sell extends JFrame {
             Products p = (Products) productosLabel.getSelectedItem();
             if (p != null) {
                 int pPK = p.getPk();
-                for (int i = 0; i < canINT; i++) {
-                    Product newProduct = new Product(preINT, date, metINT, pPK);
-                   // WriterProduct.appendProductCSV(newProduct);
-                }
+                   WriterProduct.moverLineasPorPK(pPK, canINT);
+                
             }
         });
 

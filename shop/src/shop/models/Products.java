@@ -7,7 +7,7 @@ public class Products {
     private String name;
     private String code;
     private float price;
-    private LinkedList products;
+    public LinkedList<Product> products;
     private Boolean active;
     private String date;
     
@@ -19,7 +19,7 @@ public class Products {
         this.price = price;
         this.date = date;
         this.active = active;
-        this.products = new LinkedList();
+        this.products = new LinkedList<Product>();
     }
     //getters and setters
     public int getPk() {
@@ -60,8 +60,8 @@ public class Products {
     }
                                                     
     //methods
-    public void addProduct(){
-
+    public void addProduct(Product p){
+        products.add(p);
     }
 
     public void saleProduct(){

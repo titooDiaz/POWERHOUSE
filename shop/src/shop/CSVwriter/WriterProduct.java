@@ -7,11 +7,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.LinkedList;
-
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import shop.models.Product;
-import shop.models.Products;
 
 public class WriterProduct {
     static String basePath = System.getProperty("user.dir");
@@ -73,24 +72,90 @@ public class WriterProduct {
             if (partes.length > 6) {
                 try {
                     int pkEncontrado = Integer.parseInt(partes[6]);
-
-                    if (pkEncontrado == pk && contador < cantidad) {
-                        pw.println(linea); // Escribe la línea
-                        contador++;
+                    if (pkEncontrado == pk) {
+                        contador ++;
+                        System.out.println(contador);
                     }
-
                 } catch (NumberFormatException e) {
                     System.out.println("Error: PK inválida -> " + partes[6]);
                 }
-            } else {
-            }
+            } 
         }
+        //pw.println(linea);
+        if (contador >= cantidad) {
+            List<String> todasLasLineas = new ArrayList<>();
+            BufferedReader br2 = new BufferedReader(new FileReader(filePath));
+            String linea2;
+            int contadorModificados = 0;
 
+            while ((linea2 = br2.readLine()) != null) {
+                String[] partes = linea2.split(",");
+
+                // Verifica que tenga al menos 7 columnas
+                if (partes.length > 6) {
+                    try {
+                        int pkEncontrado = Integer.parseInt(partes[6]);
+                        if (pkEncontrado == pk && contadorModificados < cantidad) {
+                            if (partes[4].equals("false")){
+                                partes[4] = "true"; // cambiamos "purchased" a true
+                                contadorModificados++;
+                                linea2 = String.join(",", partes);
+                            }
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Error: PK inválida -> " + partes[6]);
+                    }
+                }
+
+                todasLasLineas.add(linea2);
+            }
+            br2.close();
+
+            // Reescribimos el archivo con las líneas modificadas
+            BufferedWriter bw = new BufferedWriter(new FileWriter(filePath));
+            for (String l : todasLasLineas) {
+                bw.write(l);
+                bw.newLine();
+            }
+            bw.close();
+
+            System.out.println("Modificados " + contadorModificados + " registros.");
+        }
         pw.flush();
 
     } catch (IOException e) {
         System.out.println("Error de E/S: " + e.getMessage());
     }
 }
+
+    public static int contarVendidosPorMes(int pk, String mes) {
+        int vendidos = 0;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String linea;
+
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+
+                if (partes.length >= 7) {
+                    String fecha = partes[2].trim(); // formato: dd/MM/yyyy
+                    String purchased = partes[4].trim();
+                    int productPK = Integer.parseInt(partes[6].trim());
+
+                    if (productPK == pk && purchased.equalsIgnoreCase("true")) {
+                        System.out.println("mas");
+                        String[] fechaPartes = fecha.split("/");
+                        if (fechaPartes.length == 3 && fechaPartes[1].equals(mes)) {
+                            vendidos++;
+                        }
+                    }
+                }
+            }
+        } catch (IOException | NumberFormatException e) {
+            System.out.println("Error al leer o procesar el archivo: " + e.getMessage());
+        }
+
+        return vendidos;
+    }
 
 }

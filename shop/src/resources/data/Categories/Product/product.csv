@@ -1,1 +1,7 @@
 pk,purchase_price,date,price,purchased,paidMethod,productPK
+1,-1,27/05/2025,100.0,true,1,4
+2,-1,27/05/2025,100.0,true,1,4
+3,-1,27/05/2025,100.0,true,1,4
+4,-1,27/05/2025,100.0,false,1,4
+5,-1,27/05/2025,100.0,false,1,4
+6,-1,27/05/2025,100.0,false,1,4

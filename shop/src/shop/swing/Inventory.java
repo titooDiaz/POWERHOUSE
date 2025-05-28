@@ -257,7 +257,8 @@ public class  Inventory extends JFrame {
     }
 
     public void panelesProducto() {
-        for (Products p : listaProductos) {    
+        for (Products p : listaProductos) {  
+            if(!p.getActive())continue;  //con esto se verifica si está en true o false para aparecer o no en el panel
         RoundedPanel nuevaFila = createFilaProducto(p.getName(), p.cantProducts(), p.getPrice(), p.getCode(), labelFont, labelFont, lightGray, btnBlue, 15);
         panelProductos.add(nuevaFila);
         panelProductos.add(Box.createVerticalStrut(5));
@@ -271,7 +272,8 @@ public class  Inventory extends JFrame {
          
 
     public void panelesServicio() {
-        for (Services s : listaServicios) {    
+        for (Services s : listaServicios) {   
+            if(!s.isActive())continue;  //verificacion para aparecer en el panel
         RoundedPanel nuevaFila = createFilaServicio(s.getName(), s.getPrice(),labelFont, labelFont, lightGray, btnBlue, 15);
         panelServicios.add(nuevaFila);
         panelServicios.add(Box.createVerticalStrut(10));
@@ -548,7 +550,7 @@ public class  Inventory extends JFrame {
         }
     }
 
-    // Crea un JLabel con fondo blanco y tamaño fijo
+    // Crea un JLabel con fondo blanco y tamaño fijo para el panel de detalles
     private JLabel crearCampoFijo(String texto, Dimension size, Border border) {
         JLabel label = new JLabel(texto);
         label.setBorder(border);
@@ -561,6 +563,7 @@ public class  Inventory extends JFrame {
         return label;
     }
 
+    //DETALLES
     private void mostrarDetallesProducto(String nombre, int cantidad, float precio, String code){
         JDialog dialogo = new JDialog(this, "Detalles Producto", true);
         dialogo.setSize(300, 250);
@@ -670,18 +673,72 @@ public class  Inventory extends JFrame {
         dialogo.setVisible(true);
     }
 
+
+    //ELIMINACIONES
     private boolean confirmarEliminacionProducto(String nombre) {
-        int opcion = JOptionPane.showConfirmDialog(null,"¿Está seguro de eliminar el Producto \"" + nombre + "\"?",
-            "Confirmar eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-        return opcion == JOptionPane.YES_OPTION;
+        int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar el Producto \"" + nombre + "\"?", "Eliminar Producto",
+                                                    JOptionPane.YES_NO_OPTION,
+                                                    JOptionPane.WARNING_MESSAGE);
+    
+    if (opcion == JOptionPane.YES_OPTION) {
+        try {
+            File archivo = new File("shop/src/resources/data/Categories/Product/products.csv");
+            List<String> lineas = Files.readAllLines(archivo.toPath());
+            List<String> nuevasLineas = new ArrayList<>();
+
+            for (String linea : lineas) {
+                String[] partes = linea.split(",");
+                if (partes.length >= 6 && partes[1].equals(nombre)) {
+                    partes[5] = "false"; // Cambia el estado active a false
+                    linea = String.join(",", partes);
+                }
+                nuevasLineas.add(linea);
+            }
+
+            Files.write(archivo.toPath(), nuevasLineas);
+            JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.");
+
+            return true;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al eliminar el producto.");
+        }
     }
+    return false;
+    }
+
 
     private boolean confirmarEliminacionServicio(String nombre){
-        int opcion = JOptionPane.showConfirmDialog(null,"¿Está seguro de eliminar el Servicio \"" + nombre + "\"?",
-            "Confirmar eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-        return opcion == JOptionPane.YES_OPTION;
-    }
+        int opcion = JOptionPane.showConfirmDialog(null,"¿Está seguro de eliminar el Servicio \"" + nombre + "\"?", "Eliminar Servicio",
+                                                    JOptionPane.YES_NO_OPTION,
+                                                    JOptionPane.WARNING_MESSAGE);
+    
+        if (opcion == JOptionPane.YES_OPTION) {
+            try {
+                File archivo = new File("shop/src/resources/data/Categories/Service/services.csv");
+                List<String> lineas = Files.readAllLines(archivo.toPath());
+                List<String> nuevasLineas = new ArrayList<>();
 
+                for (String linea : lineas) {
+                    String[] partes = linea.split(",");
+                    if (partes.length >= 6 && partes[1].equals(nombre)) {
+                        partes[5] = "false"; // Cambia el estado active a false
+                        linea = String.join(",", partes);
+                    }
+                    nuevasLineas.add(linea);
+                }
+
+                Files.write(archivo.toPath(), nuevasLineas);
+                JOptionPane.showMessageDialog(null, "Servicio eliminado correctamente.");
+
+                return true;
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error al eliminar el servicio.");
+            }
+        }
+        return false;
+    }
 
 
     public static void main(String[] args) {

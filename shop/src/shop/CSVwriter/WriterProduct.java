@@ -158,4 +158,44 @@ public class WriterProduct {
         return vendidos;
     }
 
+    public static int contarProductosDisponiblesPorCodigo(String codigo) {
+    // Primero obtener el PK del producto con este código
+    int productPK = obtenerPKPorCodigo(codigo);
+    if (productPK == -1) return 0; // No existe producto con este código
+    
+    int contador = 0;
+    try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        String line;
+        br.readLine(); // Saltar cabecera
+        while ((line = br.readLine()) != null) {
+            String[] parts = line.split(",");
+            if (parts.length >= 7 && 
+                parts[4].equalsIgnoreCase("false") && // No vendido
+                parts[6].equals(String.valueOf(productPK))) { // Coincide con el PK
+                contador++;
+            }
+        }
+    } catch (IOException e) {
+        System.out.println("Error leyendo product.csv: " + e.getMessage());
+    }
+    return contador;
+    }
+
+    private static int obtenerPKPorCodigo(String codigo) {
+    String productsFilePath = basePath + "/shop/src/resources/data/Categories/Product/products.csv";
+    try (BufferedReader br = new BufferedReader(new FileReader(productsFilePath))) {
+        String line;
+        br.readLine(); // Saltar cabecera
+        while ((line = br.readLine()) != null) {
+            String[] parts = line.split(",");
+            if (parts.length >= 3 && parts[2].equals(codigo)) {
+                return Integer.parseInt(parts[0]); // Retornar el PK
+            }
+        }
+    } catch (IOException | NumberFormatException e) {
+        System.out.println("Error leyendo products.csv: " + e.getMessage());
+    }
+    return -1; // No encontrado
+    }
+
 }

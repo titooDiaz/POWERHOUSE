@@ -14,6 +14,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
+import shop.CSVwriter.WriterProduct;
 import shop.CSVwriter.WriterProducts;
 import shop.CSVwriter.WriterSerivices;
 import shop.models.Products;
@@ -259,7 +260,7 @@ public class  Inventory extends JFrame {
     public void panelesProducto() {
         for (Products p : listaProductos) {  
             if(!p.getActive())continue;  //con esto se verifica si está en true o false para aparecer o no en el panel
-        RoundedPanel nuevaFila = createFilaProducto(p.getName(), p.cantProducts(), p.getPrice(), p.getCode(), labelFont, labelFont, lightGray, btnBlue, 15);
+        RoundedPanel nuevaFila = createFilaProducto(p.getName(), p.getPrice(), p.getCode(), labelFont, labelFont, lightGray, btnBlue, 15);
         panelProductos.add(nuevaFila);
         panelProductos.add(Box.createVerticalStrut(5));
         panelProductos.revalidate();
@@ -286,8 +287,10 @@ public class  Inventory extends JFrame {
     }
     
     // fila producto
-    private RoundedPanel createFilaProducto(String name, int cant, float price, String code, Font labelFont, Font btnFont,
+    private RoundedPanel createFilaProducto(String name, float price, String code, Font labelFont, Font btnFont,
                                       Color bgRow, Color btnColor, int radius) {
+        int cantidadDisponible = WriterProduct.contarProductosDisponiblesPorCodigo(code);                                
+
         RoundedPanel row = new RoundedPanel(15);
             row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
             row.setBackground(bgRow);
@@ -308,7 +311,8 @@ public class  Inventory extends JFrame {
                 mostrarDialogoProducto(name, price, code);
             } else {
                 if(btnDet.getText().equalsIgnoreCase("detalles")){
-                    mostrarDetallesProducto(name, cant, price, code);
+                    int cantidadActualizada = WriterProduct.contarProductosDisponiblesPorCodigo(code);
+                    mostrarDetallesProducto(name,cantidadActualizada, price, code);
                 }else{
                     confirmarEliminacionProducto(name);
                 }    
@@ -317,7 +321,7 @@ public class  Inventory extends JFrame {
         row.add(btnDet, BorderLayout.EAST);
 
 
-        JLabel lblCant = new JLabel("Cantidad: " + cant);
+        JLabel lblCant = new JLabel("Cantidad: " + cantidadDisponible);
             lblCant.setFont(labelFont);
         row.add(lblCant, BorderLayout.CENTER);
 

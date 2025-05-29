@@ -78,6 +78,7 @@ public class WriterProduct {
                         }
                     } catch (NumberFormatException e) {
                         System.out.println("Error: PK inválida -> " + partes[6]);
+                        JOptionPane.showMessageDialog(null, "No hay suficientes productos de este tipo para la venta.");
                     }
                 } 
             }
@@ -107,7 +108,7 @@ public class WriterProduct {
                                 }
                             }
                         } catch (NumberFormatException e) {
-                            System.out.println("Error: PK inválida -> " + partes[6]);
+                            System.out.println("!");
                         }
                     }
 

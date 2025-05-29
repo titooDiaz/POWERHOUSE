@@ -7,10 +7,7 @@ import java.util.LinkedList;
 import javax.swing.*;
 import shop.CSVwriter.*;
 import shop.models.PaidMethod;
-import shop.models.Product;
 import shop.models.Products;
-import shop.models.Service;
-import shop.models.Services;
 
 public class Sell extends JFrame {
 
@@ -124,7 +121,9 @@ public class Sell extends JFrame {
         WriterProducts writer = new WriterProducts();
         LinkedList<Products> productos = writer.loadFromCSV(new LinkedList<>());
         for (Products producto : productos) {
-            productosLabel.addItem(producto);
+            if (producto.getActive()){
+                productosLabel.addItem(producto);
+            }
         }
 
         JTextField cantidad = new JTextField();
@@ -227,7 +226,6 @@ public class Sell extends JFrame {
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Cantidad o precio inválido.");
             } catch (Exception ex) {
-                ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Ocurrió un error al procesar la venta.");
             }
             

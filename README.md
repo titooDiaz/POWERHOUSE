@@ -29,15 +29,81 @@ Esta aplicación busca abordar estos desafíos proporcionando una solución acce
 
 ## Instalación
 
-Diagrama [UML](https://lucid.app/lucidchart/f7df46b9-29f3-4efb-a40d-b79172f46d21/edit?view_items=u1LWT.LyNiFZ&invitationId=inv_5814b055-761f-4257-8e6e-9f7ff3ca67b8)
+# Documentación para Ejecutar la Aplicación POWERHOUSE
 
-1. **Clonar el repositorio**:
+Esta guía describe paso a paso cómo ejecutar la aplicación POWERHOUSE.
 
-   ```bash
-   https://github.com/titooDiaz/POWERHOUSE
-   ```
+---
 
-## Contribuciones
+## 1. Clonar el Repositorio
+
+Primero, clona el repositorio oficial del proyecto desde GitHub:
+
+```bash
+git clone https://github.com/titooDiaz/POWERHOUSE
+```
+
+---
+
+## 2. Abrir el Proyecto en un Entorno de Desarrollo
+
+Aunque la aplicación fue creada originalmente en NetBeans, puedes abrirla sin problemas en otro entorno de desarrollo como **Visual Studio Code (VS Code)**.
+
+### Pasos:
+
+1. Abre **Visual Studio Code**.
+2. Selecciona **"Abrir carpeta"** y elige la carpeta del proyecto clonado (`POWERHOUSE`).
+3. Asegúrate de que ves carpetas como `documents`, `shop`, y otros archivos relacionados en el explorador de archivos de VS Code.
+
+---
+
+## 3. Requisitos de Python
+
+Esta aplicación requiere Python para 2 funcionalidades, enviar correos y generar reportes.
+
+### Verificar/Instalar Python:
+
+Asegúrate de tener Python instalado. Puedes comprobarlo con:
+
+```bash
+python --version
+```
+
+Si no está instalado, descárgalo desde [https://www.python.org/downloads/](https://www.python.org/downloads/).
+
+### Instalar Dependencias:
+
+Una vez tengas Python, instala las siguientes librerías necesarias:
+
+```bash
+pip install pandas
+pip install matplotlib
+```
+
+---
+
+## 4. Ejecutar la Aplicación
+
+Para ejecutar la aplicación principal:
+
+1. Navega hasta la carpeta `src` del proyecto:
+
+```bash
+cd POWERHOUSE/src/shop/
+```
+
+2. Ejecuta el archivo `Shop.java` desde tu entorno de desarrollo o usando la terminal (si tienes configurado el compilador de Java).
+
+---
+
+## 5. Todo Listo
+
+Una vez sigas los pasos anteriores, la aplicación debería correr sin problemas.
+
+---
+
+Si tienes dudas o problemas, puedes contactar al desarrollador a través del repositorio en GitHub.
+
 
 Las contribuciones son bienvenidas. Si deseas colaborar, por favor abre un issue para discutir los cambios que propones o envía un pull request con tus mejoras.
 

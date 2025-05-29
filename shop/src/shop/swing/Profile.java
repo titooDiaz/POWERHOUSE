@@ -4,7 +4,6 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.*;
-
 import shop.CSVwriter.WriterUsers;
 
 public class Profile extends JFrame {
@@ -142,6 +141,36 @@ public class Profile extends JFrame {
         avatar = new JLabel(resizedIcon);
         avatar.setBounds(510, 110, 300, 300);
         add(avatar);
+
+        // Botón Agregar Usuario
+        JButton agregarUsuario = new RoundedButton("Agregar usuario", 15);
+        agregarUsuario.setBounds(640, 420, 170, 40);  // justo debajo de la imagen
+        agregarUsuario.setBackground(new Color(0, 255, 125));
+        agregarUsuario.setForeground(Color.WHITE);
+        agregarUsuario.setFont(new Font("SansSerif", Font.BOLD, 14));
+        agregarUsuario.setFocusPainted(false);
+        agregarUsuario.setBorderPainted(false);
+        add(agregarUsuario);
+
+        // ActionListener
+        agregarUsuario.addActionListener(e -> {
+            int opcion = JOptionPane.showConfirmDialog(
+                null,
+                "Tu sesión será cerrada, ¿desea continuar?",
+                "Aviso",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.WARNING_MESSAGE
+            );
+
+            if (opcion == JOptionPane.OK_OPTION) {
+                AddUser addUser = new AddUser();
+                addUser.setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Operación cancelada", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
     }
 
     public static void main(String[] args) {

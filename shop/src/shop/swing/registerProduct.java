@@ -146,6 +146,7 @@ public class registerProduct extends JFrame {
                 JOptionPane.showMessageDialog(this, "Servicio registrado correctamente...");
                 Inventory inv = new Inventory();
                 inv.setVisible(true);
+                this.dispose();
             }
         });
     }

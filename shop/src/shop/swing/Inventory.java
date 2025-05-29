@@ -326,7 +326,11 @@ public class  Inventory extends JFrame {
                     int cantidadActualizada = WriterProduct.contarProductosDisponiblesPorCodigo(code);
                     mostrarDetallesProducto(name,cantidadActualizada, price, code);
                 }else{
-                    confirmarEliminacionProducto(name);
+                    if (confirmarEliminacionProducto(name)){
+                        TiendaVirtualGUI home = new TiendaVirtualGUI();
+                        home.setVisible(true);
+                        this.dispose();
+                    }
                 }    
             }
         });
@@ -701,38 +705,50 @@ public class  Inventory extends JFrame {
     }
 
 
-    //ELIMINACIONES
+    // ELIMINACIONES
     private boolean confirmarEliminacionProducto(String nombre) {
         int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar el Producto \"" + nombre + "\"?", "Eliminar Producto",
                                                     JOptionPane.YES_NO_OPTION,
                                                     JOptionPane.WARNING_MESSAGE);
-    
+
         if (opcion == JOptionPane.YES_OPTION) {
             try {
                 File archivo = new File("shop/src/resources/data/Categories/Product/products.csv");
                 List<String> lineas = Files.readAllLines(archivo.toPath());
                 List<String> nuevasLineas = new ArrayList<>();
+                boolean seModifico = false;
 
                 for (String linea : lineas) {
                     String[] partes = linea.split(",");
                     if (partes.length >= 6 && partes[1].equals(nombre)) {
-                        partes[5] = "false"; // Cambia el estado active a false
-                        linea = String.join(",", partes);
+                        int cantidadActual = WriterProduct.contarProductosDisponiblesPorCodigo(partes[2]);
+                        if (cantidadActual == 0) {
+                            partes[5] = "false"; // Cambia el estado 'active' a false
+                            seModifico = true;
+                            // reconstruir la línea con el cambio
+                            linea = String.join(",", partes);
+                        }
                     }
-                    nuevasLineas.add(linea);
+                    nuevasLineas.add(linea); // agregar la línea (modificada o no)
                 }
 
-                Files.write(archivo.toPath(), nuevasLineas);
-                JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.");
+                if (seModifico) {
+                    Files.write(archivo.toPath(), nuevasLineas);
+                    JOptionPane.showMessageDialog(null, "Producto eliminado correctamente.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se puede eliminar el producto porque hay stock disponible.");
+                    return false;
+                }
 
                 return true;
-            }catch (IOException ex) {
+            } catch (IOException ex) {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Error al eliminar el producto.");
             }
         }
         return false;
     }
+
 
 
     private boolean confirmarEliminacionServicio(String nombre){

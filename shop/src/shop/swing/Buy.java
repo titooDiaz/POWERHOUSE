@@ -136,7 +136,9 @@ public class Buy extends JFrame {
                 WriterProducts gp = new WriterProducts();
                 LinkedList<Products> productosList = gp.loadFromCSV(new LinkedList<>());
                     for (Products producto : productosList) {
-                        productosLabel.addItem(producto);
+                        if (producto.getActive()){
+                            productosLabel.addItem(producto);
+                        }
                     }
 
                 JTextField cantidad = new JTextField();
@@ -307,7 +309,9 @@ public class Buy extends JFrame {
 
                     JComboBox<Services> nuevoCombo = new JComboBox<>();
                         for (Services servicio : servicios) {
-                            nuevoCombo.addItem(servicio);
+                            if (servicio.isActive()){
+                                nuevoCombo.addItem(servicio);
+                            }
                         }
 
                     // reescribir funcion

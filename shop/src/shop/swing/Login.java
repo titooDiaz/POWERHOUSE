@@ -3,6 +3,8 @@ package shop.swing;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.*;
@@ -11,23 +13,23 @@ import shop.CSVwriter.WriterUsers;
 public class Login extends JFrame {
 
     //paneles
-    private JPanel panelLogin;
+    private final JPanel panelLogin;
 
     //labels
-    private JLabel titulo;
-    private JLabel loginLabel;
-    private JLabel txtFecha;
-    private JLabel logo;
-    private JLabel shadow;
+    private final JLabel titulo;
+    private final JLabel loginLabel;
+    private final JLabel txtFecha;
+    private final JLabel logo;
+    private final JLabel shadow;
 
     //botones
-    private JButton ingresar;
-    private JButton recuperar;
+    private final JButton ingresar;
+    private final JButton recuperar;
 
     //imagen
-    private ImageIcon originalIcon;
-    private Image scaledImage;
-    private ImageIcon resizedIcon;
+    private final ImageIcon originalIcon;
+    private final Image scaledImage;
+    private final ImageIcon resizedIcon;
 
     public Login() {
         setTitle("PowerApp");
@@ -135,10 +137,18 @@ public class Login extends JFrame {
             if (valid) {
                 // si es válido, mostrar el panel de bienvenida
                 TiendaVirtualGUI home = new TiendaVirtualGUI();
+                JOptionPane.showMessageDialog(null, "Bienvenido!", "Inicio Exitoso!", JOptionPane.INFORMATION_MESSAGE);
                 home.setVisible(true);
                 this.dispose();
             }else{
-                JOptionPane.showMessageDialog(null, "La contraseña o el nombre de usuario no es valido.", "Error", JOptionPane.ERROR_MESSAGE);
+                if (WriterUsers.AproveUserKey(campos[0].getText(),campos[1].getText())){
+                    TiendaVirtualGUI home = new TiendaVirtualGUI();
+                    JOptionPane.showMessageDialog(null, "No olvides tu contraseña: "+ WriterUsers.getPassWord(campos[0].getText()), "Bienvenido.", JOptionPane.INFORMATION_MESSAGE);
+                    home.setVisible(true);
+                    this.dispose();
+                }else{
+                    JOptionPane.showMessageDialog(null, "La contraseña o el nombre de usuario no es valido.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
@@ -149,6 +159,63 @@ public class Login extends JFrame {
         recuperar.setForeground(Color.WHITE);
         recuperar.setBounds(30, 230, 240, 35);
         panelLogin.add(recuperar);
+
+        recuperar.addActionListener(e -> {
+            String usernameRecuperar = JOptionPane.showInputDialog(
+                panelLogin,
+                "Ingrese su nombre de usuario para recuperar la contraseña:",
+                "Recuperar contraseña",
+                JOptionPane.PLAIN_MESSAGE
+            );
+
+            if (usernameRecuperar != null && !usernameRecuperar.trim().isEmpty()) {
+                String data = WriterUsers.obtenerkeyPorUsername(usernameRecuperar);
+                if (data != null){
+                    // user=usernameRecuperar
+                    String email = data.split(",")[1];
+                    String key = data.split(",")[0];
+
+                    // Rutas relativas a partir del proyecto
+                    String basePath = "shop/src/resources/data/";
+                    String emailPath = basePath + "sendemail.txt";
+                    String userPath = basePath + "senduser.txt";
+                    String keyPath = basePath + "sendkey.txt";
+
+                    try {
+                        // Escribir el correo
+                        FileWriter emailWriter = new FileWriter(emailPath);
+                        emailWriter.write(email);
+                        emailWriter.close();
+                        System.out.println("Datos escritos correctamente.");
+                        // Escribir el usuario
+                        FileWriter userWriter = new FileWriter(userPath);
+                        userWriter.write(usernameRecuperar);
+                        userWriter.close();
+                        System.out.println("Datos escritos correctamente.");
+                        // Escribir la clave
+                        FileWriter keyWriter = new FileWriter(keyPath);
+                        keyWriter.write(key);
+                        keyWriter.close();
+
+                        System.out.println("Datos escritos correctamente.");
+                    } catch (IOException ea) {
+                        System.err.println("Ocurrió un error al escribir los archivos.");
+                        JOptionPane.showMessageDialog(panelLogin, "Ocurrio un problema. Puede revisar en: https://github.com/titooDiaz/POWERHOUSE", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    
+                    if (WriterUsers.getPassKey(email, key)){
+                        JOptionPane.showMessageDialog(panelLogin, "Correo enviado correctamente a "+ email+".", "Error", JOptionPane.INFORMATION_MESSAGE);
+                    }else{
+                        JOptionPane.showMessageDialog(panelLogin, "Ocurrio un problema. Puede revisar en: https://github.com/titooDiaz/POWERHOUSE", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(panelLogin, "Este usuario no existe.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(panelLogin, "Debe ingresar un nombre de usuario válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
 
         // logica de las imagenes
         originalIcon = new ImageIcon(getClass().getResource("/resources/images/icon.png"));

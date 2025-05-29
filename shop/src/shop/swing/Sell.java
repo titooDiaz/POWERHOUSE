@@ -7,16 +7,17 @@ import java.util.LinkedList;
 import javax.swing.*;
 import shop.CSVwriter.*;
 import shop.models.PaidMethod;
+import shop.models.Product;
 import shop.models.Products;
+import shop.models.Service;
+import shop.models.Services;
 
 public class Sell extends JFrame {
 
     private final JPanel panelIzquierdo;
     private final JPanel panelCentral;
     private final JPanel columnasPanel;
-    private final JPanel panelDerecho;
     private final JPanel panelInferior;
-    private final JPanel panelTotales;
     private final JPanel panelBotonMetodo;
 
     private ImageIcon originalIcon;
@@ -27,10 +28,6 @@ public class Sell extends JFrame {
     private final JLabel usuario;
     private final JLabel username;
     private final JLabel email;
-    private final JLabel resumenLabel;
-    private final JLabel resumenArea;
-    private final JLabel totalProductos;
-    private final JLabel totalGeneral;
 
     private final JButton volver;
     private final JButton btnConfirmar;
@@ -76,6 +73,10 @@ public class Sell extends JFrame {
         String emailString = WriterUsers.obtenerCampoPorPk(4);
 
         originalIcon = new ImageIcon(getClass().getResource(""));
+        scaledImage = originalIcon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+        resizedIcon = new ImageIcon(scaledImage);
+
+        originalIcon = new ImageIcon(getClass().getResource("/resources/images/administrador.png"));
         scaledImage = originalIcon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
         resizedIcon = new ImageIcon(scaledImage);
 
@@ -140,8 +141,8 @@ public class Sell extends JFrame {
         }
 
         JTextField precio = new JTextField();
-        precio.setEditable(false);
-        JPanel precioPanel = createFieldPanel("Precio:", precio, labelFont);
+        precio.setEditable(true);
+        JPanel precioPanel = createFieldPanel("Precio de Venta:", precio, labelFont);
         columnasPanel.add(precioPanel);
         //logica para que se ponga el precio
         productosLabel.addActionListener(ev -> {
@@ -171,63 +172,81 @@ public class Sell extends JFrame {
 
         panelCentral.add(columnasPanel);
         // panel derecho
-        panelDerecho = new RoundedPanel(15, new BorderLayout());
-        panelDerecho.setPreferredSize(new Dimension(200, 0));
-        panelDerecho.setBackground(lightGray);
-        panelDerecho.setBorder(BorderFactory.createLineBorder(new Color(60, 60, 60), 10));
 
-        resumenLabel = new JLabel("Resumen");
-        resumenLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
-        resumenLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
-        resumenArea = new JLabel();
-        resumenArea.setFont(font);
-        panelDerecho.add(resumenLabel, BorderLayout.NORTH);
-        panelDerecho.add(new JScrollPane(resumenArea), BorderLayout.CENTER);
 
         panelInferior = new RoundedPanel(16, new BorderLayout());
         panelInferior.setPreferredSize(new Dimension(900, 70));
         panelInferior.setBackground(darkGray);
         panelInferior.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
-        totalProductos = new JLabel("TOTAL PRODUCTOS: <total>");
-        totalGeneral = new JLabel("TOTAL: <total>");
-        totalProductos.setForeground(Color.WHITE);
-        totalGeneral.setForeground(Color.WHITE);
-        totalProductos.setFont(font);
-        totalGeneral.setFont(font);
 
-        panelTotales = new JPanel(new GridLayout(2, 1));
-        panelTotales.setOpaque(false);
-        panelTotales.add(totalProductos);
-        panelTotales.add(totalGeneral);
-
-        btnConfirmar = new RoundedButton("Confirmar compras", 15);
+        btnConfirmar = new RoundedButton("Vender", 15);
         btnConfirmar.setBackground(accent);
         btnConfirmar.setForeground(Color.WHITE);
         btnConfirmar.setFont(font);
+        btnConfirmar.setPreferredSize(new Dimension(100, 50));
         btnConfirmar.setFocusPainted(false);
 
-        btnConfirmar.addActionListener(e -> {
-            String canString = cantidad.getText();
-            int canINT = Integer.parseInt(canString);
-            PaidMethod paidmt = (PaidMethod) metodoPagoCombo.getSelectedItem();
-            int metINT = paidmt.getPk();
-            float preINT = Float.parseFloat(precio.getText());
+
+        btnConfirmar.addActionListener(e -> {     
+            String mensaje = "";
+            try{
+                String canString = getComponentByType(cantidadPanel, JTextField.class).getText();
+                    int canINT = Integer.parseInt(canString);
+
+                String preString = getComponentByType(precioPanel, JTextField.class).getText();
+                    float preINT = Float.parseFloat(preString);
+                
+                PaidMethod paidmt = (PaidMethod) getComponentByType(metodoP, JComboBox.class).getSelectedItem();
+                    int metINT = (int) paidmt.getPk();
+                
+                Products pName = (Products) getComponentByType(productService, JComboBox.class).getSelectedItem();
+
+                mensaje = "¿Deseas confirmar la VENTA de " + canINT + " " +
+                pName.getName() + " a $ " + preINT + " cada uno?\n" +
+                "Total: $" + (canINT * preINT) + ".";
+
+                String[] opciones = {"Confirmar", "Cancelar"};
+                
+            int sel = JOptionPane.showOptionDialog(
+                null,
+                mensaje,
+                "Confirmar venta",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opciones,
+                opciones[0]
+            );
             Products p = (Products) productosLabel.getSelectedItem();
             if (p != null) {
                 int pPK = p.getPk();
                 WriterProduct.moverLineasPorPK(pPK, canINT, preINT, metINT);
+            } 
+
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Cantidad o precio inválido.");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Ocurrió un error al procesar la venta.");
             }
+            
         });
 
-        panelInferior.add(panelTotales, BorderLayout.WEST);
-        panelInferior.add(btnConfirmar, BorderLayout.EAST);
+        panelInferior.add(btnConfirmar, BorderLayout.CENTER);
 
         add(panelIzquierdo, BorderLayout.WEST);
         add(panelCentral, BorderLayout.CENTER);
-        add(panelDerecho, BorderLayout.EAST);
         add(panelInferior, BorderLayout.SOUTH);
+    }
+
+    private <T extends Component> T getComponentByType(JPanel panel, Class<T> type) {
+        for (Component comp : panel.getComponents()) {
+            if (type.isInstance(comp)) {
+                return type.cast(comp);
+            }
+        }
+        return null;
     }
 
     private JPanel createFieldPanel(String label, JComponent field, Font labelFont) {

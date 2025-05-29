@@ -154,7 +154,7 @@ public class Buy extends JFrame {
             }
 
                 JTextField precio = new JTextField();
-                JPanel precioPanel = createFieldPanel("precio de compra:", precio, labelFont);
+                JPanel precioPanel = createFieldPanel("Precio de compra:", precio, labelFont);
             columnasPanel.add(precioPanel);
 
         //boton de agregar metodo de pago
